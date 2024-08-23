@@ -1,0 +1,129 @@
+html, body {
+    font-family: Verdana;
+    font-size: 16px;
+    line-height: 1.4;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}    
+
+p {text-align: justify;}
+
+a {text-decoration: none; color: inherit;}
+
+#header {
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 66px;
+    line-height: 66px;
+    color: #ffffff;
+    background-color: #2e7d32;
+}
+
+#header_logo {
+    font-weight: bold;
+    padding: 0 15px;
+    float: left;
+}
+
+.menu {
+    float: left;
+}
+
+.menu a {
+    padding: 0 10px;
+}
+
+.menu a:hover {
+    color: #c6ff00;
+}
+
+.site-content{
+    position: absolute;
+    top: 66px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-top: 0;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.container {
+    margin: 0 20px;
+}
+
+/*-- responsive --*/
+@media only screen and (max-width: 550px) {
+    #header {
+        position: static;
+    }
+    
+    .site-content{
+        padding-top: 0px;
+    }
+    
+    #header_icon {
+        position: relative;
+        display: block;
+        float: left;
+        padding-top: 0px;
+        padding-left: 10px;
+        width: 40px;
+        height: 66px;
+        cursor: pointer;  
+    }
+    
+    #header_icon span, #header_icon span:before, #header_icon span:after {
+        cursor: pointer;
+        border-radius: 5px;
+        height: 4px;
+        width: 35px;
+        background-color: #ffffff;
+        position: absolute;
+        display: block;
+        content: '';
+    }
+    #header_icon span {
+        top:30px;
+    }
+    
+    #header_icon span:before {
+        top: -10px; 
+    }
+    
+    #header_icon span:after {
+        top: 10px;
+    }
+    .site-container, .site-pusher {height:100%}
+    .site-container {overflow: hidden;}
+    .site-pusher {
+        transition-duration: 0.3s;
+        transform: translateX(0px);
+    }
+    
+    .menu {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 250px;
+        background-color: #2e7d32;
+        transform: translateX(-250px);
+    }
+    
+    .menu a {
+        display: block;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        border-bottom: 1px solid #43a047;
+    }
+    
+    .with--sidebar .site-pusher  {
+        transform: translateX(250px);
+        
+     }
+}
+
