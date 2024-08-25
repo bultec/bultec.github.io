@@ -9,9 +9,9 @@
 
 `webardu` peut être utilisé de deux façons :
 - Avec `Jupyter`. l'enseignant peut réaliser des notebooks contenant une cellule de _mesures_ à laquelle il associe une partie _exploitation des données_.
-- De façon plus classique, avec un navigateur pour exploiter les données sous `python` ou sous un tableur comme `Régressi`.
+- De façon plus classique, les mesures sont réalisées à l'aide d'un navigateur et l'exploitation les données peut-se faire sous `python` ou avec un tableur comme `Régressi`.
 
-<img src="images/image_2.svg">
+<img src="images/image_2_b.svg" style="max-width:100%">
 
 
 Sans remplacer un oscilloscope ou une interface de mesures, le système peut néanmoins effectuer des mesures temporelles de 100 ou 200 points jusqu'à une fréquence de 40kHz, ce qui est largement suffisant dans la plupart des cas du programmes de lycée.
