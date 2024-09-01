@@ -34,74 +34,63 @@
 										<h1>Démo - Mode commande</h1>
 									</header>
 									
-									<h2>Transformez votre carte <em>Arduino</em> en <em>interface de mesures</em></h2>
-									<h3><em><strong>web-sciences</strong></em> pour les enseignants de sciences</h3>
+									<h2>Commande de deux leds à l'aide de la carte <em>Arduino</em></h2>
+									<h3>Matériel nécessaire</h3>
 									<ul>
-									<li>permet de réaliser des systèmes de mesures à l'aide d'un navigateur et d'une carte <em>Arduino</em>.</li>
-									<li>ne nécessite que quelques lignes de code.</li>
-									<li><strong>simplifie considérablement</strong> la réalisation de <em>mesures temporelles</em> ou <em>point par point</em> à l'aide d'une carte <em>Arduino</em>.</li>
+										<li>Deux résistances de 220 ohms</li>
+										<li>Une led rouge</li>
+										<li>Une led verte</li>
+										<li>Une carte <em>Arduino</em> équipée d'une <em>breadboard</em></li>
+										<li>Quelques fils</li>
+									</ul>
+									<h3>Montage</h3>
+									<p>Sur une carte <em>Arduino</em>, réaliser le montage suivant:</p>	
+									 <div class="row">
+										<div class="col-6 col-12-medium">
+											<p><img src="images/leds_bb.svg" style="width:550px;"></p>
+										</div>
+										<div class="col-4 col-12-medium">
+											<p><img src="images/image_4.jpeg"></p>
+										</div>
+										<div class="col-2 col-12-medium">
+											<p><img src="images/leds.svg" style="width:250px;"></p>
+										</div>
+									</div>
+
+									<hr />
+									<h3>Script <em>Arduino</em></h3>
+									<ul>
+										<li>Télécharger le script <a href="programmes/leds/leds.ino">leds.ino</a> en cliquant sur le lien</li>
+										<li>Téléverser ce script dans la carte à l'aide de l'IDE <em>Arduino</em></li>
 									</ul>
 									<hr />
-									<code>
-										mode = "commande";
-										commandes = [{texte_bouton:"Rouge", arduino:"R"},
-													{texte_bouton:"Vert", arduino:"V"},
-													{texte_bouton:"Magenta", arduino:"RB"}];
-									</code>
-									<hr />
+									<h3>Utilisation</h3>
+									<li>Cliquer sur le bouton <em>Connexion</em> ci-dessous et sélectionner le port correspondant à la carte.</li>
+									<ul>
+										<li>Le bouton Rouge allume la led rouge</li>
+										<li>Le bouton vert allume la led verte</li>
+										<li>Le bouton Stop éteint les deux leds</li>
+									</ul>		
+									
 									<div class="menu" id="id_menu">
 										<div id="id_boutons_commandes">
 										  <button class="rouge" id="id_button_connexion">Connexion</button>
 										</div>
-									  </div>
-									  <div><canvas id="myChart"></canvas></div>
-									  <p id="id_resultat"></p>
-									  <script src="assets/js/webardu_demo_commande.js"></script>
-
-									
-									<hr />
-										
-									<h3><em>Comment utiliser <strong>web-sciences</strong></em> ?</h3>
-									<ul>
-									<li>Avec <code>Jupyter</code>: l'enseignant peut réaliser des notebooks contenant une cellule de <em>mesures</em> à laquelle il associe une partie <em>exploitation des données</em>.</li>
-									<li>De façon plus classique: les mesures sont réalisées à l'aide d'un navigateur et l'exploitation les données peut se faire sous <code>python</code> ou à l&#39;aide d&#39;un tableur comme <code>Régressi</code>.</div></li>
-									</ul>
-									
-									<span class="image main"><img src="images/image_2.svg"" alt="" /></span>
-
-									<hr />
-									
-									<h4>Pourquoi utiliser web-sciences</h4>
+									</div>
+									<div><canvas id="myChart"></canvas></div>
+									<p id="id_resultat"></p>
+									<script src="assets/js/webardu_demo_commande.js"></script>
+								
 									<dl>
-										<dt>Universalité et simplicité</dt>
-										<dd>
-											Il existe beaucoup de capteurs pour la carte Arduino (Grove par exemple).
-
-											Un simple navigateur et 5 lignes de codes suffisent pour créer une interface de communication avec la carte.
-											Le système fonctionne quelque soit la façon d'exploiter les données choisie : 
-											<ul>
-												<li>Jupyter</li>
-												<li>Python</li>
-												<li>Régressi ou tableur</li>
-											</ul>
-										</dd>		
-
-										<dt>Efficacité</dt>
-										<dd>
-											<p>Sans remplacer un oscilloscope ou une interface de mesures, le système peut néanmoins effectuer des mesures temporelles de 100 ou 200 points jusqu'à une fréquence de 40kHz, ce qui est largement suffisant dans la plupart des cas du programmes de lycée.</p>
-										</dd>
-										<dt>Pédagogie</dt>
-										<dd>
-											<p>Dans la mesure où toutes les activités sont basées sur le même modèle, (en particulier sous Jupyter), les élèves, conformément au B.O. Français, se familiarisent rapidement avec l'environnement <em>python</em> pour analyser leurs résultats.</p>
-										</dd>
-										<dt>Documentation</dt>
-										<dd>
-											<p>Sont également fournis plusieurs exemples documentés, fonctionnels et testés avec des élèves, applicables au programme Français de sciences physiques dans les classes de lycée.</p>
-										</dd>
-									</dl>
-									
-
-								</section>
+									<dt>Code Javascript</dt>
+									<p>Le code Javascript nécessaire à cette application est le suivant:</p>
+<pre><code>mode = "commande";
+commandes = [{texte_bouton: "Rouge", arduino: "rouge"},
+             {texte_bouton: "Vert", arduino: "vert"},
+             {texte_bouton "Stop", arduino: "stop"}];
+</code></pre>									
+								    </dl>							
+								</div>
 
 						</div>
 					</div>
