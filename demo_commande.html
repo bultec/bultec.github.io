@@ -5,6 +5,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link href="assets/css/webardu.css" rel="stylesheet"/>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	</head>
 	<body class="is-preload">
 
@@ -29,7 +31,7 @@
 								<div>
 									<header class="main">
 										<h1></h1>
-										<h1>Présentation</h1>
+										<h1>Démo - Mode commande</h1>
 									</header>
 									
 									<h2>Transformez votre carte <em>Arduino</em> en <em>interface de mesures</em></h2>
@@ -39,11 +41,23 @@
 									<li>ne nécessite que quelques lignes de code.</li>
 									<li><strong>simplifie considérablement</strong> la réalisation de <em>mesures temporelles</em> ou <em>point par point</em> à l'aide d'une carte <em>Arduino</em>.</li>
 									</ul>
-
 									<hr />
-									
-									<p><em><strong>web-sciences</strong></em> se présente sous la forme d'un module <code>javascript</code> qui utilise l'API <code>Web Serial</code> de <em>Google</em>.
-										Il peut donc être utilisé sur un serveur <code>Jupyter</code> en ligne (comme capytale ou binder) ou bien sûr en local.</p>
+									<code>
+										mode = "commande";
+										commandes = [{texte_bouton:"Rouge", arduino:"R"},
+													{texte_bouton:"Vert", arduino:"V"},
+													{texte_bouton:"Magenta", arduino:"RB"}];
+									</code>
+									<hr />
+									<div class="menu" id="id_menu">
+										<div id="id_boutons_commandes">
+										  <button class="rouge" id="id_button_connexion">Connexion</button>
+										</div>
+									  </div>
+									  <div><canvas id="myChart"></canvas></div>
+									  <p id="id_resultat"></p>
+									  <script src="assets/js/webardu_demo_commande.js"></script>
+
 									
 									<hr />
 										
