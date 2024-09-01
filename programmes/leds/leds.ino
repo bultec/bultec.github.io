@@ -38,15 +38,15 @@ void loop() {
     String chaine = Serial.readString();
     String message = "commande non reconnue";
     if (chaine=="rouge") {
-      message = "led rouge allumée";
+      message = "led rouge allumee";
       digitalWrite(pin_led_rouge, HIGH);      
     }
     if (chaine=="vert") {
-      message = "led verte allumée";
+      message = "led verte allumee";
       digitalWrite(pin_led_verte, HIGH);       
     }
     if (chaine=="stop") {
-      message = "leds éteintes";
+      message = "leds eteintes";
       digitalWrite(pin_led_rouge, LOW);
       digitalWrite(pin_led_verte, LOW);        
     }

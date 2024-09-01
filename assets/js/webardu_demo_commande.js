@@ -474,12 +474,11 @@ function cree_zone_saisie(texte_saisie) {
 // decommenter pour effectuer les tests
 
 
-// mode commande avec bouton - fichier "led_RVB_1.ino"
+// mode commande avec bouton - fichier "leds.ino"
 mode = "commande";
-commandes = [{texte_bouton:"Rouge", arduino:"R"},
-             {texte_bouton:"Vert", arduino:"V"},
-             {texte_bouton:"Magenta", arduino:"RB"}];
-
+commandes = [{texte_bouton: "Rouge", arduino: "rouge"},
+             {texte_bouton: "Vert", arduino: "vert"},
+             {texte_bouton: "Stop", arduino: "stop"}];
 /*
 // mode commande avec zone saisie - fichier "led_RVB_1.ino"
 mode = "commande";
