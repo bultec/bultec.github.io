@@ -19,3 +19,7 @@
 button {
     cursor: pointer;
 }
+
+#id_boutons_commandes {
+    display: flex;
+}

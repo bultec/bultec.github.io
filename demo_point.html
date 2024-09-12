@@ -58,39 +58,39 @@
 									<hr />
 									<h3>Script <em>Arduino</em></h3>
 									<ul>
-										<li>Télécharger le script <a href="programmes/potentiometre/potentiometre.ino">potentiometre.ino</a> en cliquant sur le lien</li>
+										<li>Télécharger le script <a href="programmes/potentiometre/potentiometre_point.ino">
+											potentiometre_point.ino</a> en cliquant sur le lien</li>
 										<li>Téléverser ce script dans la carte à l'aide de l'IDE <em>Arduino</em></li>
 									</ul>
 									<hr />
 									<h3>Utilisation</h3>
 									<ul>
 										<li>Cliquer sur le bouton <em>Connexion</em> ci-dessous et sélectionner le port correspondant à la carte.</li>
-										<li>Cliquer sur le bouton <em>Connexion</em> ci-dessous et sélectionner le port correspondant à la carte.</li>
-										<li>Cliquer sur le bouton <em>Mesure</em>. La carte effectue 250 points de mesure de la tension 
-										appliquée sur l'entrée analogique A0 en une durée de 20 secondes. Les données sont transmises par la liaison série.</li>
-										<li>Le script affiche les données reçues sur un graphe <em>U = f(t)</em>.</li>
-										<li>Cliquer sur le bouton <em>Copie presse papier</em> pour récupérer les données dans le presse papier.
-										Dans cet exemple, les données sont formattées sous forme de tableaux python. Il est cependant possible 
-										de d'obtenir un formatage compatible avec un tableur comme <em>Régressi</em> ou <em>Excel.</em></li>
+										<li>Saisir une valeur de la grandeur arbitraire <em>X</em> dans le champ de saisie.</li>
+										<li>Cliquer sur le bouton <em>Mesure</em>. La carte effectue alors la mesure de la tension 
+										appliquée U sur l'entrée analogique A0. Le point de cooordonnées (X, U) est placé sur le graphe <em>U = f(X)</em>.</li>
+										<li>Lorsque les mesures sont terminées, cliquer sur le bouton <em>Copie presse papier</em> pour récupérer les données
+											dans le presse papier. Dans cet exemple, les données sont formatées sous forme de tableaux
+											python. Il est cependant possible d'obtenir un formatage compatible avec un tableur comme <em>Régressi</em> ou <em>Excel.</em></li>
 									</ul>		
 									
-									<div class="menu" id="id_menu">
+									<div class="menu" id="id_menu" style="display:inline-flex">
 										<div id="id_boutons_commandes">
 										  <button class="rouge" id="id_button_connexion">Connexion</button>
 										</div>
 									</div>
 									<div class="image" style="width:95%;"><canvas id="myChart"></canvas></div>
 									<p id="id_resultat"></p>
-									<script src="assets/js/webardu_demo_temporel.js"></script>
+									<script src="assets/js/webardu_demo_point.js"></script>
 								
 									<dl>
 									<dt>Code Javascript</dt>
 									<p>Le code Javascript nécessaire à cette application est le suivant:</p>
-<pre><code>mode = "temporel";
+<pre><mode>mode = "point";
 commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
 series = [{grandeur: "U", unite: "V"}];
 titre_graphe = "Montage potentiométrique";
-axes = [{grandeur: "t", unite: "ms"}, {grandeur: "U", unite: "V"}];
+axes = [{grandeur: "X", unite: "Sans"}, {grandeur: "U", unite: "V"}];
 </code></pre>									
 								    </dl>							
 								</div>
