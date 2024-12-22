@@ -531,8 +531,6 @@ series = [{grandeur: "Uc", unite: "V"}, {grandeur: "E", unite: "V"}];
 titre_graphe = "Circuit RC";
 axes = [{grandeur: "t", unite: "ms"}, {grandeur: "U", unite: "V"}];
 tableur = false;
-
-
 /*
 // mode temporel rapide - fichier "circuit_rc_rapide.ino"
 mode = "temporel";
