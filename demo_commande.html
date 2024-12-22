@@ -5,6 +5,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/style.css" />
 		<link href="assets/css/webardu.css" rel="stylesheet"/>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	</head>
@@ -78,13 +79,13 @@
 										</div>
 									</div>
 									<div class="image" style="width:95%;"><canvas id="myChart"></canvas></div>
-									<p id="id_resultat"></p>
+									<p></p>
 									<script src="assets/js/webardu_demo_commande.js"></script>
 								
 									<dl>
 									<dt>Code Javascript</dt>
 									<p>Le code Javascript nécessaire à cette application est le suivant:</p>
-<pre><code>mode = "commande";
+<pre><code class="encadre">mode = "commande";
 commandes = [{texte_bouton: "Rouge", arduino: "rouge"},
              {texte_bouton: "Vert", arduino: "vert"},
              {texte_bouton: "Stop", arduino: "stop"}];
@@ -96,87 +97,88 @@ commandes = [{texte_bouton: "Rouge", arduino: "rouge"},
 					</div>
 
 				<!-- Sidebar -->
-					<div id="sidebar">
-						<div class="inner">
+				<div id="sidebar">
+					<div class="inner">
 
-							<!-- Menu -->
-								<nav id="menu">
-									<header class="major">
-										<h2>Menu</h2>
-									</header>
-									<ul>
-										<li><a href="index.html">Accueil</a></li>
-										<li>
-											<span class="opener">Demos</span>
-											<ul>
-												<li><a href="demo_commande.html">Mode commande</a></li>
-												<li><a href="demo_temporel.html">Mode temporel</a></li>
-												<li><a href="demo_point.html">Mode point</a></li>
-											</ul>
-										</li>
-										<li><a href="mode_emploi.html">Mode d'emploi</a></li>
-										<li>
-											<span class="opener">Exemples</span>
-											<ul>
-												<li><a href="circuit_rc.html">Circuit RC</a></li>
-												<li><a href="celerite_us_1.html">Célérité des ultrasons (1)</a></li>
-												<li><a href="celerite_us_1.html">Célérité des ultrasons (2)</a></li>
-												<li><a href="mariotte.html">Loi de Mariotte</a></li>
-												<li><a href="newton.html">Loi phénoménologique de Newton</a></li>												
-											</ul>
-										</li>
-										<li><a href="telechargement.html">Téléchargement</a></li>
-									
-									</ul>
-								</nav>
+						<!-- Menu -->
+							<nav id="menu">
+								<header class="major">
+									<h2>Menu</h2>
+								</header>
+								<ul>
+									<li><a href="index.html">Accueil</a></li>
+									<li>
+										<span class="opener">Demos</span>
+										<ul>
+											<li><a href="demo_commande.html">Mode commande</a></li>
+											<li><a href="demo_temporel.html">Mode temporel</a></li>
+											<li><a href="demo_point.html">Mode point</a></li>
+										</ul>
+									</li>
+									<li><a href="mode_emploi.html">Mode d'emploi</a></li>
+									<li>
+										<span class="opener">Exemples</span>
+										<ul>
+											<li><a href="circuit_rc.html">Circuit RC</a></li>
+											<li><a href="celerite_us_1.html">Célérité des ultrasons (1)</a></li>
+											<li><a href="celerite_us_2.html">Célérité des ultrasons (2)</a></li>
+											<li><a href="mariotte.html">Loi de Mariotte</a></li>
+											<li><a href="newton.html">Loi phénoménologique de Newton</a></li>												
+										</ul>
+									</li>
+									<li><a href="documentation.html">Documentation</a></li>
+									<li><a href="telechargement.html">Téléchargement</a></li>
+								
+								</ul>
+							</nav>
 
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Quelques exemples</h2>
-									</header>
-									<div class="mini-posts">
-										<article>
-											<a href="#" class="image"><img src="images/image_5.jpeg" alt="" /></a>
-											<p>Célérité des ultrasons dans l'air.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/circuit_rc1.png" alt="" /></a>
-											<p>Circuit RC à tension constante.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/mariotte.png" alt="" /></a>
-											<p>Vérification de la loi de Mariotte.</p>
-										</article>
-									</div>
-									<ul class="actions">
-										<li><a href="#" class="button">Plus</a></li>
-									</ul>
-								</section>
+						<!-- Section -->
+							<section>
+								<header class="major">
+									<h2>Quelques exemples</h2>
+								</header>
+								<div class="mini-posts">
+									<article>
+										<a href="#" class="image"><img src="images/image_5.jpeg" alt="" /></a>
+										<p>Célérité des ultrasons dans l'air.</p>
+									</article>
+									<article>
+										<a href="#" class="image"><img src="images/circuit_rc1.png" alt="" /></a>
+										<p>Circuit RC à tension constante.</p>
+									</article>
+									<article>
+										<a href="#" class="image"><img src="images/mariotte.png" alt="" /></a>
+										<p>Vérification de la loi de Mariotte.</p>
+									</article>
+								</div>
+								<ul class="actions">
+									<li><a href="#" class="button">Plus</a></li>
+								</ul>
+							</section>
 
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>A propos</h2>
-									</header>
-									<p>Le module web_sciences a été écrit par un enseignant Français passionné d'informatique
-										qui enseigne la physique en lycée depuis plus de 40 ans et NSI depuis sa création.</p>
-		
-									<ul class="contact">
-										<li class="icon brands fa-github"><a href="https://github.com/bultec/web-sciences">web-sciences sur Github</a></li>
-										<li class="icon brands fa-linkedin"><a href="#">L'auteur sur Linkedin</a></li>
-										<li class="icon brands fa-facebook-f"><a href="#">Page facebook de collaboration</a></li>
-									</ul>
-								</section>
-							<!-- Footer -->
-								<footer id="footer">
-									<p class="copyright"><a href="https://github.com/bultec/web-sciences?tab=GPL-3.0-1-ov-file">GPL 3.0 license</a></p>
-								</footer>
+						<!-- Section -->
+							<section>
+								<header class="major">
+									<h2>A propos</h2>
+								</header>
+								<p>Le module web_sciences a été écrit par un enseignant Français passionné d'informatique
+									qui enseigne la physique en lycée depuis plus de 40 ans et NSI depuis sa création.</p>
+	
+								<ul class="contact">
+									<li class="icon brands fa-github"><a href="https://github.com/bultec/web-sciences">web-sciences sur Github</a></li>
+									<li class="icon brands fa-linkedin"><a href="#">L'auteur sur Linkedin</a></li>
+									<li class="icon brands fa-facebook-f"><a href="#">Page facebook de collaboration</a></li>
+								</ul>
+							</section>
+						<!-- Footer -->
+							<footer id="footer">
+								<p class="copyright"><a href="https://github.com/bultec/web-sciences?tab=GPL-3.0-1-ov-file">GPL 3.0 license</a></p>
+							</footer>
 
-						</div>
 					</div>
+				</div>
 
-			</div>
+		</div>
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>

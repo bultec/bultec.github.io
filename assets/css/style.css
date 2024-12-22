@@ -1,0 +1,14 @@
+.encadre {
+    background-color:#fafaff; /* Bleu très clair */
+    border: 1px dotted #002f6c; /* Bordure bleu marine */
+    padding: 15px; /* Espacement intérieur pour une meilleure lisibilité */
+    padding-left: 30px;
+    border-radius: 20px; /* Coins légèrement arrondis */
+    margin-bottom: 20px;
+    color: black;
+}
+
+.encadre p, ul, h3 {
+margin-bottom: 3px;
+margin-top: 3px;
+}
