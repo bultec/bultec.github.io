@@ -2,6 +2,10 @@
     margin-bottom: 20px;
 }
 
+.marge_b_5{
+    margin-bottom: 3px;
+}
+
 .encadre {
     background-color:#fafaff; /* Bleu très clair */
     border: 1px dotted #002f6c; /* Bordure bleu marine */
