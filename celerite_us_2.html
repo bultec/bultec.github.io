@@ -33,11 +33,12 @@
 								<div>							
 									<header class="main">
 										<h1></h1>
-										<h1>Célérité des ultrasons dans l'air (1)</h1>
+										<h1>Célérité des ultrasons dans l'air (2)</h1>
 									</header>	
-									<h3 style="margin-bottom:10px;">Un exemple d'utilisation de <em>Web Sciences</em> en mode <code>point</code></h3>
-									<p>Cet exemple de <code>mesures point par point</code> à l'aide de la bibliothèque <em>web_sciences</em>
-										utilise directement les données mesurées par le capteur à ultrasons <em>Grove</em>.</p>
+									<h3 style="margin-bottom:10px;">Un exemple d'utilisation de <em>Web Sciences</em> en mode <code>temporel rapide</code></h3>
+									<p>Le capteur <em>US Grove</em> est relié au pin 4. Cette exemple  de <code>mesures temporelles rapides</code>
+										à l'aide de la bibliothèque <em>web_sciences</em> permet de déterminer la célérité des ultrasons dans l'air en traçant
+										l'évolution de l'état du pin 4 en fonction du temps.</p>
 									<h2>I. Montage</h2>
 									<h3>Matériel nécessaire</h3>
 									<ul class="marge_b_20">
@@ -47,23 +48,34 @@
 										<li>Un écran sur support.</li>
 										<li>Un réglet.</li>
 									</ul>   
-									<div class="row">
-										<div class="col-5 col-10-medium">
-											<p><span class="image main"><img src="images/image_8.jpeg"></span></p>
-										</div>
-										<div class="col-7 col-10-medium">
-											<p><span class="image main"><img src="images/image_5.jpeg"></span></p>	
-										</div>
-									</div>
+									<p><span class="image main"><img src="images/image_5.jpeg" style ="max-width:640px;"></span></p>	
 									<h2>II. Code nécessaire</h2>
 									<h3>Script <em>Arduino</em></h3>
+
+
+
 									Le script doit:
+									
+
+									attendre l'arrivée de la commande mesure sur la liaison série et réagir en conséquence, c'est à dire effectuer une série de mesures de l'état du pin 4 pendant une durée 
+									Δ
+									�
+									 (par exemple 10ms)
+									envoyer cette série de mesures sur la laision série.
+									Voir à cet effet les commentaires dans le code source capteur_us_tempo.
+
+
+
+
+
+
 									<ul>
 										<li>attendre l'arrivée de la commande <code>mesure</code> sur la liaison série.</li>
-										<li>réagir en conséquence, c'est à dire effectuer une mesure de la durée aller retour de l'onde ultrasonore
-											émise par le capteur.</li>
-										<li>envoyer cette durée sur la liaison série.</li>
+										<li>réagir en conséquence, c'est à dire effectuer une série de mesures de l'état du pin 4 
+											pendant une durée Δt (par exemple 10ms)</li>
+										<li>envoyer cette série de mesures sur la liaison série.</li>
 									</ul>
+									La particuliarité de ce script
 									<p>Voir à cet effet les commentaires dans le code source du script
 										<a href="programmes/capteur_us/capteur_us.ino">capteur_us.ino</a></p>
 									<hr />	
