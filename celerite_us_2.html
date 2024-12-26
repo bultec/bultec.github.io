@@ -50,55 +50,42 @@
 									</ul>   
 									<p><span class="image main"><img src="images/image_5.jpeg" style ="max-width:640px;"></span></p>	
 									<h2>II. Code nécessaire</h2>
-									<h3>Script <em>Arduino</em></h3>
-
-
-
-									Le script doit:
-									
-
-									attendre l'arrivée de la commande mesure sur la liaison série et réagir en conséquence, c'est à dire effectuer une série de mesures de l'état du pin 4 pendant une durée 
-									Δ
-									�
-									 (par exemple 10ms)
-									envoyer cette série de mesures sur la laision série.
-									Voir à cet effet les commentaires dans le code source capteur_us_tempo.
-
-
-
-
-
-
+									<h3 class="marge_b_20">Script <em>Arduino</em></h3>
+									<p class="marge_b_5">Le script :</p>
 									<ul>
-										<li>attendre l'arrivée de la commande <code>mesure</code> sur la liaison série.</li>
-										<li>réagir en conséquence, c'est à dire effectuer une série de mesures de l'état du pin 4 
+										<li>attend l'arrivée de la commande <code>mesure</code> sur la liaison série.</li>
+										<li>réagit en conséquence, c'est à dire effectue une série de mesures de l'état du pin 4 
 											pendant une durée Δt (par exemple 10ms)</li>
-										<li>envoyer cette série de mesures sur la liaison série.</li>
+										<li>envoie cette série de mesures sur la liaison série.</li>
 									</ul>
-									La particuliarité de ce script
+
+									<p><strong>Remarque :</strong> Dans un soucis de rapidité, ce script a la particularité de stocker la série
+										de mesure en mémoire et d'envoyer ensuite la totalité des données sur la liaison série. Une carte
+										<em>Arduino Uno</em> réalise par exemple 200 points de mesures en 5 millisecondes sans difficulté.</p>
 									<p>Voir à cet effet les commentaires dans le code source du script
-										<a href="programmes/capteur_us/capteur_us.ino">capteur_us.ino</a></p>
+										<a href="programmes/capteur_us_tempo/capteur_us_tempo.ino">capteur_us_tempo.ino</a>.</p>
 									<hr />	
 									<h3>Code <em>Javascript</em></h3>
 									<p>Le code <em>javascript</em>:
 									<ul style="margin-top:3px;">
-										<li>fonctionne en mode <code>point</code> :
-											<pre><code>mode = "point";</code></pre></li>
+										<li>fonctionne en mode <code>temporel</code> :
+											<pre><code>mode = "temporel";</code></pre></li>
 										<li>envoie la commande <code>mesure</code> lorsque l'utilisateur clique sur le bouton <code>mesure</code>:
 										<pre><code>var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];</code></pre></li>
-										<li>attend une mesure de la durée aller retour du signal ultrasonore:
-										<pre><code>series = [{grandeur: "Δt", unite: "µs"}];</code></pre></li>
-										<li>place sur le graphique le point de coordonnées (d, Δt) où <em>d</em> est la distance capteur-écran
-											saisie par l'utilisateur <pre><code>axes = [{grandeur: "d", unite: "cm"}, {grandeur: "Δt", unite: "µs"}];</code></pre></li>
+										<li>attend une série de mesures de l'état du pin 4 en fonction du temps (en mode <code>temporel</code>,
+											le temps est la première série par défaut et ne doit pas être ajouté à la gradeur <code>series</code>):
+										<pre><code>series = [{grandeur: "E", unite: ""}];</code></pre>.</li>
+										<li>trace le graphe <em>E = f(t)</em>.
+										<pre><code>axes = [{grandeur: "Δt", unite: "µs"}, {grandeur: "E", unite: "sans unité"}];</code></pre></li>
 									</ul>	
 
 									<p>Le code <em>Javascript</em> complet est le suivant :</p>
 
-<pre><code class="encadre">mode = "point";
+<pre><code class="encadre">mode = "temporel";
 var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
-series = [{grandeur: "Δt", unite: "µs"}];
+series = [{grandeur: "E", unite: ""}];
 titre_graphe = "Célérité des ultrasons dans l'air";
-axes = [{grandeur: "d", unite: "cm"}, {grandeur: "Δt", unite: "µs"}];
+axes = [{grandeur: "Δt", unite: "µs"}, {grandeur: "E", unite: "sans unité"}];
 </code></pre>
 
 <p>Le code complet à insérer dans une cellule <em>Jupyter</em></p>
@@ -107,11 +94,11 @@ axes = [{grandeur: "d", unite: "cm"}, {grandeur: "Δt", unite: "µs"}];
 from web_sciences import get_interface
 	
 my_init = '''
-mode = "point";
+mode = "temporel";
 var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
-series = [{grandeur: "Δt", unite: "µs"}];
+series = [{grandeur: "E", unite: ""}];
 titre_graphe = "Célérité des ultrasons dans l'air";
-axes = [{grandeur: "d", unite: "cm"}, {grandeur: "Δt", unite: "µs"}];
+axes = [{grandeur: "Δt", unite: "µs"}, {grandeur: "E", unite: "sans unité"}];
 '''
 	
 S = get_interface(my_init)
@@ -120,19 +107,19 @@ display(HTML(S))
 							
 								<hr />
 								<h3>Exemple d'éxécution</h3>
-								<p><span class="image main"><img src="images/ultrasons_ponctuel_2.png" style="max-width:949px;"><span class="image main"></p>								
+								<p><span class="image main"><img src="images/ultrasons_temporel_1.png" style="max-width:1029px;"><span class="image main"></p>								
 								<hr />
 								<h3>Démo en ligne</h3>
 								<ul>
-									<li>Télécharger le script <a href="programmes/capteur_us/capteur_us.ino">capteur_us.ino</a> en cliquant sur le lien.</li>
+									<li>Télécharger le script <a href="programmes/capteur_us_tempo/capteur_us_tempo.ino">capteur_us_tempo.ino</a> en cliquant sur le lien.</li>
 									<li>Téléverser ce script dans la carte à l'aide de l'IDE <em>Arduino</em>.</li>
 									<li>Relier le capteur <em>US Grove</em> au pin 4 de la carte.</li>
 									<li>Cliquer sur le bouton <em>Connexion</em> ci-dessous et sélectionner le port correspondant à la carte.</li>
-									<li>Placer le capteur à une distance <em>d = 10 cm </em> de l'écran (voir image ci-dessus).</li>
-									<li>Cliquer sur le bouton <em>mesure</em>. La carte effectue une mesure de la durée aller retour de l'onde ultrasonore
-										émise par le capteur. Cette valeur est transmises par la liaison série.</li>
-									<li>Le script affiche le point de coordonnées (d, Δt) sur le graphe <em>Δt = f(d)</em>.</li>
-									<li>Renouveler l'opération pour <em>d</em> variant de <em>20 cm</em> à <em>90 cm</em> par pas de <em>10 cm</em>.</li>
+									<li>Placer le capteur à une distance <em>d = 50 cm </em> de l'écran par exemple (voir image ci-dessus).</li>
+									<li>Cliquer sur le bouton <em>mesure</em>. La carte effectue une série de 200 points de mesures de 
+										l'état du pin 4 en une durée de 5 millisecondes (ces valeurs peuvent être modifiées dans le script <em>Arduino</em>).
+										L'ensemble des couples <em>(t, E)</em> est transmis par la liaison série.</li>
+									<li>Le script affiche le point de coordonnées le graphe <em>E = f(t)</em>.</li>
 									<li>Cliquer sur le bouton <em>Copie presse papier</em> pour récupérer les données dans le presse papier.
 									Dans cet exemple, les données sont formatées sous forme de tableaux python. Il est cependant possible 
 									d'obtenir un formatage compatible avec un tableur comme <em>Régressi</em> ou <em>Excel</em> en
@@ -151,7 +138,7 @@ display(HTML(S))
 								</div>
 								<div class="image" style="width:95%;"><canvas id="myChart"></canvas></div>
 								<p id="id_resultat"></p>
-								<script src="assets/js/webardu_demo_ultrasons_1.js"></script>
+								<script src="assets/js/webardu_demo_ultrasons_2.js"></script>
 								<script>
 								const checkbox = document.getElementById("tableur_case");
 								checkbox.addEventListener("change", function () {
@@ -166,15 +153,14 @@ display(HTML(S))
 								<h3>Liens</h3>
 								<ul>
 									<li><a target="_blank" href="https://mybinder.org/v2/gh/bultec/physique_chimie_lycee/HEAD?labpath=ultrasons_1%2Fcelerite_ultrasons_1_prof.ipynb">
-										Un TP complet de démonstration sur Binder</a> (éventuellement long à démarrer -> soyez patient).</li>
+										Une démonstration sur Binder</a> (éventuellement long à démarrer -> soyez patient).</li>
 									<li>lien vers capytale (bientôt)</li>
-									<li>Fichier <em>Arduino</em> : <a href="programmes/capteur_us/capteur_us.ino">capteur_us.ino</a></li>				
-									<li>fichier html au format python <a target="_blank" href="programmes/html/ultrasons_1_pyt.html">ultrasons_1_pyt.html</a> (pour utilisation avec python)</li>	
-									<li>fichier html au format tableur <a target="_blank" href="programmes/html/ultrasons_1_tab.html">ultrasons_1_tab.html</a> (pour utilisation avec <em>Régressi</em> ou <em>Excel</em>).</li>	
+									<li>Fichier <em>Arduino</em> : <a href="programmes/capteur_us_tempo/capteur_us_tempo.ino">capteur_us_tempo.ino</a></li>				
+									<li>fichier html au format python <a target="_blank" href="programmes/html/ultrasons_2_pyt.html">ultrasons_2_pyt.html</a> (pour utilisation avec python)</li>	
+									<li>fichier html au format tableur <a target="_blank" href="programmes/html/ultrasons_2_tab.html">ultrasons_2_tab.html</a> (pour utilisation avec <em>Régressi</em> ou <em>Excel</em>).</li>	
 								</ul>
 								<p>&nbsp;</p>
-							</div>
-
+							</div>k
 						</div>
 					</div>
 
