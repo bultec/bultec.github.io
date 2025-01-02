@@ -33,57 +33,52 @@
 								<div>							
 									<header class="main">
 										<h1></h1>
-										<h1>Circuit RC</h1>
+										<h1>Loi phénoménologique de Newton</h1>
 									</header>
 									<h3 style="margin-bottom:10px;">Un exemple d'utilisation de <em>Web Sciences</em> en mode <code>temporel</code></h3>					
-									<p>La charge ou la décharge d'un condensateur à travers une résistance est un cas d'école pour illustrer
-									   toutes les possibilité des mesures temporelles offertes par la biblothèque <em>Web Sciences</em>.</p>
+									<p>Mesurer la variation temporelle de la température d'un système incompressible au contact d'un thermostat
+									permet d'illustrer les possibilité des mesures temporelles offertes par la biblothèque <em>Web Sciences</em>.</p>
 									<h2>I. Montage</h2>
-									<p>Dans ce montage, c'est le programme qui déclenche la charge du condensateur en plaçant le pin 3 à 
-									   l'état haut au début des mesures.</p>
 									<h3>Matériel nécessaire</h3>
 									<ul class="marge_b_20">
-										<li>Un condensateur de 100µF</li>
-										<li>Une résistance de 1k&#8486;</li>
-										<li>Deux résistances de 220&#8486;</li>
-										<li>Deux leds (une rouge et une verte).</li>
 										<li>Une carte <em>Arduino</em> équipée d'une <em>breadboard</em></li>
-										<li>Quelques fils</li>
+										<li>Un capteur de température <em>Grove</em></li>
+										<li>Un sèche cheveux</li>
 									</ul>   
 									<h3>Montage</h3>
-									<p><span class="image main"><img src="images/circuit_rc_schema.svg" style="max-width:800px"></span></p>
-									<p><span class="image main"><img src="images/circuit_rc_bb.svg" style="max-width:600px"></span></p>
-									<p>Les leds sont présentes uniquement dans un but de visualisation. Il est possible de les supprimer.</p>
+									<p><span class="image main"><img src="images/image_9_a.jpg" style="max-width:600px"></span></p>
 									<hr />
-									<h3>Script <em>Arduino</em></h3>
-									<p>Deux versions du programme sont fournies&nbsp;:</p>
-									<ul class="marge_b_20">
-										<li>le programme  <a href="programmes/circuit_rc/circuit_rc.ino">circuit_rc.ino</a> pour lequel la
-											constante de temps du circuit peut être de quelques secondes qui envoie les valeurs de
-											<em>E</em> (tension aux bornes du circuit) et de <em>u<sub>c</sub></em> (tension aux bornes du condensateur) sur la liaison série après chaque mesure.</li>
-										<li>le programme  <a href="programmes/circuit_rc_rapide/circuit_rc_rapide.ino">condo_rapide.ino</a> pour
-											lequel la constante de temps du circuit peut être de quelques centaines de millisecondes qui, dans un but de rapidité, envoie les toutes valeurs une fois que les mesures sont terminées.</li>
-									</ul>
-								
-									<h4>Fonctionnement</h4>
-									<p>Le programme:</p>
+									<h2>II. Code nécessaire</h2>
+									<h3 class="marge_b_20">Script <em>Arduino</em></h3>
+									<p class="marge_b_5">Le script :</p>
 									<ul>
-										<li>attend l'arrivée d'une commande (<code>charge</code> ou <code>decharge</code>) sur 
-											la liaison série et réagit en conséquence:</li>
-										<li>si la commande est <code>charge</code>, il place le pin 3 à l'état haut et effectue
-											la série de mesure. Chaque mesure est envoyée sur la liaison série juste après sa réalisation. la série se termine par l&#39;envoi du mot <code>end</code>.</li>
-										<li>si la commande est <code>decharge</code>, il place le pin 3 à l'état bas  et effectue la
-											série de mesures comme précédement.</li>
+										<li>attend l'arrivée de la commande <code>mesure</code> sur la liaison série.</li>
+										<li>réagit en conséquence, c'est à dire effectue une série de mesures de la température  
+											pendant une durée Δt (par exemple 5 minutes)</li>
+										<li>Chaque mesure est envoyée sur la liaison série juste après sa réalisation. La série se termine par l'envoi du mot <em>end</em>.</li>
 									</ul>
-								<hr />	
-								<h3>Code javascript</h3>
-								<p>Le programme <em>javascript</em> à utiliser est le suivant :</p>
-<pre><code class="encadre">mode = &quot;temporel&quot;;
-var commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
-				{texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
-var series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
-var titre_graphe = &quot;Circuit RC&quot;;
-var axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
+									<p>Voir à cet effet les commentaires dans le code source du script
+										<a href="programmes/capteur_temperature/capteur_temperature.ino">capteur_temperature.ino</a>.</p>
+									<hr />	
+									<h3>Code <em>Javascript</em></h3>
+									<p>Le code <em>javascript</em>:
+									<ul style="margin-top:3px;">
+										<li>fonctionne en mode <code>temporel</code> :
+											<pre><code>mode = "temporel";</code></pre></li>
+										<li>envoie la commande <code>mesure</code> lorsque l'utilisateur clique sur le bouton <code>mesure</code>:
+										<pre><code>var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];</code></pre></li>
+										<li>attend une série de mesures de la température en fonction du temps (en mode <code>temporel</code>,
+											le temps est la première série par défaut et ne doit pas être ajouté à la variable <code>series</code>):
+										<pre><code>series = [{grandeur: "T", unite: "°C"}];</code></pre>.</li>
+										<li>trace le graphe <em>T = f(t)</em>.
+										<pre><code>axes = [{grandeur: "t", unite: "ms"}, {grandeur: "T", unite: "°C"}];</code></pre></li>
+									</ul>	
+									<p>Le code <em>Javascript</em> complet est le suivant :</p>		
+<pre><code class="encadre">mode = "temporel";
+var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
+series = [{grandeur: "T", unite: "°C"}];
+titre_graphe = "Evolution de la température d'un système au contact d'un thermostat";
+axes = [{grandeur: "t", unite: "ms"}, {grandeur: "T", unite: "°C"}];
 </code></pre>
 
 <p>Le code complet à insérer dans une cellule <em>Jupyter</em></p>
@@ -91,37 +86,30 @@ var axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U
 <pre><code class="encadre">from IPython.display import HTML, display
 from web_sciences import get_interface
 
-my_init = &#39;&#39;&#39;
-mode = &quot;temporel&quot;;
-var commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
-				{texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
-var series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
-var titre_graphe = &quot;Circuit RC&quot;;
-var axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
-&#39;&#39;&#39;
+my_init = '''
+mode = "temporel";
+var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
+series = [{grandeur: "T", unite: "°C"}];
+titre_graphe = "Evolution de la température d'un système au contact d'un thermostat";
+axes = [{grandeur: "t", unite: "ms"}, {grandeur: "T", unite: "°C"}];
+'''
 
 S = get_interface(my_init)
 display(HTML(S))
 </code></pre>
-							<p>Ce code :</p>						
-								<ul>
-									<li>envoie une commande parmi <code>charge</code> ou <code>decharge</code> ou sur la liaison série.</li>
-									<li>recupère les données envoyées par la carte <em>Arduino</em> sur la liaison série.</li>
-									<li>affiche le graphe <em>U = f(t)</em>.</li>
-								</ul>
 								<hr />
 								<h3>Exemple d'éxécution</h3>
-								<p><span class="image main"><img style="max-width:875px;"src="images/circuit_rc3.png" alt=""></span></p>								
+								<p><span class="image main"><img style="max-width:795px;"src="images/newton_3.png"></span></p>								
 								<hr />
 								<h3>Démo en ligne</h3>
 								<ul>
-									<li>Télécharger le script <a href="programmes/circuit_rc/circuit_rc.ino">circuit_rc.ino</a> en cliquant sur le lien.</li>
+									<li>Télécharger le script <a href="programmes/capteur_temperature/capteur_temperature.ino">capteur_temperature.ino</a> en cliquant sur le lien.</li>
 									<li>Téléverser ce script dans la carte à l'aide de l'IDE <em>Arduino</em>.</li>
-									<li>Réaliser le montage décrit ci-dessus.</li>
+									<li>Brancher le capteur de température <em>Grove</em> sur l'entrée <em>A0</em> de la carte <em>Arduino</em>.</li>
 									<li>Cliquer sur le bouton <em>Connexion</em> ci-dessous et sélectionner le port correspondant à la carte.</li>
-									<li>Cliquer sur le bouton <em>Charge</em>. La carte effectue 50 points de mesure des tensions <em>E</em> et  
-									<em>u<sub>c</sub></em> en une durée de 7.0 secondes. Les données sont transmises par la liaison série.</li>
-									<li>Le script affiche les données reçues sur un graphe <em>U = f(t)</em>.</li>
+									<li>Cliquer sur le bouton <em>mesure</em>. La carte effectue 50 points de mesure de la température <em>T</em>
+										en une durée de 400 secondes (ces valeurs sont modifiables dans le script <em>Arduino</em>). Les données sont transmises par la liaison série.</li>
+									<li>Le script affiche les données reçues sur un graphe <em>T = f(t)</em>.</li>
 									<li>Cliquer sur le bouton <em>Copie presse papier</em> pour récupérer les données dans le presse papier.
 									Dans cet exemple, les données sont formatées sous forme de tableaux python. Il est cependant possible 
 									d'obtenir un formatage compatible avec un tableur comme <em>Régressi</em> ou <em>Excel</em> en
@@ -140,7 +128,7 @@ display(HTML(S))
 								</div>
 								<div class="image" style="width:95%;"><canvas id="myChart"></canvas></div>
 								<p id="id_resultat"></p>
-								<script src="assets/js/webardu_circuit_rc.js"></script>
+								<script src="assets/js/webardu_demo_temperature.js"></script>
 								<script>
 								const checkbox = document.getElementById("tableur_case");
 								checkbox.addEventListener("change", function () {
@@ -152,25 +140,20 @@ display(HTML(S))
 								});	
 								</script>	
 
-								<p>Le traitement des données permet de tracer les graphes <em>uc = f(t), ur=f(t), E=f(t)</em>, de les modéliser
-									et de déterminer la constante de temps du circuit (voir le notebook ci-dessous).</p>
-								<p><span class="image main"><img src="images/circuit_rc4.png" style="max-width:593px;"><span class="image main"></p>	
+								<p>Le traitement des données permet de tracer les graphes <em>T = f(t)</em> de les modéliser par une exponentielle décroissante
+									et de déterminer le temps caractéristique ainsi que la température du thermostat (voir le notebook ci-dessous).</p>
+								<p><span class="image main"><img src="images/newton_1.png" style="max-width:628px;"><span class="image main"></p>	
 
 								<h3>Liens</h3>
 								<ul>
-									<li><a target="_blank" href="https://mybinder.org/v2/gh/bultec/physique_chimie_lycee/HEAD?labpath=demo_circuit_rc%2FCircuitRC.ipynb">
+									<li><a target="_blank" href="https://mybinder.org/v2/gh/bultec/physique_chimie_lycee/HEAD?labpath=temperature%2Ftemperature_demo.ipynb">
 										Un notebook de démonstration sur Binder</a> (éventuellement long à démarrer -> soyez patient).</li>
 									<li>Le lien vers capytale (bientôt)</li>
-									<li>Le notebook correspondant : <a href="programmes/notebooks/CircuitRC.ipynb">CircuitRC.ipynb</a></li>
-									<li>Les fichiers <em>Arduino</em> : 
-										<ul>
-											<li><a href="programmes/circuit_rc/circuit_rc.ino">circuit_rc.ino</a></li>
-											<li><a href="programmes/circuit_rc_rapide/circuit_rc_rapide.ino">condo_rapide.ino</a></li>
-										</ul>		
-									</li>
+									<li>Le notebook correspondant : <a href="programmes/notebooks/temperature_demo.ipynb">temperature_demo.ipynb</a></li>
+									<li>Le fichier <em>Arduino</em> : <a href="programmes/capteur_temperature/capteur_temperature.ino">capteur_temperature.ino</a></li>	
 									<li>La bibliothèque Web Sciences : <a href="programmes/web_sciences.py">web_sciences.py</a></li>			
-									<li>fichier html au format python <a target="_blank" href="programmes/html/circuit_rc_pyt.html">circuit_rc_pyt</a> (pour utilisation avec python)</li>	
-									<li>fichier html au format tableur <a target="_blank" href="programmes/html/circuit_rc_tab.html">circuit_rc_tab</a> (pour utilisation avec <em>Régressi</em> ou <em>Excel</em>).</li>		
+									<li>fichier html au format python <a target="_blank" href="programmes/html/temperature_pyt.html">temperature_pyt</a> (pour utilisation avec python)</li>	
+									<li>fichier html au format tableur <a target="_blank" href="programmes/html/temperature_tab.html">temperature_tab</a> (pour utilisation avec <em>Régressi</em> ou <em>Excel</em>).</li>		
 								</ul>
 								<p>&nbsp;</p>
 							</div>

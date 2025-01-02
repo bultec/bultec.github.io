@@ -36,7 +36,7 @@
 										<h1>Célérité des ultrasons dans l'air (2)</h1>
 									</header>	
 									<h3 style="margin-bottom:10px;">Un exemple d'utilisation de <em>Web Sciences</em> en mode <code>temporel rapide</code></h3>
-									<p>Le capteur <em>US Grove</em> est relié au pin 4. Cette exemple  de <code>mesures temporelles rapides</code>
+									<p>Le capteur <em>US Grove</em> est relié au pin 4. Cet exemple  de <code>mesures temporelles rapides</code>
 										à l'aide de la bibliothèque <em>web_sciences</em> permet de déterminer la célérité des ultrasons dans l'air en traçant
 										l'évolution de l'état du pin 4 en fonction du temps.</p>
 									<h2>I. Montage</h2>
@@ -73,7 +73,7 @@
 										<li>envoie la commande <code>mesure</code> lorsque l'utilisateur clique sur le bouton <code>mesure</code>:
 										<pre><code>var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];</code></pre></li>
 										<li>attend une série de mesures de l'état du pin 4 en fonction du temps (en mode <code>temporel</code>,
-											le temps est la première série par défaut et ne doit pas être ajouté à la gradeur <code>series</code>):
+											le temps est la première série par défaut et ne doit pas être ajouté à la variable <code>series</code>):
 										<pre><code>series = [{grandeur: "E", unite: ""}];</code></pre>.</li>
 										<li>trace le graphe <em>E = f(t)</em>.
 										<pre><code>axes = [{grandeur: "Δt", unite: "µs"}, {grandeur: "E", unite: "sans unité"}];</code></pre></li>
@@ -119,7 +119,7 @@ display(HTML(S))
 									<li>Cliquer sur le bouton <em>mesure</em>. La carte effectue une série de 200 points de mesures de 
 										l'état du pin 4 en une durée de 5 millisecondes (ces valeurs peuvent être modifiées dans le script <em>Arduino</em>).
 										L'ensemble des couples <em>(t, E)</em> est transmis par la liaison série.</li>
-									<li>Le script affiche le point de coordonnées le graphe <em>E = f(t)</em>.</li>
+									<li>Le script affiche le graphe <em>E = f(t)</em>.</li>
 									<li>Cliquer sur le bouton <em>Copie presse papier</em> pour récupérer les données dans le presse papier.
 									Dans cet exemple, les données sont formatées sous forme de tableaux python. Il est cependant possible 
 									d'obtenir un formatage compatible avec un tableur comme <em>Régressi</em> ou <em>Excel</em> en
@@ -148,7 +148,11 @@ display(HTML(S))
 										tableur = false;
 									}
 								});	
-								</script>	
+								</script>
+
+								<p>Le traitement des données permet de tracer le graphe <em>E = f(t)</em> 
+									dont l'exploitation permet de déterminer la célérité des ultrasons dans l'air (voir le notebook ci-dessous).</p>
+								<p><span class="image main"><img src="images/ultrasons_temporel_2.png" style="max-width:572px;"><span class="image main"></p>	
 
 								<h3>Liens</h3>
 								<ul>
