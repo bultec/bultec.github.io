@@ -4,9 +4,11 @@
 		<title>Web Sciences - Mesures Arduino</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/code.css">
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/style.css" />
 		<link href="assets/css/webardu.css" rel="stylesheet"/>
+
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	</head>
 	<body class="is-preload">
@@ -38,6 +40,8 @@
 									<h3 style="margin-bottom:10px;">Un exemple d'utilisation de <em>Web Sciences</em> en mode <code>temporel</code></h3>					
 									<p>La charge ou la décharge d'un condensateur à travers une résistance est un cas d'école pour illustrer
 									   toutes les possibilité des mesures temporelles offertes par la biblothèque <em>Web Sciences</em>.</p>
+									<p class="fond_colore">Le mode <em>temporel</em> permet de tracer une ou plusieurs grandeurs mesurées par <em>Arduino</em>
+									en fonction du temps.</p>   
 									<h2>I. Montage</h2>
 									<p>Dans ce montage, c'est le programme qui déclenche la charge du condensateur en plaçant le pin 3 à 
 									   l'état haut au début des mesures.</p>
@@ -78,7 +82,7 @@
 								<hr />	
 								<h3>Code javascript</h3>
 								<p>Le programme <em>javascript</em> à utiliser est le suivant :</p>
-<pre><code class="encadre">mode = &quot;temporel&quot;;
+<pre><code class="javascript encadre">mode = &quot;temporel&quot;;
 var commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
 				{texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
 var series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
@@ -88,7 +92,7 @@ var axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U
 
 <p>Le code complet à insérer dans une cellule <em>Jupyter</em></p>
 
-<pre><code class="encadre">from IPython.display import HTML, display
+<pre><code class="python encadre">from IPython.display import HTML, display
 from web_sciences import get_interface
 
 my_init = &#39;&#39;&#39;
@@ -267,6 +271,9 @@ display(HTML(S))
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+		<!-- Inclusion du script Highlight.js -->
+  		<script src="assets/js/highlight.min.js"></script>
+  		<script>hljs.highlightAll();</script>
 
 	</body>
 </html>

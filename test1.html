@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mode d'emploi Web-Sciences : Tableur ou Python</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+        }
+        pre {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: Consolas, "Courier New", monospace;
+        }
+        ul {
+            margin: 10px 0 20px 20px;
+        }
+        a {
+            color: #0056b3;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mode d'emploi : Utilisation de Web-Sciences avec un tableur ou Python</h1>
+
+    <h2>1. Préparation des fichiers nécessaires</h2>
+    <p>Pour configurer l’environnement, téléchargez les deux fichiers suivants :</p>
+    <ul>
+        <li><strong>web_sciences_complet.html</strong> : Contient le modèle HTML de base.</li>
+        <li><strong>insere_code.py</strong> : Script Python pour intégrer votre code JavaScript dans un fichier HTML.</li>
+    </ul>
+
+    <h2>2. Copier le code JavaScript dans le fichier Python</h2>
+    <ol>
+        <li>
+            <strong>Récupération du code JavaScript :</strong>
+            <p>Utilisez le code préparé précédemment, qui configure les variables comme <code>mode</code>, <code>commandes</code>, <code>series</code>, et <code>axes</code>.</p>
+        </li>
+        <li>
+            <strong>Modification du fichier <code>insere_code.py</code> :</strong>
+            <p>Collez le code JavaScript dans la section prévue, par exemple :</p>
+            <pre><code>my_code_js = """
+let mode = "point";
+let commandes = ["vas_y"];
+let series = [
+    { grandeur: "Température", unite: "°C" }
+];
+let axes = { x: "temps (s)", y: "Température (°C)" };
+"""</code></pre>
+        </li>
+        <li>
+            <strong>Définir le fichier de sortie HTML :</strong>
+            <p>Ajoutez le nom du fichier HTML généré dans <code>insere_code.py</code> :</p>
+            <pre><code>output_file = "interface_comm_web_sciences.html"</code></pre>
+        </li>
+    </ol>
+
+    <h2>3. Générer le fichier HTML</h2>
+    <ol>
+        <li>
+            <strong>Exécuter le script Python :</strong>
+            <p>Ouvrez un terminal et lancez la commande :</p>
+            <pre><code>python insere_code.py</code></pre>
+        </li>
+        <li>
+            <strong>Résultat :</strong>
+            <p>Un fichier HTML sera généré avec le nom défini dans la variable <code>output_file</code>.</p>
+        </li>
+    </ol>
+
+    <h2>4. Exécuter le fichier HTML dans un navigateur</h2>
+    <ol>
+        <li>
+            <strong>Ouvrir le fichier :</strong>
+            <p>Double-cliquez sur le fichier HTML pour l’ouvrir dans un navigateur compatible (par exemple, Chrome ou Firefox).</p>
+        </li>
+        <li>
+            <strong>Interface obtenue :</strong>
+            <p>Elle sera identique à celle générée dans un notebook Jupyter.</p>
+        </li>
+    </ol>
+
+    <h2>5. Utiliser la sortie avec un tableur</h2>
+    <ol>
+        <li>
+            <strong>Activer le mode tableur :</strong>
+            <p>Ajoutez ou modifiez la variable suivante dans le code JavaScript avant de générer le fichier HTML :</p>
+            <pre><code>let tableur = true;</code></pre>
+        </li>
+        <li>
+            <strong>Résultat :</strong>
+            <p>Les données copiées dans le presse-papiers seront formatées pour être collées dans un tableur.</p>
+        </li>
+    </ol>
+
+    <h2>Conclusion</h2>
+    <p>Ce mode d’emploi vous permet d’utiliser la bibliothèque Web-Sciences avec un tableur ou un environnement Python. Partagez le fichier HTML généré avec vos élèves pour une utilisation simple et autonome.</p>
+</body>
+</html>
+

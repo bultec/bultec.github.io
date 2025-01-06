@@ -4,6 +4,7 @@
 		<title>Web Sciences - Mesures Arduino</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/code.css">
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/style.css" />
 		<link href="assets/css/webardu.css" rel="stylesheet"/>
@@ -39,6 +40,8 @@
 									<p>Le capteur <em>US Grove</em> est relié au pin 4. Cet exemple  de <code>mesures temporelles rapides</code>
 										à l'aide de la bibliothèque <em>web_sciences</em> permet de déterminer la célérité des ultrasons dans l'air en traçant
 										l'évolution de l'état du pin 4 en fonction du temps.</p>
+									<p class="fond_colore">Le mode <em>temporel</em> permet de tracer une ou plusieurs grandeurs mesurées par <em>Arduino</em>
+									en fonction du temps.</p>   
 									<h2>I. Montage</h2>
 									<h3>Matériel nécessaire</h3>
 									<ul class="marge_b_20">
@@ -69,19 +72,19 @@
 									<p>Le code <em>javascript</em>:
 									<ul style="margin-top:3px;">
 										<li>fonctionne en mode <code>temporel</code> :
-											<pre><code>mode = "temporel";</code></pre></li>
+											<pre><code class="javascript encadre">mode = "temporel";</code></pre></li>
 										<li>envoie la commande <code>mesure</code> lorsque l'utilisateur clique sur le bouton <code>mesure</code>:
-										<pre><code>var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];</code></pre></li>
+										<pre><code class="javascript encadre">var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];</code></pre></li>
 										<li>attend une série de mesures de l'état du pin 4 en fonction du temps (en mode <code>temporel</code>,
 											le temps est la première série par défaut et ne doit pas être ajouté à la variable <code>series</code>):
-										<pre><code>series = [{grandeur: "E", unite: ""}];</code></pre>.</li>
+										<pre><code class="javascript encadre">series = [{grandeur: "E", unite: ""}];</code></pre>.</li>
 										<li>trace le graphe <em>E = f(t)</em>.
-										<pre><code>axes = [{grandeur: "Δt", unite: "µs"}, {grandeur: "E", unite: "sans unité"}];</code></pre></li>
+										<pre><code class="javascript encadre">axes = [{grandeur: "Δt", unite: "µs"}, {grandeur: "E", unite: "sans unité"}];</code></pre></li>
 									</ul>	
 
 									<p>Le code <em>Javascript</em> complet est le suivant :</p>
 
-<pre><code class="encadre">mode = "temporel";
+<pre><code class="javascript encadre">mode = "temporel";
 var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
 series = [{grandeur: "E", unite: ""}];
 titre_graphe = "Célérité des ultrasons dans l'air";
@@ -90,7 +93,7 @@ axes = [{grandeur: "Δt", unite: "µs"}, {grandeur: "E", unite: "sans unité"}];
 
 <p>Le code complet à insérer dans une cellule <em>Jupyter</em></p>
 
-<pre><code class="encadre">from IPython.display import HTML, display
+<pre><code class="python encadre">from IPython.display import HTML, display
 from web_sciences import get_interface
 	
 my_init = '''
@@ -254,11 +257,14 @@ display(HTML(S))
 			</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<!-- Inclusion du script Highlight.js -->
+		<script src="assets/js/highlight.min.js"></script>
+		<script>hljs.highlightAll();</script>	
 
 	</body>
 </html>

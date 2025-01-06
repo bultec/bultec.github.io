@@ -1,0 +1,324 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Web Sciences - Mesures Arduino</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/code.css">
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/style.css" />
+		<link href="assets/css/webardu.css" rel="stylesheet"/>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong>Web Sciences</strong> - Mesures Arduino au labo</a>
+									<ul class="icons">
+										<li><a target="_blank" href="https://github.com/bultec/web-sciences"
+											class="icon brands fa-github"><span class="label">Github</span></a></li>
+										<li><a target="_blank" href="https://www.linkedin.com/in/philippe-campion-06351a326"
+											class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<div>							
+									<header class="main">
+										<h1></h1>
+										<h1>Mode d'emploi</h1>
+										<p>Ce mode d'emploi précise comment utiliser la bibliothèque Web-Sciences pour transformer une carte Arduino en une interface de mesure.</p>
+									</header>
+									<h2 style="margin-bottom:10px;">I. Configuration et préparation de l'environnement <em>Web-Sciences</em></h2>
+                                    <p>Pour utiliser efficacement la bibliothèque <em>Web-Sciences</em> et transformer votre carte <em>Arduino</em>
+										en une interface de mesure, suivez ces étapes détaillées.<p></p>	
+									<section id="arduino">
+										<h3>1. Préparer et téléverser le code Arduino</h3>
+										<ol>
+											<li>Choisissez ou créez un programme Arduino :</li>
+												<ul>
+													<li>Utilisez les programmes proposés sur le site (section <em>Documentation</em> ou <em>Exemples</em>).</li>
+													<li>Pour un programme personnalisé, suivez les instructions disponibles sur la page <em>Documentation</em>.</li>
+												</ul>
+											<li>Ouvrez l'IDE <em>Arduino</em> et chargez le fichier <code>.ino</code> correspondant.</li>
+											<li>Connectez la carte Arduino à votre ordinateur via USB et téléversez le code.</li>
+											</ol>
+										</section>
+									<section id="telechargement">
+										<h3>2. Télécharger la bibliothèque <em>Web-Sciences</em></h3>
+										<ol>
+											<li>Rendez-vous sur le site officiel <a href="https:www.web-sciences.fr" target="_blank">web-sciences.fr</a>.</li>
+											<li>Pour une utilisation avec <em>Jupyter</em>, téléchargez uniquement la bibliothèque  <a href="programmes/web_sciences.py">web_sciences.py</a>.</li>
+											<li>Pour une utilisation avec un <em>tableur</em> ou un <em>IDE python</em>, téléchargez également le programme
+												<em>python</em> <a target="_blank" href="programmes/insere_code.py">insere_code.py</a> ainsi que le fichier
+												<a target="_blank" href="programmes/web_sciences_complet.html" download="web_sciences_complet.html">web_sciences_complet.html</a>
+									</section>
+									<section id="javascript">
+										<h3>3. Écrire le code JavaScript pour la communication</h3>
+										<p>Le code <em>JavaScript</em> doit être complété en cinq étapes :</p>
+										<h4>a) Choisir le mode de fonctionnement</h4>
+										<p>Définissez le mode :</p>
+										<pre><code class="javascript encadre">mode = &quot;temporel&quot;; // ou "point" ou "commande"</code></pre>
+								
+										<h4>b) Définir les commandes à envoyer</h4>
+										<p>Spécifiez les commandes à envoyer à la carte <em>Arduino</em> ainsi que le texte à afficher
+											sur le bouton que l'utilisateur va cliquer: </p>
+										<pre><code class="javascript encadre">var commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
+                 {texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];</code></pre>
+										<p>Chaque élément du tableau <code>commandes</code>du type <code>{texte_bouton:&quot;...&quot;, arduino:&quot;...&quot;}</code>va créer
+										un bouton qui permet d'envoyer une commande à <em>Arduino</em>.</p>
+										<h4>c) Spécifier les séries renvoyées</h4>
+										<p>Définissez les séries renvoyées par la carte avec leurs unités:</p>
+										<pre><code class="javascript encadre">var series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];</code></pre>
+										<div class="encadre">
+											<p><strong>Remarque : </strong>Dans le cas du mode temporel, la première série renvoyée par la carte est toujours le <em>temps</em>. Il n'est pas nécessaire de le
+												préciser dans la variable <code>series</code>.</p>
+										</div>
+										<h4>d) Configurer le graphique</h4>
+										<p>Définissez les axes :</p>
+										<pre><code class="javascript encadre">var axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];</code></pre>
+										<div class="encadre">
+											<p><strong>Remarques : </strong></p>
+											<ul>
+												<li><strong>Mode temporel</strong> : l'abscisse est toujours le <em>temps</em>. Les grandeurs en ordonnées sont les séries contenues dans la variable<code>series</code>.</li>		
+												<li><strong>Mode point</strong> : l'abscisse est toujours la grandeur saisie par l'utilisateur (par exemple <em>d (cm))</em>. Les grandeurs en ordonnées sont les séries
+													contenues dans la variable<code>series</code></li>		
+												<li><strong>Mode commande</strong> : Il n'y a pas de graphique.</li>		
+											</ul>
+										</div>
+										<h4>e) Choisir un titre</h4>	
+										<p>Choisissez, si nécessaire, un titre pour le graphique</p>
+										<pre><code class="javascript encadre">var titre_graphe = &quot;Circuit RC&quot;;</code></pre>
+										<h4>f) Rassembler le code</h4>
+										<p>Placez tout le code <em>JavaScript</em> dans une variable <em>python</em> de type <code>str</code>:</p>
+										<pre><code class="python encadre">my_init = '''
+mode = &quot;temporel&quot;;
+var commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
+                 {texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
+var series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
+var axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
+var titre_graphe = &quot;Circuit RC&quot;;
+'''</code></pre>
+
+									<h2>II. Utilisation avec <em>Jupyter</em></h2>
+									<p>Copiez le fichier <code>web_sciences.py</code> dans le même dossier que votre notebook.</p>
+									<p>Intégrez le code précédent dans une cellule <em>Jupyter</em> :</p>
+									<pre><code class="python encadre">from IPython.display import HTML, display
+from web_sciences import get_interface
+
+my_init = &#39;&#39;&#39;
+mode = &quot;temporel&quot;;
+var commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
+				{texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
+var series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
+var titre_graphe = &quot;Circuit RC&quot;;
+var axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
+&#39;&#39;&#39;
+
+S = get_interface(my_init)
+display(HTML(S))</code></pre>
+<p>Après exécution de la cellule <em>Jupyter</em>, on obtient quelque chose qui ressemble à ceci : </p>
+<p><span class="image main"><img src="images/image_8.png" style="max-width:457px"></span></p>
+<p>Après avoir cliqué sur le bouton <code>Connexion</code> et connecté la carte <em>Arduino</em>, les boutons s'activent et 
+	le graphe apparaît éventuellement :</p>
+<p><span class="image main"><img src="images/image_9.png" style="max-width:729px"></span></p>
+
+									<h2>III. Utilisation avec un <em>tableur</em> ou un <em>IDE python</em></h2>										
+									<h3>1. Préparation des fichiers nécessaires</h3>	
+									<p class="marge_b_5">Au préalable, téléchargez les deux fichiers suivants :</p>
+									<ul class="marge_b_20">
+										<li><code>web_sciences_complet.html</code> : Contient le modèle HTML de base.</li>
+										<li><code>insere_code.py</code> : Script Python pour intégrer votre code JavaScript dans un fichier HTML.</li>
+									</ul>
+									<h3>2. Copier le code JavaScript dans le fichier Python</h3>
+									<ol style="list-style-type:lower-alpha;">
+										<li>
+											<strong>Récupération du code JavaScript :</strong>
+											<p>Utilisez le code préparé précédemment, qui configure les variables <code>mode</code>,
+											   <code>commandes</code>, <code>series</code>, et <code>axes</code> et <code>titre_graphe</code>.</p>
+										</li>
+										<li>
+											<strong>Modification du fichier <code>insere_code.py</code> :</strong>
+											<p>Collez le code JavaScript dans la section prévue, par exemple :</p>
+											<pre><code class="python encadre"># code javascrit à insérer
+
+my_init = '''
+mode = &quot;temporel&quot;;
+var commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
+					{texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
+var series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
+var axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
+var titre_graphe = &quot;Circuit RC&quot;;
+'''</code></pre>
+										</li>
+										<li>
+											<strong>Définir le fichier de sortie HTML :</strong>
+											<p>Ajoutez le nom du fichier HTML généré dans <code>insere_code.py</code> :</p>
+											<pre><code class="python encadre"># nom du fichier html de sortie
+nom_sortie = "circuit_rc.html"</code></pre>
+										</li>
+									</ol>
+									
+									<h3>3. Générer le fichier HTML</h3>
+									<ol style="list-style-type:lower-alpha;">
+										<li>
+											<strong>Exécuter le script Python :</strong>
+											<p>Exécutez le programme <code>insere_code.py</code> depuis l'environnement <em>python</em> ou 
+												ouvrez un terminal et lancez la commande :</p>
+											<pre><code class="encadre">python insere_code.py</code></pre>
+										</li>
+										<li>
+											<strong>Résultat :</strong>
+											<p>Un fichier HTML sera généré avec le nom défini dans la variable <code>nom_sortie</code>.</p>
+										</li>
+									</ol>
+									
+									<h3>4. Exécuter le fichier HTML dans un navigateur</h3>
+									<ol style="list-style-type:lower-alpha;">
+										<li>
+											<strong>Ouvrir le fichier :</strong>
+											<p>Double-cliquez sur le fichier HTML pour l’ouvrir dans un navigateur compatible avec l'API <code>Web Serial</code>(par exemple Chrome).</p>
+										</li>
+										<li>
+											<strong>Interface obtenue :</strong>
+											<p>Elle sera identique à celle générée dans un notebook Jupyter.</p>
+<p><span class="image main"><img src="images/image_8.png" style="max-width:457px"></span></p>
+<p>Après avoir cliqué sur le bouton <code>Connexion</code> et connecté la carte <em>Arduino</em>, les boutons s'activent et 
+	le graphe apparaît éventuellement :</p>
+<p><span class="image main"><img src="images/image_9.png" style="max-width:729px"></span></p>
+										</li>
+									</ol>
+									
+									<h3>5. Utiliser la sortie avec un tableur</h3>
+									<ol style="list-style-type:lower-alpha;">
+										<li>
+											<strong>Activer le mode tableur :</strong>
+											<p>Ajoutez ou modifiez la variable suivante dans le code JavaScript avant de générer le fichier HTML :</p>
+											<pre><code class="javascript encadre">var tableur = true;</code></pre>
+										</li>
+										<li>
+											<strong>Résultat :</strong>
+											<p>Les données copiées dans le presse-papiers seront formatées pour être collées dans un tableur.</p>
+										</li>
+									</ol>
+									
+									<h3>Conclusion</h3>
+									<p>Ce mode d’emploi vous permet d'utiliser la bibliothèque <code>Web-Sciences</code> avec un tableur ou un environnement Python.
+									Partagez le fichier HTML généré avec vos élèves pour une utilisation simple et autonome.</p>
+																
+
+								<h3>Liens</h3>
+								<ul>
+									<li>La bibliothèque Web Sciences pour Jupyter: <a href="programmes/web_sciences.py">web_sciences.py</a>.</li>			
+									<li>Le fichier <code>web_sciences_complet.html</code> qui contient le modèle HTML de base <a target="_blank" href="programmes/web_sciences_complet.html" download="web_sciences_complet.html">web_sciences_complet.html</a>.</li>	
+									<li>Le fichier <code>insere_code.py</code>pour créer un fichier html utilisable avec un tableur ou un IDE <em>python</em> <a target="_blank" href="programmes/insere_code.py">insere_code.py</a>.</li>		
+								</ul>
+								<p>&nbsp;</p>
+							</div>
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Accueil</a></li>
+										<li>
+											<span class="opener">Demos</span>
+											<ul>
+												<li><a href="demo_commande.html">Mode commande</a></li>
+												<li><a href="demo_temporel.html">Mode temporel</a></li>
+												<li><a href="demo_point.html">Mode point</a></li>
+											</ul>
+										</li>
+										<li><a href="mode_emploi.html">Mode d'emploi</a></li>
+										<li>
+											<span class="opener">Exemples</span>
+											<ul>
+												<li><a href="circuit_rc.html">Circuit RC</a></li>
+												<li><a href="celerite_us_1.html">Célérité des ultrasons (1)</a></li>
+												<li><a href="celerite_us_2.html">Célérité des ultrasons (2)</a></li>
+												<li><a href="mariotte.html">Loi de Mariotte</a></li>
+												<li><a href="newton.html">Loi phénoménologique de Newton</a></li>												
+											</ul>
+										</li>
+										<li><a href="documentation.html">Documentation</a></li>
+										<li><a href="telechargement.html">Téléchargement</a></li>
+									
+									</ul>
+								</nav>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Quelques exemples</h2>
+									</header>
+									<div class="mini-posts">
+										<article>
+											<a href="#" class="image"><img src="images/image_5.jpeg" alt="" /></a>
+											<p>Célérité des ultrasons dans l'air.</p>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/circuit_rc1.png" alt="" /></a>
+											<p>Circuit RC à tension constante.</p>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/mariotte.png" alt="" /></a>
+											<p>Vérification de la loi de Mariotte.</p>
+										</article>
+									</div>
+									<ul class="actions">
+										<li><a href="#" class="button">Plus</a></li>
+									</ul>
+								</section>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>A propos</h2>
+									</header>
+									<p>Le module web_sciences a été écrit par un enseignant Français passionné d'informatique
+										qui enseigne la physique en lycée depuis plus de 40 ans et NSI depuis sa création.</p>
+		
+									<ul class="contact">
+										<li class="icon brands fa-github"><a target="_blank" href="https://github.com/bultec/web-sciences">web-sciences sur Github</a></li>
+										<li class="icon brands fa-linkedin"><a target="_blank" href="https://www.linkedin.com/in/philippe-campion-06351a326">L'auteur sur Linkedin</a></li>
+									</ul>
+								</section>
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright"><a href="https://github.com/bultec/web-sciences?tab=GPL-3.0-1-ov-file">GPL 3.0 license</a></p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<!-- Inclusion du script Highlight.js -->
+		<script src="assets/js/highlight.min.js"></script>
+		<script>hljs.highlightAll();</script>
+  
+	</body>
+</html>

@@ -4,6 +4,7 @@
 		<title>Web Sciences - Mesures Arduino</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/code.css">
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/style.css" />
 		<link href="assets/css/webardu.css" rel="stylesheet"/>
@@ -39,8 +40,8 @@
 									<p>Une seringue qui emprisonne une quantité d'air de volume <em>V</em> à la pression atmosphérique est reliée 
 									au capteur de pression <em>Grove</em> par l'intermédiaire d'un tube souple. On fait varier le volume d'air <em>V</em>
 									en agissant sur le piston de la seringue et on recueille la pression mesurée par le capteur.</p>
-									<p>Cet exemple  de <code>mesures point par point</code> à l'aide de la bibliothèque <em>web_sciences</em>
-									permet de tracer le graphe <em>P =f(1/V)</em> et de vérifier ainsi la loi de Mariotte <em>PV = cte</em>.</p>
+									<p>Cet exemple  de <code>mesures point par point</code> permet de tracer le graphe <em>P =f(1/V)</em>
+										et de vérifier ainsi la loi de Mariotte <em>PV = cte</em>.</p>
 									<h2>I. Montage</h2>
 									<h3>Matériel nécessaire</h3>
 									<ul class="marge_b_20">
@@ -77,18 +78,18 @@
 									<p>Le code <em>javascript</em>:
 									<ul style="margin-top:3px;">
 										<li>fonctionne en mode <code>point</code> :
-											<pre><code>mode = "point";</code></pre></li>
+											<pre><code class="javascript encadre">mode = "point";</code></pre></li>
 										<li>envoie la commande <code>mesure</code> lorsque l'utilisateur clique sur le bouton <code>mesure</code>:
-										<pre><code>var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];</code></pre></li>
+										<pre><code class="javascript encadre">var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];</code></pre></li>
 										<li>attend une mesure de la pression délivrée par le capteur de pression :
-										<pre><code>series = [{grandeur: "P", unite: "hPa"}];</code></pre>.</li>
+										<pre><code class="javascript encadre">series = [{grandeur: "P", unite: "hPa"}];</code></pre>.</li>
 										<li>place sur le graphique le point de coordonnées (V, P) où <em>V</em> est le volume d'air saisi par
-											l'utilisateur <pre><code>axes = [{grandeur: "V", unite: "mL"}, {grandeur: "P", unite: "hPa"}];</code></pre></li>
+											l'utilisateur <pre><code class="javascript encadre">axes = [{grandeur: "V", unite: "mL"}, {grandeur: "P", unite: "hPa"}];</code></pre></li>
 									</ul>	
 
 									<p>Le code <em>Javascript</em> complet est le suivant :</p>
 
-<pre><code class="encadre">mode = "point";
+<pre><code class="javascript encadre">mode = "point";
 var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
 series = [{grandeur: "P", unite: "hPa"}];
 titre_graphe = "Loi de Mariotte";
@@ -97,7 +98,7 @@ axes = [{grandeur: "V", unite: "mL"}, {grandeur: "P", unite: "hPa"}];
 
 <p>Le code complet à insérer dans une cellule <em>Jupyter</em></p>
 
-<pre><code class="encadre">from IPython.display import HTML, display
+<pre><code class="python encadre">from IPython.display import HTML, display
 from web_sciences import get_interface
 	
 my_init = '''
@@ -265,11 +266,14 @@ display(HTML(S))
 			</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<!-- Inclusion du script Highlight.js -->
+		<script src="assets/js/highlight.min.js"></script>
+		<script>hljs.highlightAll();</script>	
 
 	</body>
 </html>

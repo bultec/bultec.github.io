@@ -4,6 +4,7 @@
 		<title>Web Sciences - Mesures Arduino</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/code.css">
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/style.css" />
 		<link href="assets/css/webardu.css" rel="stylesheet"/>
@@ -35,7 +36,7 @@
 										<h1></h1>
 										<h1>Démo - Mode commande</h1>
 									</header>
-									
+									<p class="fond_colore">Le mode <em>commande</em> permet d'envoyer une commande quelconque à la carte <em>Arduino</em>.</p>
 									<h2>Commande de deux leds</h2>
 									<h3>Matériel nécessaire</h3>
 									<ul class="marge_b_20">
@@ -85,8 +86,8 @@
 								
 									<dl>
 									<dt>Code Javascript</dt>
-									<p>Le code Javascript nécessaire à cette application est le suivant:</p>
-<pre><code class="encadre">mode = "commande";
+									<p>Le code <em>Javascript</em> nécessaire à cette application est le suivant:</p>
+<pre><code class="javascript encadre">mode = "commande";
 commandes = [{texte_bouton: "Rouge", arduino: "rouge"},
              {texte_bouton: "Vert", arduino: "vert"},
              {texte_bouton: "Stop", arduino: "stop"}];
@@ -181,11 +182,14 @@ commandes = [{texte_bouton: "Rouge", arduino: "rouge"},
 		</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<!-- Inclusion du script Highlight.js -->
+		<script src="assets/js/highlight.min.js"></script>
+		<script>hljs.highlightAll();</script>
 
 	</body>
 </html>

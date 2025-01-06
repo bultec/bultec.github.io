@@ -4,6 +4,7 @@
 		<title>Web Sciences - Mesures Arduino</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/code.css">
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/style.css" />
 		<link href="assets/css/webardu.css" rel="stylesheet"/>
@@ -35,6 +36,8 @@
 										<h1></h1>
 										<h1>Démo - Mode temporel</h1>
 									</header>
+									<p class="fond_colore">Le mode <em>temporel</em> permet de tracer une ou plusieurs grandeurs mesurées par <em>Arduino</em>
+										en fonction du temps.</p>   
 									
 									<h2>Visualisation d'une tension en fonction du temps</h2>
 									<h3>Matériel nécessaire</h3>
@@ -86,8 +89,8 @@
 								
 									<dl>
 									<dt>Code Javascript</dt>
-									<p>Le code Javascript nécessaire à cette application est le suivant:</p>
-<pre><code class="encadre">mode = "temporel";
+									<p>Le code <em>Javascript</em> nécessaire à cette application est le suivant:</p>
+<pre><code class="javascript encadre">mode = "temporel";
 commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
 series = [{grandeur: "U", unite: "V"}];
 titre_graphe = "Montage potentiométrique";
@@ -183,11 +186,14 @@ axes = [{grandeur: "t", unite: "ms"}, {grandeur: "U", unite: "V"}];
 			</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<!-- Inclusion du script Highlight.js -->
+		<script src="assets/js/highlight.min.js"></script>
+		<script>hljs.highlightAll();</script>
 
 	</body>
 </html>

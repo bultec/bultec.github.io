@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)http://127.0.0.1:5500/mode_emploi.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Web Sciences - Mesures Arduino</title>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="./Web Sciences - Mesures Arduino_files/code.css">
+		<link rel="stylesheet" href="./Web Sciences - Mesures Arduino_files/main.css">
+		<link rel="stylesheet" href="./Web Sciences - Mesures Arduino_files/style.css">
+		<link href="./Web Sciences - Mesures Arduino_files/webardu.css" rel="stylesheet">
+		<script src="./Web Sciences - Mesures Arduino_files/chart.js.téléchargement"></script>
+	</head>
+	<body class="">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="http://127.0.0.1:5500/index.html" class="logo"><strong>Web Sciences</strong> - Mesures Arduino au labo</a>
+									<ul class="icons">
+										<li><a target="_blank" href="https://github.com/bultec/web-sciences" class="icon brands fa-github"><span class="label">Github</span></a></li>
+										<li><a target="_blank" href="https://www.linkedin.com/in/philippe-campion-06351a326" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<div>							
+									<header class="main">
+										<h1></h1>
+										<h1>Mode d'emploi</h1>
+										<p>Ce mode d'emploi précise comment utiliser la bibliothèque Web-Sciences pour transformer une carte Arduino en une interface de mesure.</p>
+									</header>
+									<h2 style="margin-bottom:10px;">I. Configuration et préparation de l'environnement <em>Web-Sciences</em></h2>
+                                    <p>Pour utiliser efficacement la bibliothèque <em>Web-Sciences</em> et transformer votre carte <em>Arduino</em>
+										en une interface de mesure, suivez ces étapes détaillées.</p><p></p>	
+									<section id="arduino">
+										<h3>1. Préparer et téléverser le code Arduino</h3>
+										<ol>
+											<li>Choisissez ou créez un programme Arduino :</li>
+												<ul>
+													<li>Utilisez les programmes proposés sur le site (section <em>Documentation</em> ou <em>Exemples</em>).</li>
+													<li>Pour un programme personnalisé, suivez les instructions disponibles sur la page <em>Documentation</em>.</li>
+												</ul>
+											<li>Ouvrez l'IDE <em>Arduino</em> et chargez le fichier <code>.ino</code> correspondant.</li>
+											<li>Connectez la carte Arduino à votre ordinateur via USB et téléversez le code.</li>
+											</ol>
+										</section>
+									<section id="telechargement">
+										<h3>2. Télécharger la bibliothèque <em>Web-Sciences</em></h3>
+										<ol>
+											<li>Rendez-vous sur le site officiel <a href="https://www.web-sciences.fr/" target="_blank">web-sciences.fr</a>.</li>
+											<li>Pour une utilisation avec <em>Jupyter</em>, téléchargez uniquement la bibliothèque <code>web_sciences.py</code>.</li>
+											<li>Pour une utilisation avec un <em>tableur</em> ou un <em>IDE python</em>, téléchargez également le programme
+												<em>python</em> <code>insere_code.py</code>.</li>
+										</ol>
+									</section>
+									<section id="javascript">
+										<h3>3. Écrire le code JavaScript pour la communication</h3>
+										<p>Le code <em>JavaScript</em> doit être complété en cinq étapes :</p>
+										<h4>a) Choisir le mode de fonctionnement</h4>
+										<p>Définissez le mode :</p>
+										<pre><code class="javascript encadre hljs language-javascript">mode = <span class="hljs-string">"temporel"</span>; <span class="hljs-comment">// ou "point" ou "commande"</span></code></pre>
+								
+										<h4>b) Définir les commandes à envoyer</h4>
+										<p>Spécifiez les commandes à envoyer à la carte <em>Arduino</em> ainsi que le texte à afficher
+											sur le bouton que l'utilisateur va cliquer: </p>
+										<pre><code class="javascript encadre hljs language-javascript"><span class="hljs-keyword">var</span> commandes = [{<span class="hljs-attr">texte_bouton</span>:<span class="hljs-string">"Charge"</span>, <span class="hljs-attr">arduino</span>:<span class="hljs-string">"charge"</span>},
+                 {<span class="hljs-attr">texte_bouton</span>:<span class="hljs-string">"Décharge"</span>, <span class="hljs-attr">arduino</span>:<span class="hljs-string">"decharge"</span>}];</code></pre>
+								
+										<h4>c) Spécifier les séries renvoyées</h4>
+										<p>Définissez les séries renvoyées par la carte avec leurs unités:</p>
+										<pre><code class="javascript encadre hljs language-javascript"><span class="hljs-keyword">var</span> series = [{<span class="hljs-attr">grandeur</span>: <span class="hljs-string">"Uc"</span>, <span class="hljs-attr">unite</span>: <span class="hljs-string">"V"</span>}, {<span class="hljs-attr">grandeur</span>: <span class="hljs-string">"E"</span>, <span class="hljs-attr">unite</span>: <span class="hljs-string">"V"</span>}];</code></pre>
+										<div class="encadre">
+											<p><strong>Remarque : </strong>Dans le cas du mode temporel, la première série renvoyée par la carte est toujours le <em>temps</em>. Il n'est pas nécessaire de le
+												préciser dans la variable <code>series</code>.</p>
+										</div>
+										<h4>d) Configurer le graphique</h4>
+										<p>Définissez les axes :</p>
+										<pre><code class="javascript encadre hljs language-javascript"><span class="hljs-keyword">var</span> axes = [{<span class="hljs-attr">grandeur</span>: <span class="hljs-string">"t"</span>, <span class="hljs-attr">unite</span>: <span class="hljs-string">"ms"</span>}, {<span class="hljs-attr">grandeur</span>: <span class="hljs-string">"U"</span>, <span class="hljs-attr">unite</span>: <span class="hljs-string">"V"</span>}];</code></pre>
+										<div class="encadre">
+											<p><strong>Remarques : </strong></p>
+											<ul>
+												<li><strong>Mode temporel</strong> : l'abscisse est toujours le <em>temps</em>. Les grandeurs en ordonnées sont les séries contenues dans la variable<code>series</code>.</li>		
+												<li><strong>Mode point</strong> : l'abscisse est toujours la grandeur saisie par l'utilisateur (par exemple <em>d (cm))</em>. Les grandeurs en ordonnées sont les séries
+													contenues dans la variable<code>series</code></li>		
+												<li><strong>Mode commande</strong> : Il n'y a pas de graphique.</li>		
+											</ul>
+										</div>
+										<h4>e) Choisir un titre</h4>	
+										<p>Choisissez, si nécessaire, un titre pour le graphique</p>
+										<pre><code class="javascript encadre hljs language-javascript"><span class="hljs-keyword">var</span> titre_graphe = <span class="hljs-string">"Circuit RC"</span>;</code></pre>
+										<h4>f) Rassembler le code</h4>
+										<p>Placez tout le code <em>JavaScript</em> dans une variable <em>python</em> de type <code>str</code>:</p>
+										<pre><code class="python encadre hljs language-python">my_init = <span class="hljs-string">'''
+mode = "temporel";
+var commandes = [{texte_bouton:"Charge", arduino:"charge"},
+                 {texte_bouton:"Décharge", arduino:"decharge"}];
+var series = [{grandeur: "Uc", unite: "V"}, {grandeur: "E", unite: "V"}];
+var axes = [{grandeur: "t", unite: "ms"}, {grandeur: "U", unite: "V"}];
+var titre_graphe = "Circuit RC";
+'''</span></code></pre>
+
+									<h2>II. Utilisation avec <em>Jupyter</em></h2>
+									<p>Copiez le fichier <code>web_sciences.py</code> dans le même dossier que votre notebook.</p>
+									<p>Intégrez le code précédent dans une cellule <em>Jupyter</em> :</p>
+									<pre><code class="python encadre hljs language-python"><span class="hljs-keyword">from</span> IPython.display <span class="hljs-keyword">import</span> HTML, display
+<span class="hljs-keyword">from</span> web_sciences <span class="hljs-keyword">import</span> get_interface
+
+my_init = <span class="hljs-string">'''
+mode = "temporel";
+var commandes = [{texte_bouton:"Charge", arduino:"charge"},
+				{texte_bouton:"Décharge", arduino:"decharge"}];
+var series = [{grandeur: "Uc", unite: "V"}, {grandeur: "E", unite: "V"}];
+var titre_graphe = "Circuit RC";
+var axes = [{grandeur: "t", unite: "ms"}, {grandeur: "U", unite: "V"}];
+'''</span>
+
+S = get_interface(my_init)
+display(HTML(S))</code></pre>
+<p>Après exécution de la cellule <em>Jupyter</em>, on obtient quelque chose qui ressemble à ceci : </p>
+<p><span class="image main"><img src="./Web Sciences - Mesures Arduino_files/image_8.png" style="max-width:457px"></span></p>
+<p>Après avoir cliqué sur le bouton <code>Connexion</code> et connecté la carte <em>Arduino, les boutons s'activent et 
+	le graphe apparaît éventuellement : </em></p><em>
+
+
+
+										</em></section><em>
+									
+										<footer>
+											<p>Pour plus d'exemples et d'informations, visitez <a href="https://bultec.github.io/" target="_blank">bultec.github.io</a>.</p>
+										</footer>
+									<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+									
+
+
+									<h2>III. Utilisation avec un <em>tableur</em> ou un <em>IDE python</em></h2>
+									
+
+
+
+
+
+
+
+
+
+
+									<h3 style="margin-bottom:10px;">Utilisation avec Jupyter</h3>					
+									<p>La charge ou la décharge d'un condensateur à travers une résistance est un cas d'école pour illustrer
+									   toutes les possibilité des mesures temporelles offertes par la biblothèque <em>Web Sciences</em>.</p>
+									<h2>I. Montage</h2>
+									<p>Dans ce montage, c'est le programme qui déclenche la charge du condensateur en plaçant le pin 3 à 
+									   l'état haut au début des mesures.</p>
+									<h3>Matériel nécessaire</h3>
+									<ul class="marge_b_20">
+										<li>Un condensateur de 100µF</li>
+										<li>Une résistance de 1kΩ</li>
+										<li>Deux résistances de 220Ω</li>
+										<li>Deux leds (une rouge et une verte).</li>
+										<li>Une carte <em>Arduino</em> équipée d'une <em>breadboard</em></li>
+										<li>Quelques fils</li>
+									</ul>   
+									<h3>Montage</h3>
+									<p><span class="image main"><img src="./Web Sciences - Mesures Arduino_files/circuit_rc_schema.svg" style="max-width:800px"></span></p>
+									<p><span class="image main"><img src="./Web Sciences - Mesures Arduino_files/circuit_rc_bb.svg" style="max-width:600px"></span></p>
+									<p>Les leds sont présentes uniquement dans un but de visualisation. Il est possible de les supprimer.</p>
+									<hr>
+									<h3>Script <em>Arduino</em></h3>
+									<p>Deux versions du programme sont fournies&nbsp;:</p>
+									<ul class="marge_b_20">
+										<li>le programme  <a href="http://127.0.0.1:5500/programmes/circuit_rc/circuit_rc.ino">circuit_rc.ino</a> pour lequel la
+											constante de temps du circuit peut être de quelques secondes qui envoie les valeurs de
+											<em>E</em> (tension aux bornes du circuit) et de <em>u<sub>c</sub></em> (tension aux bornes du condensateur) sur la liaison série après chaque mesure.</li>
+										<li>le programme  <a href="http://127.0.0.1:5500/programmes/circuit_rc_rapide/circuit_rc_rapide.ino">condo_rapide.ino</a> pour
+											lequel la constante de temps du circuit peut être de quelques centaines de millisecondes qui, dans un but de rapidité, envoie les toutes valeurs une fois que les mesures sont terminées.</li>
+									</ul>
+								
+									<h4>Fonctionnement</h4>
+									<p>Le programme:</p>
+									<ul>
+										<li>attend l'arrivée d'une commande (<code>charge</code> ou <code>decharge</code>) sur 
+											la liaison série et réagit en conséquence:</li>
+										<li>si la commande est <code>charge</code>, il place le pin 3 à l'état haut et effectue
+											la série de mesure. Chaque mesure est envoyée sur la liaison série juste après sa réalisation. la série se termine par l'envoi du mot <code>end</code>.</li>
+										<li>si la commande est <code>decharge</code>, il place le pin 3 à l'état bas  et effectue la
+											série de mesures comme précédement.</li>
+									</ul>
+								<hr>	
+								<h3>Code javascript</h3>
+								<p>Le programme <em>javascript</em> à utiliser est le suivant :</p>
+<pre><code class="encadre hljs language-csharp">mode = <span class="hljs-string">"temporel"</span>;
+<span class="hljs-keyword">var</span> commandes = [{texte_bouton:<span class="hljs-string">"Charge"</span>, arduino:<span class="hljs-string">"charge"</span>},
+				{texte_bouton:<span class="hljs-string">"Décharge"</span>, arduino:<span class="hljs-string">"decharge"</span>}];
+<span class="hljs-keyword">var</span> series = [{grandeur: <span class="hljs-string">"Uc"</span>, unite: <span class="hljs-string">"V"</span>}, {grandeur: <span class="hljs-string">"E"</span>, unite: <span class="hljs-string">"V"</span>}];
+<span class="hljs-keyword">var</span> titre_graphe = <span class="hljs-string">"Circuit RC"</span>;
+<span class="hljs-keyword">var</span> axes = [{grandeur: <span class="hljs-string">"t"</span>, unite: <span class="hljs-string">"ms"</span>}, {grandeur: <span class="hljs-string">"U"</span>, unite: <span class="hljs-string">"V"</span>}];
+</code></pre>
+
+<p>Le code complet à insérer dans une cellule <em>Jupyter</em></p>
+
+<pre><code class="encadre hljs language-swift">from <span class="hljs-type">IPython</span>.display <span class="hljs-keyword">import</span> HTML, display
+from web_sciences <span class="hljs-keyword">import</span> get_interface
+
+my_init <span class="hljs-operator">=</span> '''
+mode <span class="hljs-operator">=</span> <span class="hljs-string">"temporel"</span>;
+<span class="hljs-keyword">var</span> commandes <span class="hljs-operator">=</span> [{texte_bouton:<span class="hljs-string">"Charge"</span>, arduino:<span class="hljs-string">"charge"</span>},
+				{texte_bouton:<span class="hljs-string">"Décharge"</span>, arduino:<span class="hljs-string">"decharge"</span>}];
+<span class="hljs-keyword">var</span> series <span class="hljs-operator">=</span> [{grandeur: <span class="hljs-string">"Uc"</span>, unite: <span class="hljs-string">"V"</span>}, {grandeur: <span class="hljs-string">"E"</span>, unite: <span class="hljs-string">"V"</span>}];
+<span class="hljs-keyword">var</span> titre_graphe <span class="hljs-operator">=</span> <span class="hljs-string">"Circuit RC"</span>;
+<span class="hljs-keyword">var</span> axes <span class="hljs-operator">=</span> [{grandeur: <span class="hljs-string">"t"</span>, unite: <span class="hljs-string">"ms"</span>}, {grandeur: <span class="hljs-string">"U"</span>, unite: <span class="hljs-string">"V"</span>}];
+'''
+
+<span class="hljs-type">S</span> <span class="hljs-operator">=</span> get_interface(my_init)
+display(<span class="hljs-type">HTML</span>(<span class="hljs-type">S</span>))
+</code></pre>
+							<p>Ce code :</p>						
+								<ul>
+									<li>envoie une commande parmi <code>charge</code> ou <code>decharge</code> ou sur la liaison série.</li>
+									<li>recupère les données envoyées par la carte <em>Arduino</em> sur la liaison série.</li>
+									<li>affiche le graphe <em>U = f(t)</em>.</li>
+								</ul>
+								<hr>
+								<h3>Exemple d'éxécution</h3>
+								<p><span class="image main"><img style="max-width:875px;" src="./Web Sciences - Mesures Arduino_files/circuit_rc3.png" alt=""></span></p>								
+								<hr>
+								<h3>Démo en ligne</h3>
+								<ul>
+									<li>Télécharger le script <a href="http://127.0.0.1:5500/programmes/circuit_rc/circuit_rc.ino">circuit_rc.ino</a> en cliquant sur le lien.</li>
+									<li>Téléverser ce script dans la carte à l'aide de l'IDE <em>Arduino</em>.</li>
+									<li>Réaliser le montage décrit ci-dessus.</li>
+									<li>Cliquer sur le bouton <em>Connexion</em> ci-dessous et sélectionner le port correspondant à la carte.</li>
+									<li>Cliquer sur le bouton <em>Charge</em>. La carte effectue 50 points de mesure des tensions <em>E</em> et  
+									<em>u<sub>c</sub></em> en une durée de 7.0 secondes. Les données sont transmises par la liaison série.</li>
+									<li>Le script affiche les données reçues sur un graphe <em>U = f(t)</em>.</li>
+									<li>Cliquer sur le bouton <em>Copie presse papier</em> pour récupérer les données dans le presse papier.
+									Dans cet exemple, les données sont formatées sous forme de tableaux python. Il est cependant possible 
+									d'obtenir un formatage compatible avec un tableur comme <em>Régressi</em> ou <em>Excel</em> en
+								cochant la case ci-dessous.</li>
+								</ul>
+														
+								<form class="my_form">
+									<input type="checkbox" id="tableur_case" name="tableur_case" value="">
+									<label for="tableur_case">Cocher cette case pour obtenir les données au format tableur (Régressi par exemple)</label>
+								</form>
+							
+								<div class="menu" id="id_menu">
+									<div id="id_boutons_commandes">
+									  <button class="rouge" id="id_button_connexion">Connexion</button>
+									<button class="element bouton" disabled="">Charge</button><button class="element bouton" disabled="">Décharge</button><button class="element" disabled="">Copie presse papier</button></div>
+								</div>
+								<div class="image" style="width:95%;"><canvas id="myChart" height="582" style="display: none; box-sizing: border-box; height: 582px; width: 1165px;" width="1165"></canvas></div>
+								<p id="id_resultat" style="display: none;"></p>
+								<script src="./Web Sciences - Mesures Arduino_files/webardu_circuit_rc.js.téléchargement"></script>
+								<script>
+								const checkbox = document.getElementById("tableur_case");
+								checkbox.addEventListener("change", function () {
+									if (checkbox.checked) {
+										tableur = true;
+									} else {
+										tableur = false;
+									}
+								});	
+								</script>	
+
+								<p>Le traitement des données permet de tracer les graphes <em>uc = f(t), ur=f(t), E=f(t)</em>, de les modéliser
+									et de déterminer la constante de temps du circuit (voir le notebook ci-dessous).</p>
+								<p><span class="image main"><img src="./Web Sciences - Mesures Arduino_files/circuit_rc4.png" style="max-width:593px;"><span class="image main"></span></span></p>	
+
+								<h3>Liens</h3>
+								<ul>
+									<li><a target="_blank" href="https://mybinder.org/v2/gh/bultec/physique_chimie_lycee/HEAD?labpath=demo_circuit_rc%2FCircuitRC.ipynb">
+										Un notebook de démonstration sur Binder</a> (éventuellement long à démarrer -&gt; soyez patient).</li>
+									<li>Le lien vers capytale (bientôt)</li>
+									<li>Le notebook correspondant : <a href="http://127.0.0.1:5500/programmes/notebooks/CircuitRC.ipynb">CircuitRC.ipynb</a></li>
+									<li>Les fichiers <em>Arduino</em> : 
+										<ul>
+											<li><a href="http://127.0.0.1:5500/programmes/circuit_rc/circuit_rc.ino">circuit_rc.ino</a></li>
+											<li><a href="http://127.0.0.1:5500/programmes/circuit_rc_rapide/circuit_rc_rapide.ino">condo_rapide.ino</a></li>
+										</ul>		
+									</li>
+									<li>La bibliothèque Web Sciences : <a href="http://127.0.0.1:5500/programmes/web_sciences.py">web_sciences.py</a></li>			
+									<li>fichier html au format python <a target="_blank" href="http://127.0.0.1:5500/programmes/html/circuit_rc_pyt.html">circuit_rc_pyt</a> (pour utilisation avec python)</li>	
+									<li>fichier html au format tableur <a target="_blank" href="http://127.0.0.1:5500/programmes/html/circuit_rc_tab.html">circuit_rc_tab</a> (pour utilisation avec <em>Régressi</em> ou <em>Excel</em>).</li>		
+								</ul>
+								<p>&nbsp;</p>
+							</em></div><em>
+
+						</em></div><em>
+					</em></div><em>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner" style="position: fixed; top: -1441.06px;">
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="http://127.0.0.1:5500/index.html">Accueil</a></li>
+										<li>
+											<span class="opener">Demos</span>
+											<ul>
+												<li><a href="http://127.0.0.1:5500/demo_commande.html">Mode commande</a></li>
+												<li><a href="http://127.0.0.1:5500/demo_temporel.html">Mode temporel</a></li>
+												<li><a href="http://127.0.0.1:5500/demo_point.html">Mode point</a></li>
+											</ul>
+										</li>
+										<li><a href="http://127.0.0.1:5500/mode_emploi.html">Mode d'emploi</a></li>
+										<li>
+											<span class="opener">Exemples</span>
+											<ul>
+												<li><a href="http://127.0.0.1:5500/circuit_rc.html">Circuit RC</a></li>
+												<li><a href="http://127.0.0.1:5500/celerite_us_1.html">Célérité des ultrasons (1)</a></li>
+												<li><a href="http://127.0.0.1:5500/celerite_us_2.html">Célérité des ultrasons (2)</a></li>
+												<li><a href="http://127.0.0.1:5500/mariotte.html">Loi de Mariotte</a></li>
+												<li><a href="http://127.0.0.1:5500/newton.html">Loi phénoménologique de Newton</a></li>												
+											</ul>
+										</li>
+										<li><a href="http://127.0.0.1:5500/documentation.html">Documentation</a></li>
+										<li><a href="http://127.0.0.1:5500/telechargement.html">Téléchargement</a></li>
+									
+									</ul>
+								</nav>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Quelques exemples</h2>
+									</header>
+									<div class="mini-posts">
+										<article>
+											<a href="http://127.0.0.1:5500/mode_emploi.html#" class="image"><img src="./Web Sciences - Mesures Arduino_files/image_5.jpeg" alt=""></a>
+											<p>Célérité des ultrasons dans l'air.</p>
+										</article>
+										<article>
+											<a href="http://127.0.0.1:5500/mode_emploi.html#" class="image"><img src="./Web Sciences - Mesures Arduino_files/circuit_rc1.png" alt=""></a>
+											<p>Circuit RC à tension constante.</p>
+										</article>
+										<article>
+											<a href="http://127.0.0.1:5500/mode_emploi.html#" class="image"><img src="./Web Sciences - Mesures Arduino_files/mariotte.png" alt=""></a>
+											<p>Vérification de la loi de Mariotte.</p>
+										</article>
+									</div>
+									<ul class="actions">
+										<li><a href="http://127.0.0.1:5500/mode_emploi.html#" class="button">Plus</a></li>
+									</ul>
+								</section>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>A propos</h2>
+									</header>
+									<p>Le module web_sciences a été écrit par un enseignant Français passionné d'informatique
+										qui enseigne la physique en lycée depuis plus de 40 ans et NSI depuis sa création.</p>
+		
+									<ul class="contact">
+										<li class="icon brands fa-github"><a target="_blank" href="https://github.com/bultec/web-sciences">web-sciences sur Github</a></li>
+										<li class="icon brands fa-linkedin"><a target="_blank" href="https://www.linkedin.com/in/philippe-campion-06351a326">L'auteur sur Linkedin</a></li>
+									</ul>
+								</section>
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright"><a href="https://github.com/bultec/web-sciences?tab=GPL-3.0-1-ov-file">GPL 3.0 license</a></p>
+								</footer>
+
+						</div>
+					<a href="http://127.0.0.1:5500/mode_emploi.html#sidebar" class="toggle">Toggle</a></div>
+
+			</em></div><em>
+
+		<!-- Scripts -->
+		<script src="./Web Sciences - Mesures Arduino_files/jquery.min.js.téléchargement"></script>
+		<script src="./Web Sciences - Mesures Arduino_files/browser.min.js.téléchargement"></script>
+		<script src="./Web Sciences - Mesures Arduino_files/breakpoints.min.js.téléchargement"></script>
+		<script src="./Web Sciences - Mesures Arduino_files/util.js.téléchargement"></script>
+		<script src="./Web Sciences - Mesures Arduino_files/main.js.téléchargement"></script>
+		<!-- Inclusion du script Highlight.js -->
+		<script src="./Web Sciences - Mesures Arduino_files/highlight.min.js.téléchargement"></script>
+		<script>hljs.highlightAll();</script>
+  
+	<!-- Code inject--></em></body></html>

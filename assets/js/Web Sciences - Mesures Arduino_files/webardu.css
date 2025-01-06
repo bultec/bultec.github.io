@@ -1,0 +1,25 @@
+.menu {
+    display: flex;
+    padding: 10px;
+}
+.vert {
+    background-color: darkseagreen;
+}
+
+.bleu {
+    background-color:cadetblue;
+}
+
+.rouge {
+    background-color:lightcoral;
+}
+.element {
+    margin-left:20px;
+}
+button {
+    cursor: pointer;
+}
+
+#id_boutons_commandes {
+    display: flex;
+}

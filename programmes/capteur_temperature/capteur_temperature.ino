@@ -1,57 +1,45 @@
-/* mesures de température  par réception de commandes envoyées par la bibiothèque pduino.py 
- * montage: capteur température grove sur A0
- * ref sur 5,0V
- * commandes acceptées: mesure , stop 
- * à la réception de la commande "mesure", le programme envoie la valeur de la température
- * mesurée à partir de A0 sur la liaison série
- */
+#include <math.h> // Pour utiliser la fonction log()
 
-#include <math.h>
-#define TEMPS 400000
-#define N_PTS 50
+// Configuration du capteur de température Grove
+const int pinCapteur = A1; // Entrée analogique utilisée pour le capteur
 
-/* TEMPS : durée de la mesure en millisecondes
- * N_PTS : nombre de points de mesure 
- */
-
-unsigned long t_total = TEMPS;
-const int B = 4275;           // B value of the thermistor
-const long R0 = 100000;       // R0 = 100k
-const int pinTempSensor = A0; // Grove - Temperature Sensor connect to A0
+// Paramètres du capteur
+const float R0 = 10000.0; // Résistance à 25°C (en ohms)
+const float B = 3950.0;   // Constante B du thermistor
+const float tensionRef = 5.0; // Tension d'alimentation (en volts)
+const int resolution = 1023; // Résolution de l'ADC (10 bits)
+const float resistancePullup = 10000.0; // Résistance de pull-up (en ohms)
 
 void setup() {
+  // Initialisation de la liaison série
   Serial.begin(9600);
-  delay(1);
-}
-
-void mesures() {
-  unsigned long dt = t_total / N_PTS; //en ms
-  unsigned long temps_depart = millis();
-  unsigned long t_mesure;
-  bool ok = true;
-  while ((millis() - temps_depart <= t_total) and (ok)) {
-    t_mesure = (millis() - temps_depart);
-    int a = analogRead(pinTempSensor);
-    float R = 1023.0/a - 1.0;
-    R = R0*R;
-    float temperature = 1.0/(log(R/R0)/B+1/298.15)-273.15; // convert to temperature via datasheet
-    Serial.println(String(t_mesure) + "," + String(temperature));
-    //un delai personnalisé pour optimiser la mesure du temps
-    while ((millis() - temps_depart) - t_mesure < dt) {
-      if (Serial.available()) {
-        if (Serial.readString() == "stop") {
-          ok = false;
-        }
-      }
-    }
-  }
-  Serial.println("end");
 }
 
 void loop() {
-  if (Serial.available()) {
-    if (Serial.readString() == "mesure") {
-        mesures();
+  // Vérifier si des données sont disponibles sur la liaison série
+  if (Serial.available() > 0) {
+    // Lire la commande complète envoyée sur la liaison série
+    String commande = Serial.readString();
+    commande.trim(); // Supprimer les espaces ou sauts de ligne superflus
+
+    // Vérifier si la commande est "vas_y"
+    if (commande == "vas_y") {
+      mesurerTemperature();
     }
   }
+}
+
+// Fonction pour mesurer la température
+void mesurerTemperature() {
+  int valeurAnalogique = analogRead(pinCapteur); // Lire la valeur brute du capteur
+  float tension = (valeurAnalogique / resolution) * tensionRef; // Convertir en tension (en volts)
+
+  // Calcul de la résistance du thermistor
+  float resistance = resistancePullup * ((tensionRef / tension) - 1);
+
+  // Calcul de la température en °C
+  float temperature = 1.0 / (log(resistance / R0) / B + 1 / 298.15) - 273.15;
+
+  // Envoyer uniquement la mesure de température sur la liaison série
+  Serial.println(temperature);
 }
