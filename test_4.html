@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Web Sciences - Documentation JavaScript</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Main -->
+        <div id="main">
+            <div class="inner">
+
+                <!-- Header -->
+                <header id="header">
+                    <a href="index.html" class="logo"><strong>Web Sciences</strong> - Documentation JavaScript</a>
+                    <ul class="icons">
+                        <li><a target="_blank" href="https://github.com/bultec/web-sciences"
+                               class="icon brands fa-github"><span class="label">Github</span></a></li>
+                        <li><a target="_blank" href="https://www.linkedin.com/in/philippe-campion-06351a326"
+                               class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+                    </ul>
+                </header>
+
+                <!-- Content -->
+                <section>
+                    <header class="main">
+                        <h1>Documentation</h1>
+                    </header>
+                    <p>La bibliothèque JavaScript Web-Sciences permet de configurer une interface interactive pour des expériences de physique. En définissant quelques variables, vous pouvez personnaliser les mesures, les commandes et les graphiques.</p>
+
+                    <h2>Structure du Code JavaScript</h2>
+                    <h3>1. Mode de fonctionnement (<code>mode</code>)</h3>
+                    <p>La variable <code>mode</code> détermine le type d'interface utilisé :</p>
+                    <ul>
+                        <li><code>"commande"</code> : Interface avec des boutons pour envoyer des commandes à la carte Arduino.</li>
+                        <li><code>"point"</code> : Interface pour effectuer une mesure ponctuelle (par exemple : tension, distance).</li>
+                        <li><code>"temporel"</code> : Interface pour effectuer une acquisition en fonction du temps.</li>
+                    </ul>
+
+                    <h3>2. Commandes à envoyer (<code>commandes</code>)</h3>
+                    <p>La variable <code>commandes</code> est un tableau d'objets contenant les commandes à envoyer à la carte Arduino :</p>
+                    <pre><code>var commandes = [
+    {texte_bouton: "Charge", arduino: "charge"}, 
+    {texte_bouton: "Décharge", arduino: "decharge"}
+];</code></pre>
+
+                    <h3>3. Séries de données (<code>series</code>)</h3>
+                    <p>La variable <code>series</code> est un tableau d'objets définissant les grandeurs et leurs unités retournées par la carte Arduino :</p>
+                    <pre><code>var series = [
+    {grandeur: "Uc", unite: "V"}, 
+    {grandeur: "E", unite: "V"}
+];</code></pre>
+                    <p><strong>Note : </strong>En mode temporel, la première série est toujours le temps. Il n'est pas nécessaire de l'ajouter dans <code>series</code>.</p>
+
+                    <h3>4. Axes du graphique (<code>axes</code>)</h3>
+                    <p>La variable <code>axes</code> détermine le graphique affiché :</p>
+                    <ul>
+                        <li><strong>Mode temporel :</strong> L'abscisse est le temps, et les ordonnées correspondent aux séries définies dans <code>series</code>.</li>
+                        <li><strong>Mode point :</strong> L'abscisse est la grandeur définie par l'utilisateur (exemple : distance en cm), et les ordonnées correspondent aux séries définies dans <code>series</code>.</li>
+                        <li><strong>Mode commande :</strong> Pas de graphique affiché.</li>
+                    </ul>
+
+                    <h2>Utilisation Avancée</h2>
+
+                    <h3>1. Insérer le code JavaScript dans une cellule Jupyter avec <code>web_sciences.py</code></h3>
+                    <p>La bibliothèque <code>web_sciences.py</code> permet d'insérer le code JavaScript dans une cellule Jupyter. Suivez ces étapes :</p>
+                    <ol>
+                        <li>Placez le fichier <code>web_sciences.py</code> dans le même dossier que votre notebook.</li>
+                        <li>Importez la bibliothèque avec :
+                            <pre><code>from web_sciences import insere_code</code></pre>
+                        </li>
+                        <li>Créez une chaîne contenant votre code JavaScript et insérez-la dans une cellule :
+                            <pre><code>insere_code(my_init)</code></pre>
+                        </li>
+                        <li>Exécutez la cellule pour afficher l'interface.</li>
+                    </ol>
+
+                    <h3>2. Insérer le code JavaScript dans un fichier HTML avec <code>insere_code.py</code></h3>
+                    <p>Pour créer un fichier HTML autonome, utilisez <code>insere_code.py</code> :</p>
+                    <ol>
+                        <li>Placez <code>insere_code.py</code> et <code>web_sciences_complet.html</code> dans le même dossier.</li>
+                        <li>Copiez votre code JavaScript dans <code>insere_code.py</code>.</li>
+                        <li>Exécutez le script pour générer un fichier HTML prêt à l'emploi.</li>
+                    </ol>
+                    <p><strong>Exemple :</strong></p>
+                    <pre><code># insere_code.py
+from web_sciences import creer_html
+
+my_init = '''
+var mode = "point";
+var series = [
+    {grandeur: "Distance", unite: "cm"}, 
+    {grandeur: "Temps", unite: "s"}
+];
+'''
+
+creer_html(my_init, "output.html")</code></pre>
+                </section>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div id="sidebar">
+            <div class="inner">
+                <nav id="menu">
+                    <header class="major">
+                        <h2>Menu</h2>
+                    </header>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="telechargement.html">Téléchargement</a></li>
+                        <li><a href="documentation.html">Documentation</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+</body>
+</html>
+

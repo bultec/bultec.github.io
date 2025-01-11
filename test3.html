@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Documentation JavaScript - Web-Sciences</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body class="is-preload">
+    <div id="wrapper">
+        <div id="main">
+            <div class="inner">
+                <header id="header">
+                    <a href="index.html" class="logo"><strong>Web-Sciences</strong> - Documentation JavaScript</a>
+                </header>
+                <section>
+                    <header class="main">
+                        <h1>Documentation JavaScript</h1>
+                    </header>
+                    <p>La bibliothèque JavaScript Web-Sciences permet de configurer une interface interactive pour des expériences de physique. En définissant quelques variables, vous pouvez personnaliser les mesures, les commandes et les graphiques.</p>
+                    
+                    <h2>Structure du Code JavaScript</h2>
+
+                    <h3>1. Mode de fonctionnement (<code>mode</code>)</h3>
+                    <ul>
+                        <li>Définit la manière dont les données sont envoyées par la carte Arduino.</li>
+                        <li><strong>Valeurs possibles</strong> :
+                            <ul>
+                                <li><code>"point"</code> : Envoie une seule mesure sur demande.</li>
+                                <li><code>"temporel"</code> : Envoie un flux continu de mesures.</li>
+                                <li><code>"commande"</code> : Exécute des actions spécifiques basées sur l'interaction utilisateur.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <pre><code>var mode = "commande";</code></pre>
+
+                    <h3>2. Commandes à envoyer (<code>commandes</code>)</h3>
+                    <ul>
+                        <li>Liste d'objets définissant les boutons de commande.</li>
+                        <li>Chaque objet contient :
+                            <ul>
+                                <li><code>texte_bouton</code> : texte affiché sur le bouton.</li>
+                                <li><code>arduino</code> : commande envoyée à la carte Arduino.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <pre><code>var commandes = [
+    {texte_bouton: "Charge", arduino: "charge"}, 
+    {texte_bouton: "Décharge", arduino: "decharge"}
+];</code></pre>
+
+                    <h3>3. Séries de données (<code>series</code>)</h3>
+                    <ul>
+                        <li>Définit les grandeurs mesurées, leur nom et leur unité.</li>
+                        <li>Chaque objet contient :
+                            <ul>
+                                <li><code>grandeur</code> : nom de la grandeur mesurée.</li>
+                                <li><code>unite</code> : unité correspondante.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Remarque :</strong> En mode temporel, la première série renvoyée par la carte est toujours le temps. <strong>Il n'est pas nécessaire de la préciser dans la variable <code>series</code>.</strong></li>
+                    </ul>
+                    <pre><code>var series = [
+    {grandeur: "Uc", unite: "V"}, 
+    {grandeur: "E", unite: "V"}
+];</code></pre>
+
+                    <h3>4. Axes du graphique (<code>axes</code>)</h3>
+                    <ul>
+                        <li>Configure les axes pour le graphique.</li>
+                        <li>Chaque axe est défini par :
+                            <ul>
+                                <li><code>nom</code> : label de l'axe.</li>
+                                <li><code>unite</code> : unité correspondante.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Remarques spécifiques par mode</strong> :
+                            <ul>
+                                <li><strong>Mode temporel :</strong> 
+                                    <ul>
+                                        <li>L'abscisse est toujours le temps.</li>
+                                        <li>Les grandeurs en ordonnées sont les séries définies dans la variable <code>series</code>.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Mode point :</strong> 
+                                    <ul>
+                                        <li>L'abscisse correspond toujours à la grandeur saisie par l'utilisateur (ex. : <code>d (cm)</code>).</li>
+                                        <li>Les grandeurs en ordonnées sont celles définies dans <code>series</code>.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Mode commande :</strong> Aucun graphique n'est généré.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <pre><code>var axes = [
+    {nom: "Temps", unite: "s"}, 
+    {nom: "Uc", unite: "V"}
+];</code></pre>
+
+                    <h2>Exemples Complets</h2>
+
+                    <h3>Commande avec boutons</h3>
+                    <pre><code>var mode = "commande";
+var commandes = [
+    {texte_bouton: "Charge", arduino: "charge"}, 
+    {texte_bouton: "Décharge", arduino: "decharge"}
+];
+var series = [
+    {grandeur: "Uc", unite: "V"}, 
+    {grandeur: "E", unite: "V"}
+];</code></pre>
+
+                    <h3>Mesure Temporelle</h3>
+                    <pre><code>var mode = "temporel";
+var commandes = [{texte_bouton: "Démarrer", arduino: "start"}];
+var series = [{grandeur: "Température", unite: "°C"}];
+var axes = [
+    {nom: "Temps", unite: "s"}, 
+    {nom: "Température", unite: "°C"}
+];</code></pre>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

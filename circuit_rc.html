@@ -4,11 +4,15 @@
 		<title>Web Sciences - Mesures Arduino</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="Robots" content="all">
+		<meta name="author" content="Philippe Campion">
+		<meta name="description" content="Mesure de la constante de temps d'un circuit RC à l'aide d'une carte Arduino">
+		<meta name="keywords" content="physique,chimie,lyc&eacute;e,lycee,Arduino,interface,mesure,mesures,laboratoire,labo,web_sciences.py,
+		web-sciences,duinolabo,&eacute;ducation,bac,lyc&eacute;e,enseignement,spécialité,premi&egrave;re,teminale,sciencifique">
 		<link rel="stylesheet" href="assets/css/code.css">
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/style.css" />
 		<link href="assets/css/webardu.css" rel="stylesheet"/>
-
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	</head>
 	<body class="is-preload">
@@ -84,7 +88,7 @@
 								<p>Le programme <em>javascript</em> à utiliser est le suivant :</p>
 <pre><code class="javascript encadre">mode = &quot;temporel&quot;;
 var commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
-				{texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
+                 {texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
 var series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
 var titre_graphe = &quot;Circuit RC&quot;;
 var axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
@@ -98,7 +102,7 @@ from web_sciences import get_interface
 my_init = &#39;&#39;&#39;
 mode = &quot;temporel&quot;;
 var commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
-				{texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
+                 {texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
 var series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
 var titre_graphe = &quot;Circuit RC&quot;;
 var axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
@@ -121,7 +125,7 @@ display(HTML(S))
 								<ul>
 									<li>Télécharger le script <a href="programmes/circuit_rc/circuit_rc.ino">circuit_rc.ino</a> en cliquant sur le lien.</li>
 									<li>Téléverser ce script dans la carte à l'aide de l'IDE <em>Arduino</em>.</li>
-									<li>Réaliser le montage décrit ci-dessus.</li>
+									<li>Réaliser le montage décrit ci-dessus (les leds ne sont pas obligatoires).</li>
 									<li>Cliquer sur le bouton <em>Connexion</em> ci-dessous et sélectionner le port correspondant à la carte.</li>
 									<li>Cliquer sur le bouton <em>Charge</em>. La carte effectue 50 points de mesure des tensions <em>E</em> et  
 									<em>u<sub>c</sub></em> en une durée de 7.0 secondes. Les données sont transmises par la liaison série.</li>
@@ -135,8 +139,9 @@ display(HTML(S))
 								<form class="my_form">
 									<input type="checkbox" id="tableur_case" name="tableur_case" value="">
 									<label for="tableur_case">Cocher cette case pour obtenir les données au format tableur (Régressi par exemple)</label>
+									<code class="code_special">tableur = <span id="id_tableur_boolean">false</span>;</code>
 								</form>
-							
+								
 								<div class="menu" id="id_menu">
 									<div id="id_boutons_commandes">
 									  <button class="rouge" id="id_button_connexion">Connexion</button>
@@ -149,8 +154,10 @@ display(HTML(S))
 								const checkbox = document.getElementById("tableur_case");
 								checkbox.addEventListener("change", function () {
 									if (checkbox.checked) {
+										document.getElementById("id_tableur_boolean").textContent = "true";
 										tableur = true;
 									} else {
+										document.getElementById("id_tableur_boolean").textContent = "false";
 										tableur = false;
 									}
 								});	
@@ -164,7 +171,7 @@ display(HTML(S))
 								<ul>
 									<li><a target="_blank" href="https://mybinder.org/v2/gh/bultec/physique_chimie_lycee/HEAD?labpath=demo_circuit_rc%2FCircuitRC.ipynb">
 										Un notebook de démonstration sur Binder</a> (éventuellement long à démarrer -> soyez patient).</li>
-									<li>Le lien vers capytale (bientôt)</li>
+									<li>Le lien vers capytale : <a target="_blank" href ="https://capytale2.ac-paris.fr/web/b/3921011">Mesure de la constante de temps d'un circuit RC série</a></li>
 									<li>Le notebook correspondant : <a href="programmes/notebooks/CircuitRC.ipynb">CircuitRC.ipynb</a></li>
 									<li>Les fichiers <em>Arduino</em> : 
 										<ul>

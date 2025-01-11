@@ -36,3 +36,8 @@ margin-top: 3px;
     padding-right: 20px;
     border-radius: 10px;
 }
+
+.code_special{
+    background:#555;
+    color:white;
+}
