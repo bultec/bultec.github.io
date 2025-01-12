@@ -4,6 +4,12 @@
 		<title>Web Sciences - Mesures Arduino</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="Robots" content="all">
+		<meta name="author" content="Philippe Campion">
+		<meta name="description" content="Loi phénoménologique de Newton">
+		<meta name="keywords" content="physique,chimie,lycée,lycee,Arduino,interface,mesure,mesures,température,
+		laboratoire,labo,web_sciences.py,web-sciences,duinolabo,&eacute;ducation,bac,enseignement,spécialité,
+		premi&egrave;re,teminale,scientifique">
 		<link rel="stylesheet" href="assets/css/code.css">
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/style.css" />
@@ -120,6 +126,7 @@ display(HTML(S))
 								<form class="my_form">
 									<input type="checkbox" id="tableur_case" name="tableur_case" value="">
 									<label for="tableur_case">Cocher cette case pour obtenir les données au format tableur (Régressi par exemple)</label>
+									<code class="code_special">tableur = <span id="id_tableur_boolean">false</span>;</code>
 								</form>
 							
 								<div class="menu" id="id_menu">
@@ -134,8 +141,10 @@ display(HTML(S))
 								const checkbox = document.getElementById("tableur_case");
 								checkbox.addEventListener("change", function () {
 									if (checkbox.checked) {
+										document.getElementById("id_tableur_boolean").textContent = "true";
 										tableur = true;
 									} else {
+										document.getElementById("id_tableur_boolean").textContent = "false";
 										tableur = false;
 									}
 								});	
