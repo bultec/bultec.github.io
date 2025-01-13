@@ -1,58 +1,398 @@
-<!DOCTYPE html>
-<html lang="fr">
-  <!DOCTYPE html>
-  <html lang="fr">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>En cours de rédaction</title>
-      <style>
-          body {
-              font-family: Arial, sans-serif;
-              background-color: #f4f4f9;
-              color: #333;
-              text-align: center;
-              padding: 50px;
-          }
-          h1 {
-              color: #0056b3;
-              font-size: 2.5em;
-          }
-          p {
-              font-size: 1.2em;
-              color: #666;
-          }
-          .spinner {
-              margin: 30px auto;
-              width: 50px;
-              height: 50px;
-              border: 6px solid #f4f4f9;
-              border-top: 6px solid #0056b3;
-              border-radius: 50%;
-              animation: spin 1s linear infinite;
-          }
-          @keyframes spin {
-              0% { transform: rotate(0deg); }
-              100% { transform: rotate(360deg); }
-          }
-          a {
-              display: inline-block;
-              margin-top: 30px;
-              padding: 10px 20px;
-              background-color: #0056b3;
-              color: #fff;
-              text-decoration: none;
-              border-radius: 5px;
-          }
-          a:hover {
-              background-color: #003d80;
-          }
-      </style>
-  </head>
-  <body>
-      <h1>Page en cours de rédaction</h1>
-      <div class="spinner"></div>
-      <p>Cette page est actuellement en cours de rédaction. Revenez bientôt pour découvrir le contenu !</p>
-      <a href="index.html">Retour à l'accueil</a>
-  </body>
-  </html>
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Web Sciences - Mesures Arduino</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="Robots" content="all">
+		<meta name="author" content="Philippe Campion">
+		<meta name="description" content="Documentation de mesures Arduino à l'aide du script web_sciences.py">
+		<meta name="keywords" content="physique,chimie,lyc&eacute;e,lycee,Arduino,interface,mesure,mesures,laboratoire,labo,web_sciences.py,
+		web-sciences,duinolabo,&eacute;ducation,bac,lyc&eacute;e,enseignement,spécialité,premi&egrave;re,teminale,scientifique">
+		<link rel="stylesheet" href="assets/css/code.css">
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/style.css" />
+		<link href="assets/css/webardu.css" rel="stylesheet"/>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong>Web Sciences</strong> - Mesures Arduino au labo</a>
+									<ul class="icons">
+										<li><a target="_blank" href="https://github.com/bultec/web-sciences"
+											class="icon brands fa-github"><span class="label">Github</span></a></li>
+										<li><a target="_blank" href="https://www.linkedin.com/in/philippe-campion-06351a326"
+											class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<div>							
+									<header class="main">
+										<h1></h1>
+										<h1>Documentation</h1>
+									</header>	
+									<h2>I. Structure du Code JavaScript</h2>
+									<p>La bibliothèque JavaScript <em>web_sciences</em> permet de configurer une interface interactive pour des
+									expérimentations en physique-chimie et SVT. En définissant quelques variables, vous pouvez
+									personnaliser les mesures et les graphiques.</p>
+									<p>Le code JavaScript, doit être écrit sous la forme d'une chaîne de caractères. En fonction du type d'utilisation choisie,
+									   ce code sera inséré automatiquement dans une cellule <em>Jupyter</em> ou dans un fichier <em>HTML</em>.</p>	
+									<h3>1. Mode de fonctionnement (<code>mode</code>)</h3>
+									<ul class="marge_b_20">
+										<li>Définit la manière dont les données sont envoyées par la carte Arduino.</li>
+										<li><strong>Valeurs possibles</strong> :
+											<ul>
+												<li><code>"point"</code> : <em>Arduino</em> envoie une seule mesure sur demande.</li>
+												<li><code>"temporel"</code> : <em>Arduino</em> envoie un flux continu de mesures.</li>
+												<li><code>"commande"</code> : <em>Arduino</em> exécute des actions spécifiques basées sur l'interaction utilisateur.</li>
+											</ul>
+											</li>
+										</ul>
+										<pre><code class="javascript encadre">var mode = "commande";</code></pre>
+					
+										<h3>2. Commandes à envoyer (<code>commandes</code>)</h3>
+										<ul class="marge_b_20">
+											<li>Liste d'objets définissant les boutons de commande.</li>
+											<li>Chaque objet contient :
+												<ul>
+													<li><code>texte_bouton</code> : texte affiché sur le bouton.</li>
+													<li><code>arduino</code> : commande envoyée à la carte Arduino.</li>
+												</ul>
+											</li>
+										</ul>
+<pre><code class="javascript encadre">var commandes = [{texte_bouton: "Charge", arduino: "charge"}, {texte_bouton: "Décharge", arduino: "decharge"}];</code></pre>
+					
+										<h3>3. Séries de données (<code>series</code>)</h3>
+										<ul class="marge_b_20">
+											<li>Définit les séries de grandeurs mesurées par la carte <em>Arduino</em>, leur nom et leur unité.</li>
+											<li>Chaque objet contient :
+												<ul>
+													<li><code>grandeur</code> : nom de la grandeur mesurée.</li>
+													<li><code>unite</code> : unité correspondante.</li>
+												</ul>
+											</li>
+											<li><strong>Remarque :</strong> En mode temporel, la première série renvoyée par la carte est toujours le temps. <strong>Il n'est pas nécessaire de la préciser dans la variable <code>series</code>.</strong></li>
+										</ul>
+										<pre><code class="javascript encadre">var series = [{grandeur: "Uc", unite: "V"}, {grandeur: "E", unite: "V"}];</code></pre>
+					
+										<h3>4. Axes du graphique (<code>axes</code>)</h3>
+										<ul>
+											<li>Configure les axes pour le graphique.</li>
+											<li>Chaque axe est défini par :
+												<ul>
+													<li><code>nom</code> : label de l'axe.</li>
+													<li><code>unite</code> : unité correspondante.</li>
+												</ul>
+											</li>
+											<li><strong>Remarques spécifiques par mode</strong> :
+												<ul>
+													<li><strong>Mode temporel :</strong> 
+														<ul>
+															<li>L'abscisse est toujours le temps.</li>
+															<li>Les grandeurs en ordonnées sont les séries définies dans la variable <code>series</code>.</li>
+														</ul>
+													</li>
+													<li><strong>Mode point :</strong> 
+														<ul>
+															<li>L'abscisse correspond toujours à la grandeur saisie par l'utilisateur (ex. : <code>d (cm)</code>).</li>
+															<li>Les grandeurs en ordonnées sont celles définies dans <code>series</code>.</li>
+														</ul>
+													</li>
+													<li><strong>Mode commande :</strong> Aucun graphique n'est généré.</li>
+												</ul>
+											</li>
+										</ul>
+										<pre><code>var axes = [
+						{nom: "Temps", unite: "s"}, 
+						{nom: "Uc", unite: "V"}
+					];</code></pre>
+					
+										<h2>Exemples Complets</h2>
+					
+										<h3>Commande avec boutons</h3>
+										<pre><code>var mode = "commande";
+					var commandes = [
+						{texte_bouton: "Charge", arduino: "charge"}, 
+						{texte_bouton: "Décharge", arduino: "decharge"}
+					];
+					var series = [
+						{grandeur: "Uc", unite: "V"}, 
+						{grandeur: "E", unite: "V"}
+					];</code></pre>
+					
+										<h3>Mesure Temporelle</h3>
+										<pre><code>var mode = "temporel";
+					var commandes = [{texte_bouton: "Démarrer", arduino: "start"}];
+					var series = [{grandeur: "Température", unite: "°C"}];
+					var axes = [
+						{nom: "Temps", unite: "s"}, 
+						{nom: "Température", unite: "°C"}
+					];</code></pre>
+									
+									
+
+
+
+
+
+
+
+
+
+
+
+
+									<h3 style="margin-bottom:10px;">Un exemple d'utilisation de <em>Web Sciences</em> en mode <code>point</code></h3>
+									<p>Une seringue qui emprisonne une quantité d'air de volume <em>V</em> à la pression atmosphérique est reliée 
+									au capteur de pression <em>Grove</em> par l'intermédiaire d'un tube souple. On fait varier le volume d'air <em>V</em>
+									en agissant sur le piston de la seringue et on recueille la pression mesurée par le capteur.</p>
+									<p>Cet exemple  de <code>mesures point par point</code> permet de tracer le graphe <em>P =f(1/V)</em>
+										et de vérifier ainsi la loi de Mariotte <em>PV = cte</em>.</p>
+									<h2>I. Montage</h2>
+									<h3>Matériel nécessaire</h3>
+									<ul class="marge_b_20">
+										<li>Une carte <em>Arduino</em> équipée d'un shield <em>Grove</em>.</li>
+										<li>Un capteur de pression <em>Grove</em>.</li>
+										<li>Une seringue de 60mL munie d'un tube souple.</li>
+									</ul>   
+									<div class="row">
+										<div class="col-5 col-10-medium">
+											<p><span class="image main"><img src="images/image_7.png"></span></p>
+										</div>
+										<div class="col-5 col-10-medium">
+											<p><span class="image main"><img src="images/image_8.jpg"></span></p>	
+										</div>
+									</div>
+
+									<h2>II. Code nécessaire</h2>
+									<h3 class="marge_b_20">Script <em>Arduino</em></h3>
+									<p class="marge_b_5">Le script :</p>
+									<ul>
+										<li>attend l'arrivée de la commande <code>mesure</code> sur la liaison série.</li>
+										<li>réagit en conséquence, c'est à dire effectue une mesure de la pression délivrée par le capteur
+											de pression.</li>
+										<li>envoie cette mesure sur la liaison série.</li>
+									</ul>
+									<p>Voir à cet effet les commentaires dans le code source du script
+										<a href="programmes/capteur_pression_1/capteur_pression_2.ino">capteur_pression_2.ino</a>.</p>
+									<p><strong>Remarque :</strong> Il sera probablement nécessaire d'étalonner le capteur de pression. Pour 
+										cela, utiliser le script <a href="programmes/capteur_pression_1/capteur_pression_1.ino">capteur_pression_1.ino</a>,
+										l'éxécuter dans l'IDE <em>Arduino</em> et modifier la valeur de <em>k</em> par tatonnement en observant la valeur de la pression sur
+										le moniteur série.</p>
+									<hr />	
+									<h3>Code <em>Javascript</em></h3>
+									<p>Le code <em>javascript</em>:
+									<ul style="margin-top:3px;">
+										<li>fonctionne en mode <code>point</code> :
+											<pre><code class="javascript encadre">mode = "point";</code></pre></li>
+										<li>envoie la commande <code>mesure</code> lorsque l'utilisateur clique sur le bouton <code>mesure</code>:
+										<pre><code class="javascript encadre">var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];</code></pre></li>
+										<li>attend une mesure de la pression délivrée par le capteur de pression :
+										<pre><code class="javascript encadre">series = [{grandeur: "P", unite: "hPa"}];</code></pre>.</li>
+										<li>place sur le graphique le point de coordonnées (V, P) où <em>V</em> est le volume d'air saisi par
+											l'utilisateur <pre><code class="javascript encadre">axes = [{grandeur: "V", unite: "mL"}, {grandeur: "P", unite: "hPa"}];</code></pre></li>
+									</ul>	
+
+									<p>Le code <em>Javascript</em> complet est le suivant :</p>
+
+<pre><code class="javascript encadre">mode = "point";
+var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
+series = [{grandeur: "P", unite: "hPa"}];
+titre_graphe = "Loi de Mariotte";
+axes = [{grandeur: "V", unite: "mL"}, {grandeur: "P", unite: "hPa"}];
+</code></pre>
+
+<p>Le code complet à insérer dans une cellule <em>Jupyter</em></p>
+
+<pre><code class="python encadre">from IPython.display import HTML, display
+from web_sciences import get_interface
+	
+my_init = '''
+mode = "point";
+var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
+series = [{grandeur: "P", unite: "hPa"}];
+titre_graphe = "Loi de Mariotte";
+axes = [{grandeur: "V", unite: "mL"}, {grandeur: "P", unite: "hPa"}];
+'''
+	
+S = get_interface(my_init)
+display(HTML(S))
+</code></pre>
+							
+								<hr />
+								<h3>Exemple d'éxécution</h3>
+								<p><span class="image main"><img src="images/mariotte_1.png" style="max-width:902px;"><span class="image main"></p>								
+								<hr />
+								<h3>Démo en ligne</h3>
+								<ul>
+									<li>Télécharger le script <a href="programmes/capteur_pression_1/capteur_pression_2.ino">capteur_pression_2.ino</a> en cliquant sur le lien.</li>
+									<li>Téléverser ce script dans la carte à l'aide de l'IDE <em>Arduino</em>.</li>
+									<li>Relier le capteur de <em>pression Grove</em> à l'entrée <em>A0</em> de la carte.</li>
+									<li>Cliquer sur le bouton <em>Connexion</em> ci-dessous et sélectionner le port correspondant à la carte.</li>
+									<li>Régler le volume de la seringue à <em>60mL</em> en relier le tube au capteur de pression (voir image ci-dessus).</li>
+									<li>Cliquer sur le bouton <em>mesure</em>. La carte effectue une mesure de la pression dans la seringue et cette valeur  
+										est transmise par la liaison série.</li>
+									<li>Le script affiche le point de coordonnées (V, P) (ou <em>V</em> est la valeur du volume saisie par l'utilisateur)
+										sur le graphe <em>P = f(V)</em>.</li>
+									<li>Renouveler l'opération pour <em>V</em> variant de <em>60 mL</em> à <em>25 mL</em> par pas de <em>5 mL</em>.</li>
+									<li>Cliquer sur le bouton <em>Copie presse papier</em> pour récupérer les données dans le presse papier.
+									Dans cet exemple, les données sont formatées sous forme de tableaux python. Il est cependant possible 
+									d'obtenir un formatage compatible avec un tableur comme <em>Régressi</em> ou <em>Excel</em> en
+								cochant la case ci-dessous.</li>
+								</ul>
+														
+								<form class="my_form">
+									<input type="checkbox" id="tableur_case" name="tableur_case" value="">
+									<label for="tableur_case">Cocher cette case pour obtenir les données au format tableur (Régressi par exemple)</label>
+									<code class="code_special">tableur = <span id="id_tableur_boolean">false</span>;</code>
+								</form>
+							
+								<div class="menu" id="id_menu">
+									<div id="id_boutons_commandes">
+									  <button class="rouge" id="id_button_connexion">Connexion</button>
+									</div>
+								</div>
+								<div class="image" style="width:95%;"><canvas id="myChart"></canvas></div>
+								<p id="id_resultat"></p>
+								<script src="assets/js/webardu_demo_mariotte.js"></script>
+								<script>
+								const checkbox = document.getElementById("tableur_case");
+								checkbox.addEventListener("change", function () {
+									if (checkbox.checked) {
+										document.getElementById("id_tableur_boolean").textContent = "true";
+										tableur = true;
+									} else {
+										document.getElementById("id_tableur_boolean").textContent = "false";
+										tableur = false;
+									}
+								});	
+								</script>	
+								<p>Le traitement des données permet de tracer le graphe <em>P = f(1/V)</em> et de vérifier ainsi la loi de
+									Mariotte (voir le notebook ci-dessous).</p>
+									<p><span class="image main"><img src="images/mariotte_2.png" style="max-width:587px;"><span class="image main"></p>								
+								<h3>Liens</h3>
+								<ul>
+									<li><a target="_blank" href="https://mybinder.org/v2/gh/bultec/physique_chimie_lycee/HEAD?labpath=loi_mariotte%2Floi_mariotte_prof.ipynb">
+										Un TP complet sur Binder</a> (éventuellement long à démarrer -> soyez patient).</li>
+									<li>Un lien vers capytale (bientôt)</li>
+									<li>Le notebook correspondant : <a href="programmes/notebooks/loi_mariotte_prof.ipynb">loi_mariotte_prof.ipynb</a></li>
+									<li>Les fichiers <em>Arduino</em> : 
+										<ul>
+											<li><a href="programmes/capteur_pression_1/capteur_pression_1.ino">capteur_pression_1</a> (pour l'étalonnage)</li>
+											<li><a href="programmes/capteur_pression_2/capteur_pression_2.ino">capteur_pression_2</a> (pour les mesures)</li>
+										</ul>		
+									</li>				
+									<li>La bibliothèque Web Sciences : <a href="programmes/web_sciences.py">web_sciences.py</a></li>
+									<li>fichier html au format python <a target="_blank" href="programmes/html/mariotte_pyt.html">mariotte_pyt.html</a> (pour utilisation avec python)</li>	
+									<li>fichier html au format tableur <a target="_blank" href="programmes/html/mariotte_tab.html">mariotte_tab.html</a> (pour utilisation avec <em>Régressi</em> ou <em>Excel</em>).</li>	
+								</ul>
+								<p>&nbsp;</p>
+							</div>k
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Accueil</a></li>
+										<li>
+											<span class="opener">Demos</span>
+											<ul>
+												<li><a href="demo_commande.html">Mode commande</a></li>
+												<li><a href="demo_temporel.html">Mode temporel</a></li>
+												<li><a href="demo_point.html">Mode point</a></li>
+											</ul>
+										</li>
+										<li><a href="mode_emploi.html">Mode d'emploi</a></li>
+										<li>
+											<span class="opener">Exemples</span>
+											<ul>
+												<li><a href="circuit_rc.html">Circuit RC</a></li>
+												<li><a href="celerite_us_1.html">Célérité des ultrasons (1)</a></li>
+												<li><a href="celerite_us_2.html">Célérité des ultrasons (2)</a></li>
+												<li><a href="mariotte.html">Loi de Mariotte</a></li>
+												<li><a href="newton.html">Loi phénoménologique de Newton</a></li>												
+											</ul>
+										</li>
+										<li><a href="documentation.html">Documentation</a></li>
+										<li><a href="telechargement.html">Téléchargement</a></li>
+									
+									</ul>
+								</nav>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Quelques exemples</h2>
+									</header>
+									<div class="mini-posts">
+										<article>
+											<a href="#" class="image"><img src="images/image_5.jpeg" alt="" /></a>
+											<p>Célérité des ultrasons dans l'air.</p>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/circuit_rc1.png" alt="" /></a>
+											<p>Circuit RC à tension constante.</p>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/mariotte.png" alt="" /></a>
+											<p>Vérification de la loi de Mariotte.</p>
+										</article>
+									</div>
+									<ul class="actions">
+										<li><a href="#" class="button">Plus</a></li>
+									</ul>
+								</section>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>A propos</h2>
+									</header>
+									<p>Le module web_sciences a été écrit par un enseignant Français passionné d'informatique
+										qui enseigne la physique en lycée depuis plus de 40 ans et NSI depuis sa création.</p>
+		
+									<ul class="contact">
+										<li class="icon brands fa-github"><a target="_blank" href="https://github.com/bultec/web-sciences">web-sciences sur Github</a></li>
+										<li class="icon brands fa-linkedin"><a target="_blank" href="https://www.linkedin.com/in/philippe-campion-06351a326">L'auteur sur Linkedin</a></li>
+									</ul>
+								</section>
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright"><a href="https://github.com/bultec/web-sciences?tab=GPL-3.0-1-ov-file">GPL 3.0 license</a></p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<!-- Inclusion du script Highlight.js -->
+		<script src="assets/js/highlight.min.js"></script>
+		<script>hljs.highlightAll();</script>	
+
+	</body>
+</html>

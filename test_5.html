@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Web Sciences - Documentation</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+<body class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Main -->
+        <div id="main">
+            <div class="inner">
+
+                <!-- Header -->
+                <header id="header">
+                    <a href="index.html" class="logo"><strong>Web Sciences</strong> - Documentation</a>
+                    <ul class="icons">
+                        <li><a target="_blank" href="https://github.com/bultec/web-sciences" class="icon brands fa-github">
+                            <span class="label">Github</span></a></li>
+                        <li><a target="_blank" href="https://www.linkedin.com/in/philippe-campion-06351a326"
+                            class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+                    </ul>
+                </header>
+
+                <!-- Content -->
+                <div>
+                    <header class="main">
+                        <h1>Documentation complète du JavaScript</h1>
+                    </header>
+
+                    <section>
+                        <h2>1. Commandes</h2>
+                        <p>Les commandes permettent de définir les boutons disponibles pour interagir avec la carte Arduino. Chaque commande associe un texte affiché à un message envoyé à la carte.</p>
+<pre><code>var commandes = [
+    {texte_bouton: "Charge", arduino: "charge"},
+    {texte_bouton: "Décharge", arduino: "decharge"}
+];</code></pre>
+
+                        <h2>2. Séries</h2>
+                        <p>Les séries définissent les données mesurées et leur unité associée.</p>
+<pre><code>var series = [
+    {grandeur: "Uc", unite: "V"},
+    {grandeur: "E", unite: "V"}
+];</code></pre>
+                        <p><strong>Remarque :</strong> En mode temporel, la première série renvoyée est toujours le temps. Il n’est pas nécessaire de la préciser dans <code>series</code>.</p>
+
+                        <h2>3. Axes</h2>
+                        <p>Les axes définissent le graphique affiché selon le mode sélectionné :</p>
+                        <ul>
+                            <li><strong>Mode temporel :</strong> L’abscisse est toujours le temps. Les ordonnées sont les séries définies.</li>
+                            <li><strong>Mode point :</strong> L’abscisse est la grandeur spécifiée par l’utilisateur. Les ordonnées sont les séries définies.</li>
+                            <li><strong>Mode commande :</strong> Aucun graphique n’est affiché.</li>
+                        </ul>
+
+                        <h2>4. Insérer le code dans un notebook Jupyter</h2>
+                        <p>Pour utiliser <code>web_sciences.py</code> dans un notebook Jupyter :</p>
+                        <ol>
+                            <li>Importez la bibliothèque : <code>from web_sciences import WebSciences</code></li>
+                            <li>Créez une variable contenant le code JavaScript.</li>
+                            <li>Utilisez la méthode <code>affiche</code> pour insérer l’interface.</li>
+                        </ol>
+<pre><code>from web_sciences import WebSciences
+
+my_init = """
+var mode = "point";
+var commandes = [{texte_bouton: "Mesure", arduino: "vas_y"}];
+var series = [{grandeur: "T", unite: "°C"}];
+"""
+
+interface = WebSciences(my_init)
+interface.affiche()</code></pre>
+
+                        <h2>5. Insérer le code dans un fichier HTML</h2>
+                        <p>Pour utiliser <code>insere_code.py</code> et <code>web_sciences_complet.html</code> :</p>
+                        <ol>
+                            <li>Copiez le code JavaScript dans le fichier <code>insere_code.py</code>.</li>
+                            <li>Exécutez <code>insere_code.py</code> pour générer un fichier HTML.</li>
+                            <li>Ouvrez ce fichier dans un navigateur compatible pour interagir avec la carte Arduino.</li>
+                        </ol>
+<pre><code>python insere_code.py</code></pre>
+
+                        <p><strong>Remarque :</strong> Pour utiliser un tableur, ajoutez <code>tableur = true;</code> au code JavaScript. Les données seront copiées dans le presse-papiers au format compatible.</p>
+                    </section>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div id="sidebar">
+            <div class="inner">
+
+                <!-- Menu -->
+                <nav id="menu">
+                    <header class="major">
+                        <h2>Menu</h2>
+                    </header>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="mode_emploi.html">Mode d'emploi</a></li>
+                        <li><a href="telechargement.html">Téléchargement</a></li>
+                        <li><a href="documentation.html">Documentation</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Footer -->
+                <footer id="footer">
+                    <p class="copyright"><a href="https://github.com/bultec/web-sciences?tab=GPL-3.0-1-ov-file">GPL 3.0 license</a></p>
+                </footer>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+</body>
+</html>
