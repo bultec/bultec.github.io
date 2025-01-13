@@ -86,14 +86,15 @@
 										<pre><code class="javascript encadre">var series = [{grandeur: "Uc", unite: "V"}, {grandeur: "E", unite: "V"}];</code></pre>
 					
 										<h3>4. Axes du graphique (<code>axes</code>)</h3>
-										<ul>
+										<ul class="marge_b_20">
 											<li>Configure les axes pour le graphique.</li>
 											<li>Chaque axe est défini par :
-												<ul>
+												<ul class="marge_b_20">
 													<li><code>nom</code> : label de l'axe.</li>
 													<li><code>unite</code> : unité correspondante.</li>
 												</ul>
 											</li>
+<pre><code class="javascript encadre">var axes = [{nom: "Temps", unite: "s"}, {nom: "Uc", unite: "V"}];</code></pre>
 											<li><strong>Remarques spécifiques par mode</strong> :
 												<ul>
 													<li><strong>Mode temporel :</strong> 
@@ -112,32 +113,29 @@
 												</ul>
 											</li>
 										</ul>
-										<pre><code>var axes = [
-						{nom: "Temps", unite: "s"}, 
-						{nom: "Uc", unite: "V"}
-					];</code></pre>
-					
+			
 										<h2>Exemples Complets</h2>
 					
 										<h3>Commande avec boutons</h3>
-										<pre><code>var mode = "commande";
-					var commandes = [
-						{texte_bouton: "Charge", arduino: "charge"}, 
-						{texte_bouton: "Décharge", arduino: "decharge"}
-					];
-					var series = [
-						{grandeur: "Uc", unite: "V"}, 
-						{grandeur: "E", unite: "V"}
-					];</code></pre>
+<pre><code class="javascript encadre">mode = "commande";
+commandes = [{texte_bouton: "Rouge", arduino: "rouge"},
+             {texte_bouton: "Vert", arduino: "vert"},
+             {texte_bouton: "Stop", arduino: "stop"}];</code></pre>
 					
-										<h3>Mesure Temporelle</h3>
-										<pre><code>var mode = "temporel";
-					var commandes = [{texte_bouton: "Démarrer", arduino: "start"}];
-					var series = [{grandeur: "Température", unite: "°C"}];
-					var axes = [
-						{nom: "Temps", unite: "s"}, 
-						{nom: "Température", unite: "°C"}
-					];</code></pre>
+										<h3>Mesures temporelles avec bouton de début des mesures</h3>
+<pre><code class="javascript encadre">var mode = "temporel";
+var commandes = [{texte_bouton: "Démarrer les mesures", arduino: "start"}];
+var series = [{grandeur: "Température", unite: "°C"}];
+var axes = [{nom: "Temps", unite: "s"}, 
+            {nom: "Température", unite: "°C"}];
+var titre_graphe = "Loi phénoménologique de Newton";</code></pre>
+
+<h3>Mesures ponctuelles avec bouton de mesure</h3>
+<pre><code class="javascript encadre">mode = "point";
+var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
+series = [{grandeur: "P", unite: "hPa"}];
+titre_graphe = "Loi de Mariotte";
+axes = [{grandeur: "V", unite: "mL"}, {grandeur: "P", unite: "hPa"}];</code></pre>
 									
 									
 
