@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Web Sciences - Intégration du Code JavaScript</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+<body class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Main -->
+        <div id="main">
+            <div class="inner">
+
+                <!-- Header -->
+                <header id="header">
+                    <a href="index.html" class="logo"><strong>Web Sciences</strong> - Intégration du Code JavaScript</a>
+                </header>
+
+                <!-- Content -->
+                <section>
+                    <header class="main">
+                        <h1>Intégrer le Code JavaScript</h1>
+                    </header>
+
+                    <h2>1. Utilisation avec un Notebook Jupyter</h2>
+                    <ol>
+                        <li>
+                            <strong>Importer la bibliothèque :</strong>  
+                            Téléchargez <code>web_sciences.py</code> et placez-le dans le même dossier que votre notebook Jupyter. Puis, importez-le :
+                            <pre><code>from web_sciences import WebSciences</code></pre>
+                        </li>
+                        <li>
+                            <strong>Définir le code JavaScript :</strong>  
+                            Rédigez votre code JavaScript dans une variable Python :
+                            <pre><code>
+my_init = """
+var mode = "point";
+var commandes = [{texte_bouton: "Mesure", arduino: "vas_y"}];
+var series = [{grandeur: "T", unite: "°C"}];
+"""
+                            </code></pre>
+                        </li>
+                        <li>
+                            <strong>Afficher l'interface :</strong>  
+                            Créez une instance de <code>WebSciences</code> et appelez la méthode <code>affiche</code> :
+                            <pre><code>
+interface = WebSciences(my_init)
+interface.affiche()
+                            </code></pre>
+                        </li>
+                    </ol>
+
+                    <h2>2. Intégration dans un Fichier HTML</h2>
+                    <ol>
+                        <li>
+                            <strong>Préparer les fichiers requis :</strong>  
+                            Téléchargez :
+                            <ul>
+                                <li><code>insere_code.py</code></li>
+                                <li><code>web_sciences_complet.html</code></li>
+                            </ul>
+                            Placez-les dans le même dossier.
+                        </li>
+                        <li>
+                            <strong>Modifier le fichier Python :</strong>  
+                            Ouvrez <code>insere_code.py</code> et ajoutez votre code JavaScript :
+                            <pre><code>
+my_init = """
+var mode = "point";
+var commandes = [{texte_bouton: "Mesure", arduino: "vas_y"}];
+var series = [{grandeur: "T", unite: "°C"}];
+"""
+                            </code></pre>
+                        </li>
+                        <li>
+                            <strong>Spécifier le fichier de sortie :</strong>  
+                            Indiquez le nom du fichier HTML dans le script Python :
+                            <pre><code>nom_fichier_html = "interface_arduino.html"</code></pre>
+                        </li>
+                        <li>
+                            <strong>Exécuter le script :</strong>  
+                            Lancez le programme Python pour générer le fichier HTML :
+                            <pre><code>python insere_code.py</code></pre>
+                        </li>
+                        <li>
+                            <strong>Tester le fichier HTML :</strong>  
+                            Ouvrez le fichier généré dans un navigateur. Il fournit une interface interactive prête à l’emploi.
+                        </li>
+                    </ol>
+
+                    <h3>Remarque :</h3>
+                    <p>Pour une utilisation avec un tableur, ajoutez la ligne suivante dans votre code JavaScript :</p>
+                    <pre><code>var tableur = true;</code></pre>
+                </section>
+
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div id="sidebar">
+            <div class="inner">
+
+                <!-- Menu -->
+                <nav id="menu">
+                    <header class="major">
+                        <h2>Menu</h2>
+                    </header>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="telechargement.html">Téléchargement</a></li>
+                        <li><a href="documentation.html">Documentation</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Section -->
+                <section>
+                    <header class="major">
+                        <h2>A propos</h2>
+                    </header>
+                    <p>Le module web_sciences a été conçu pour faciliter l'intégration de mesures Arduino dans des projets éducatifs.</p>
+                </section>
+
+                <!-- Footer -->
+                <footer id="footer">
+                    <p class="copyright"><a href="https://github.com/bultec/web-sciences">web-sciences sur Github</a></p>
+                </footer>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+</body>
+</html>

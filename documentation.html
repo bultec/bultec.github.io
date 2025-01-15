@@ -114,15 +114,15 @@
 											</li>
 										</ul>
 			
-										<h2>Exemples Complets</h2>
+										<h3>5. Exemples Complets</h3>
 					
-										<h3>Commande avec boutons</h3>
+										<h4>Commande avec boutons</h4>
 <pre><code class="javascript encadre">mode = "commande";
 commandes = [{texte_bouton: "Rouge", arduino: "rouge"},
              {texte_bouton: "Vert", arduino: "vert"},
              {texte_bouton: "Stop", arduino: "stop"}];</code></pre>
 					
-										<h3>Mesures temporelles avec bouton de début des mesures</h3>
+										<h4>Mesures temporelles avec bouton de début des mesures</h4>
 <pre><code class="javascript encadre">var mode = "temporel";
 var commandes = [{texte_bouton: "Démarrer les mesures", arduino: "start"}];
 var series = [{grandeur: "Température", unite: "°C"}];
@@ -130,7 +130,7 @@ var axes = [{nom: "Temps", unite: "s"},
             {nom: "Température", unite: "°C"}];
 var titre_graphe = "Loi phénoménologique de Newton";</code></pre>
 
-<h3>Mesures ponctuelles avec bouton de mesure</h3>
+<h4>Mesures ponctuelles avec bouton de mesure</h4>
 <pre><code class="javascript encadre">mode = "point";
 var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
 series = [{grandeur: "P", unite: "hPa"}];
@@ -138,9 +138,73 @@ titre_graphe = "Loi de Mariotte";
 axes = [{grandeur: "V", unite: "mL"}, {grandeur: "P", unite: "hPa"}];</code></pre>
 									
 									
+<h2 style="margin-top:2em;">II. Intégrer le Code JavaScript</h2>
 
+<h3>1. Si vous souhaitez utiliser votre interface <em>Web Sciences</em> dans un Notebook Jupyter</h3>
+<ol style="list-style-type:lower-alpha; margin-left:20px;">
+	<li>
+		<strong>Importer la bibliothèque :</strong>  
+		Téléchargez <code>web_sciences.py</code> et placez-le dans le même dossier que votre notebook Jupyter. Puis, importez-le :
+		<pre><code code class="python encadre">from web_sciences import WebSciences</code></pre>
+	</li>
+	<li>
+		<strong>Définir le code JavaScript :</strong>  
+		Rédigez votre code JavaScript dans une variable Python :
+		<pre><code class="python encadre">my_init = """
+var mode = "point";
+var commandes = [{texte_bouton: "Mesure", arduino: "vas_y"}];
+var series = [{grandeur: "T", unite: "°C"}];
+"""</code></pre>
+	</li>
+	<li>
+		<strong>Afficher l'interface :</strong>  
+		Créez une instance de <em>WebSciences</em> et appelez la méthode <code>affiche</code> :
+		<pre><code code class="python encadre">interface = WebSciences(my_init)
+interface.affiche()</code></pre>
+	</li>
+</ol>
 
+<h3>2. Si vous souhaitez intégrer votre interface <code>Web Sciences </code> dans un Fichier HTML distribuable aux élèves</h3>
+<ol style="list-style-type:lower-alpha; margin-left:20px;">
+	<li class="marge_b_20">
+		<strong>Préparer les fichiers requis :</strong>  
+		Téléchargez :
+		<ul>
+			<li><code>insere_code.py</code></li>
+			<li><code>web_sciences_complet.html</code></li>
+		</ul>
+		Placez-les dans le même dossier.
+	</li>
+	<li>
+		<strong>Modifier le fichier Python :</strong>  
+		Ouvrez <code>insere_code.py</code> et ajoutez votre code JavaScript :
+		<pre><code>
+my_init = """
+var mode = "point";
+var commandes = [{texte_bouton: "Mesure", arduino: "vas_y"}];
+var series = [{grandeur: "T", unite: "°C"}];
+"""
+		</code></pre>
+	</li>
+	<li>
+		<strong>Spécifier le fichier de sortie :</strong>  
+		Indiquez le nom du fichier HTML dans le script Python :
+		<pre><code>nom_fichier_html = "interface_arduino.html"</code></pre>
+	</li>
+	<li>
+		<strong>Exécuter le script :</strong>  
+		Lancez le programme Python pour générer le fichier HTML :
+		<pre><code>python insere_code.py</code></pre>
+	</li>
+	<li>
+		<strong>Tester le fichier HTML :</strong>  
+		Ouvrez le fichier généré dans un navigateur. Il fournit une interface interactive prête à l’emploi.
+	</li>
+</>
 
+<h3>Remarque :</h3>
+<p>Pour une utilisation avec un tableur, ajoutez la ligne suivante dans votre code JavaScript :</p>
+<pre><code>var tableur = true;</code></pre>
 
 
 
