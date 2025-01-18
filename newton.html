@@ -73,7 +73,7 @@
 										<li>fonctionne en mode <code>temporel</code> :
 											<pre><code class="javascript encadre">mode = "temporel";</code></pre></li>
 										<li>envoie la commande <code>mesure</code> lorsque l'utilisateur clique sur le bouton <code>mesure</code>:
-										<pre><code class="javascript encadre">var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];</code></pre></li>
+										<pre><code class="javascript encadre">commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];</code></pre></li>
 										<li>attend une série de mesures de la température en fonction du temps (en mode <code>temporel</code>,
 											le temps est la première série par défaut et ne doit pas être ajouté à la variable <code>series</code>):
 										<pre><code class="javascript encadre">series = [{grandeur: "T", unite: "°C"}];</code></pre>.</li>
@@ -82,7 +82,7 @@
 									</ul>	
 									<p>Le code <em>Javascript</em> complet est le suivant :</p>		
 <pre><code class="javascript encadre">mode = "temporel";
-var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
+commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
 series = [{grandeur: "T", unite: "°C"}];
 titre_graphe = "Evolution de la température d'un système au contact d'un thermostat";
 axes = [{grandeur: "t", unite: "ms"}, {grandeur: "T", unite: "°C"}];
@@ -90,19 +90,18 @@ axes = [{grandeur: "t", unite: "ms"}, {grandeur: "T", unite: "°C"}];
 
 <p>Le code complet à insérer dans une cellule <em>Jupyter</em></p>
 
-<pre><code class="python encadre">from IPython.display import HTML, display
-from web_sciences import get_interface
+<pre><code class="python encadre">from web_sciences import WebSciences
 
 my_init = '''
 mode = "temporel";
-var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
+commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
 series = [{grandeur: "T", unite: "°C"}];
 titre_graphe = "Evolution de la température d'un système au contact d'un thermostat";
 axes = [{grandeur: "t", unite: "ms"}, {grandeur: "T", unite: "°C"}];
 '''
 
-S = get_interface(my_init)
-display(HTML(S))
+interface = WebSciences(my_init)
+interface.affiche()
 </code></pre>
 								<hr />
 								<h3>Exemple d'éxécution</h3>

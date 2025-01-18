@@ -87,29 +87,28 @@
 								<h3>Code javascript</h3>
 								<p>Le programme <em>javascript</em> à utiliser est le suivant :</p>
 <pre><code class="javascript encadre">mode = &quot;temporel&quot;;
-var commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
-                 {texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
-var series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
-var titre_graphe = &quot;Circuit RC&quot;;
-var axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
+commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
+             {texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
+series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
+titre_graphe = &quot;Circuit RC&quot;;
+axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
 </code></pre>
 
 <p>Le code complet à insérer dans une cellule <em>Jupyter</em></p>
 
-<pre><code class="python encadre">from IPython.display import HTML, display
-from web_sciences import get_interface
+<pre><code class="python encadre">from web_sciences import WebSciences
 
 my_init = &#39;&#39;&#39;
 mode = &quot;temporel&quot;;
-var commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
-                 {texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
-var series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
-var titre_graphe = &quot;Circuit RC&quot;;
-var axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
+commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
+             {texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
+series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
+titre_graphe = &quot;Circuit RC&quot;;
+axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
 &#39;&#39;&#39;
 
-S = get_interface(my_init)
-display(HTML(S))
+interface = WebSciences(my_init)
+interface.affiche()
 </code></pre>
 							<p>Ce code :</p>						
 								<ul>

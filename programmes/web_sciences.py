@@ -1,3 +1,5 @@
+from IPython.display import HTML, display
+
 def get_interface(code_init):
 	S='''
 	<!doctype html>
@@ -656,3 +658,12 @@ def get_interface(code_init):
 	'''
 	S = S.replace('// --- inserer ici ---', code_init)
 	return S
+
+# --- class WebSciences ---
+class WebSciences:
+    def __init__(self, init) -> None:
+        self.interface = get_interface(init)
+
+    def affiche(self):
+        display(HTML(self.interface))
+    

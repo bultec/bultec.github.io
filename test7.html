@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Documentation - Codage Arduino</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+<body class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Main -->
+        <div id="main">
+            <div class="inner">
+
+                <!-- Header -->
+                <header id="header">
+                    <a href="index.html" class="logo"><strong>Web Sciences</strong> - Documentation Arduino</a>
+                </header>
+
+                <!-- Content -->
+                <section>
+                    <header class="main">
+                        <h1>Documentation : Codage des Programmes Arduino</h1>
+                    </header>
+
+                    <p>Cette section explique comment coder les programmes Arduino nécessaires pour les trois modes de fonctionnement : <strong>commande</strong>, <strong>point</strong>, et <strong>temporel</strong>. Chaque mode est présenté avec un exemple de code et des explications détaillées.</p>
+
+                    <!-- Mode commande -->
+                    <h2>1. Mode commande</h2>
+                    <p>Le mode commande permet à l'Arduino de réagir à des commandes reçues via la liaison série. Il exécute des actions spécifiques et renvoie une réponse à chaque commande. Voici un exemple :</p>
+                    <pre><code>
+/* déclaration des constantes */
+const int ledPin = 13; // Exemple : une LED connectée à la broche 13
+
+void setup() {
+    Serial.begin(9600);
+    pinMode(ledPin, OUTPUT); // Configure la broche comme sortie
+    delay(1);
+}
+
+void loop() {
+    if (Serial.available()) {
+        String chaine = Serial.readString(); // Lecture de la commande
+        if (chaine == "allume") {
+            digitalWrite(ledPin, HIGH); // Allume la LED
+            Serial.println("LED allumée");
+        } else if (chaine == "eteint") {
+            digitalWrite(ledPin, LOW); // Éteint la LED
+            Serial.println("LED éteinte");
+        } else {
+            Serial.println("commande non reconnue"); // Réponse par défaut
+        }
+    }
+}
+                    </code></pre>
+                    <p>Dans cet exemple :</p>
+                    <ul>
+                        <li>Une LED est connectée à la broche 13.</li>
+                        <li>Les commandes <code>allume</code> et <code>eteint</code> contrôlent l'état de la LED.</li>
+                        <li>Toute commande non reconnue génère un message d'erreur.</li>
+                    </ul>
+
+                    <!-- Mode point -->
+                    <h2>2. Mode point</h2>
+                    <p>Le mode point réalise une mesure unique sur demande et renvoie la valeur mesurée. Exemple :</p>
+                    <pre><code>
+const int capteurPin = A0; // Capteur connecté à la broche analogique A0
+
+void setup() {
+    Serial.begin(9600);
+    delay(1);
+}
+
+void loop() {
+    if (Serial.available()) {
+        String chaine = Serial.readString();
+        if (chaine == "mesure") {
+            int valeurBrute = analogRead(capteurPin); // Lecture de la valeur
+            float tension = valeurBrute * (5.0 / 1023.0); // Conversion en volts
+            Serial.println(tension); // Envoie la mesure
+        } else {
+            Serial.println("commande non reconnue");
+        }
+    }
+}
+                    </code></pre>
+                    <p>Ce code lit la valeur d'un capteur analogique sur la broche A0, la convertit en tension, et envoie la mesure via la liaison série.</p>
+
+                    <!-- Mode temporel -->
+                    <h2>3. Mode temporel</h2>
+                    <p>Le mode temporel effectue des mesures périodiques et transmet les résultats en continu. Exemple :</p>
+                    <pre><code>
+const int capteurPin = A1; // Capteur sur A1
+unsigned long interval = 1000; // Intervalle entre mesures en ms
+unsigned long dernierTemps = 0;
+
+void setup() {
+    Serial.begin(9600);
+    delay(1);
+}
+
+void loop() {
+    unsigned long tempsActuel = millis();
+    if (tempsActuel - dernierTemps >= interval) {
+        dernierTemps = tempsActuel;
+
+        int valeurBrute = analogRead(capteurPin); // Lecture brute
+        float temperature = valeurBrute * (5.0 / 1023.0) * 100.0; // Conversion en °C
+        Serial.println(temperature); // Envoi de la mesure
+    }
+}
+                    </code></pre>
+                    <p>Dans cet exemple, une mesure est effectuée toutes les secondes (<code>interval = 1000</code>) et envoyée au PC en continu.</p>
+
+                    <h2>Conclusion</h2>
+                    <p>Ces exemples peuvent être adaptés pour répondre à vos besoins spécifiques. Testez vos programmes avec l'interface Web-Sciences pour valider leur bon fonctionnement.</p>
+                </section>
+
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div id="sidebar">
+            <div class="inner">
+
+                <!-- Menu -->
+                <nav id="menu">
+                    <header class="major">
+                        <h2>Menu</h2>
+                    </header>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="documentation.html">Documentation</a></li>
+                        <li><a href="telechargement.html">Téléchargement</a></li>
+                        <li><a href="mode_emploi.html">Mode d'emploi</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Footer -->
+                <footer id="footer">
+                    <p class="copyright"><a href="https://github.com/bultec/web-sciences?tab=GPL-3.0-1-ov-file">GPL 3.0 license</a></p>
+                </footer>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+</body>
+</html>

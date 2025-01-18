@@ -85,7 +85,7 @@
 										<li>fonctionne en mode <code>point</code> :
 											<pre><code class="javascript encadre">mode = "point";</code></pre></li>
 										<li>envoie la commande <code>mesure</code> lorsque l'utilisateur clique sur le bouton <code>mesure</code>:
-										<pre><code class="javascript encadre">var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];</code></pre></li>
+										<pre><code class="javascript encadre">commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];</code></pre></li>
 										<li>attend une mesure de la pression délivrée par le capteur de pression :
 										<pre><code class="javascript encadre">series = [{grandeur: "P", unite: "hPa"}];</code></pre>.</li>
 										<li>place sur le graphique le point de coordonnées (V, P) où <em>V</em> est le volume d'air saisi par
@@ -95,7 +95,7 @@
 									<p>Le code <em>Javascript</em> complet est le suivant :</p>
 
 <pre><code class="javascript encadre">mode = "point";
-var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
+commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
 series = [{grandeur: "P", unite: "hPa"}];
 titre_graphe = "Loi de Mariotte";
 axes = [{grandeur: "V", unite: "mL"}, {grandeur: "P", unite: "hPa"}];
@@ -103,19 +103,18 @@ axes = [{grandeur: "V", unite: "mL"}, {grandeur: "P", unite: "hPa"}];
 
 <p>Le code complet à insérer dans une cellule <em>Jupyter</em></p>
 
-<pre><code class="python encadre">from IPython.display import HTML, display
-from web_sciences import get_interface
+<pre><code class="python encadre">from web_sciences import WebSciences
 	
 my_init = '''
 mode = "point";
-var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
+commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
 series = [{grandeur: "P", unite: "hPa"}];
 titre_graphe = "Loi de Mariotte";
 axes = [{grandeur: "V", unite: "mL"}, {grandeur: "P", unite: "hPa"}];
 '''
 	
-S = get_interface(my_init)
-display(HTML(S))
+interface = WebSciences(my_init)
+interface.affiche()
 </code></pre>
 							
 								<hr />

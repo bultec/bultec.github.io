@@ -58,7 +58,7 @@
 											</ul>
 											</li>
 										</ul>
-										<pre><code class="javascript encadre">var mode = "commande";</code></pre>
+										<pre><code class="javascript encadre">mode = "temporel";</code></pre>
 					
 										<h3>2. Commandes à envoyer (<code>commandes</code>)</h3>
 										<ul class="marge_b_20">
@@ -70,7 +70,7 @@
 												</ul>
 											</li>
 										</ul>
-<pre><code class="javascript encadre">var commandes = [{texte_bouton: "Charge", arduino: "charge"}, {texte_bouton: "Décharge", arduino: "decharge"}];</code></pre>
+<pre><code class="javascript encadre">commandes = [{texte_bouton: "Charge", arduino: "charge"}, {texte_bouton: "Décharge", arduino: "decharge"}];</code></pre>
 					
 										<h3>3. Séries de données (<code>series</code>)</h3>
 										<ul class="marge_b_20">
@@ -83,7 +83,7 @@
 											</li>
 											<li><strong>Remarque :</strong> En mode temporel, la première série renvoyée par la carte est toujours le temps. <strong>Il n'est pas nécessaire de la préciser dans la variable <code>series</code>.</strong></li>
 										</ul>
-										<pre><code class="javascript encadre">var series = [{grandeur: "Uc", unite: "V"}, {grandeur: "E", unite: "V"}];</code></pre>
+										<pre><code class="javascript encadre">series = [{grandeur: "Uc", unite: "V"}, {grandeur: "E", unite: "V"}];</code></pre>
 					
 										<h3>4. Axes du graphique (<code>axes</code>)</h3>
 										<ul class="marge_b_20">
@@ -94,7 +94,7 @@
 													<li><code>unite</code> : unité correspondante.</li>
 												</ul>
 											</li>
-<pre><code class="javascript encadre">var axes = [{nom: "Temps", unite: "s"}, {nom: "Uc", unite: "V"}];</code></pre>
+<pre><code class="javascript encadre">axes = [{nom: "Temps", unite: "s"}, {nom: "Uc", unite: "V"}];</code></pre>
 											<li><strong>Remarques spécifiques par mode</strong> :
 												<ul>
 													<li><strong>Mode temporel :</strong> 
@@ -113,30 +113,48 @@
 												</ul>
 											</li>
 										</ul>
-			
-										<h3>5. Exemples Complets</h3>
-					
+										<h3>5. Autres variables</h3>
+										<ul class="marge_b_20">
+											<li>La variable <code>tableur</code> est un boolean qui formatte la <em>Copie presse papier</em>
+												au format tableur. Elle est intialisée à <code>false</code> par defaut.
+<pre><code class="javascript encadre">tableur = true;</code></pre>
+											</li>
+											<li>La variable <code>precision</code> est un entier qui permet de préciser le nombre
+												de chiffres significatifs utilisés par le script. Elle est intialisée à <code>3</code>
+												par defaut.
+<pre><code class="javascript encadre">precision = 5;</code></pre>
+											</li>
+											<li>La variable <code>car_par_ligne</code> est un entier qui permet de modifier le nombre
+												de caractères par lignes utilisés chiffres significatifs utilisés dans la <em>Copie presse papier</em>
+												Elle est intialisée à <code>70</code> par defaut.
+<pre><code class="javascript encadre">car_par_ligne = 85;</code></pre>
+											</li>
+										</ul>	
+
+
+										<h3>6. Exemples Complets</h3>
+		
 										<h4>Commande avec boutons</h4>
 <pre><code class="javascript encadre">mode = "commande";
 commandes = [{texte_bouton: "Rouge", arduino: "rouge"},
              {texte_bouton: "Vert", arduino: "vert"},
              {texte_bouton: "Stop", arduino: "stop"}];</code></pre>
-					
+						
 										<h4>Mesures temporelles avec bouton de début des mesures</h4>
-<pre><code class="javascript encadre">var mode = "temporel";
-var commandes = [{texte_bouton: "Démarrer les mesures", arduino: "start"}];
-var series = [{grandeur: "Température", unite: "°C"}];
-var axes = [{nom: "Temps", unite: "s"}, 
-            {nom: "Température", unite: "°C"}];
-var titre_graphe = "Loi phénoménologique de Newton";</code></pre>
+<pre><code class="javascript encadre">mode = "temporel";
+commandes = [{texte_bouton: "Démarrer les mesures", arduino: "start"}];
+series = [{grandeur: "Température", unite: "°C"}];
+axes = [{nom: "Temps", unite: "s"}, 
+        {nom: "Température", unite: "°C"}];
+titre_graphe = "Loi phénoménologique de Newton";</code></pre>
 
 <h4>Mesures ponctuelles avec bouton de mesure</h4>
 <pre><code class="javascript encadre">mode = "point";
-var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
+commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
 series = [{grandeur: "P", unite: "hPa"}];
 titre_graphe = "Loi de Mariotte";
 axes = [{grandeur: "V", unite: "mL"}, {grandeur: "P", unite: "hPa"}];</code></pre>
-									
+										
 									
 <h2 style="margin-top:2em;">II. Intégrer le Code JavaScript</h2>
 
@@ -178,18 +196,16 @@ interface.affiche()</code></pre>
 	<li>
 		<strong>Modifier le fichier Python :</strong>  
 		Ouvrez <code>insere_code.py</code> et ajoutez votre code JavaScript :
-		<pre><code>
-my_init = """
-var mode = "point";
-var commandes = [{texte_bouton: "Mesure", arduino: "vas_y"}];
-var series = [{grandeur: "T", unite: "°C"}];
-"""
-		</code></pre>
+		<pre><code class="python encadre">my_init = """
+mode = "point";
+commandes = [{texte_bouton: "Mesure", arduino: "vas_y"}];
+series = [{grandeur: "T", unite: "°C"}];
+"""</code></pre>
 	</li>
 	<li>
 		<strong>Spécifier le fichier de sortie :</strong>  
 		Indiquez le nom du fichier HTML dans le script Python :
-		<pre><code>nom_fichier_html = "interface_arduino.html"</code></pre>
+		<pre><code  class="python encadre">nom_fichier_html = "interface_arduino.html"</code></pre>
 	</li>
 	<li>
 		<strong>Exécuter le script :</strong>  
@@ -206,160 +222,49 @@ var series = [{grandeur: "T", unite: "°C"}];
 <p>Pour une utilisation avec un tableur, ajoutez la ligne suivante dans votre code JavaScript :</p>
 <pre><code>var tableur = true;</code></pre>
 
+<h2>III. Codage des Programmes <em>Arduino</em></h2>
+<p>Cette section explique comment coder les programmes <em>Arduino</em> nécessaires pour les trois modes de fonctionnement
+<code>commande</code>, <code>point</code>, et <code>temporel</code>. Chaque mode est présenté avec un exemple de code et des
+explications détaillées.</p>
 
+<!-- Mode commande -->
+<h2>1. Mode commande</h2>
+<p>Le mode commande permet à l'Arduino de réagir à des commandes reçues via la liaison série. Il exécute des actions spécifiques et renvoie une réponse à chaque commande. Voici un exemple :</p>
+<pre><code class="encadre">/* déclaration des constantes */
+const int ledPin = 13; // Exemple : une LED connectée à la broche 13
 
+void setup() {
+    Serial.begin(9600);
+    pinMode(ledPin, OUTPUT); // Configure la broche comme sortie
+    delay(1);
+}
 
-
-
-
-
-
-									<h3 style="margin-bottom:10px;">Un exemple d'utilisation de <em>Web Sciences</em> en mode <code>point</code></h3>
-									<p>Une seringue qui emprisonne une quantité d'air de volume <em>V</em> à la pression atmosphérique est reliée 
-									au capteur de pression <em>Grove</em> par l'intermédiaire d'un tube souple. On fait varier le volume d'air <em>V</em>
-									en agissant sur le piston de la seringue et on recueille la pression mesurée par le capteur.</p>
-									<p>Cet exemple  de <code>mesures point par point</code> permet de tracer le graphe <em>P =f(1/V)</em>
-										et de vérifier ainsi la loi de Mariotte <em>PV = cte</em>.</p>
-									<h2>I. Montage</h2>
-									<h3>Matériel nécessaire</h3>
-									<ul class="marge_b_20">
-										<li>Une carte <em>Arduino</em> équipée d'un shield <em>Grove</em>.</li>
-										<li>Un capteur de pression <em>Grove</em>.</li>
-										<li>Une seringue de 60mL munie d'un tube souple.</li>
-									</ul>   
-									<div class="row">
-										<div class="col-5 col-10-medium">
-											<p><span class="image main"><img src="images/image_7.png"></span></p>
-										</div>
-										<div class="col-5 col-10-medium">
-											<p><span class="image main"><img src="images/image_8.jpg"></span></p>	
-										</div>
-									</div>
-
-									<h2>II. Code nécessaire</h2>
-									<h3 class="marge_b_20">Script <em>Arduino</em></h3>
-									<p class="marge_b_5">Le script :</p>
-									<ul>
-										<li>attend l'arrivée de la commande <code>mesure</code> sur la liaison série.</li>
-										<li>réagit en conséquence, c'est à dire effectue une mesure de la pression délivrée par le capteur
-											de pression.</li>
-										<li>envoie cette mesure sur la liaison série.</li>
-									</ul>
-									<p>Voir à cet effet les commentaires dans le code source du script
-										<a href="programmes/capteur_pression_1/capteur_pression_2.ino">capteur_pression_2.ino</a>.</p>
-									<p><strong>Remarque :</strong> Il sera probablement nécessaire d'étalonner le capteur de pression. Pour 
-										cela, utiliser le script <a href="programmes/capteur_pression_1/capteur_pression_1.ino">capteur_pression_1.ino</a>,
-										l'éxécuter dans l'IDE <em>Arduino</em> et modifier la valeur de <em>k</em> par tatonnement en observant la valeur de la pression sur
-										le moniteur série.</p>
-									<hr />	
-									<h3>Code <em>Javascript</em></h3>
-									<p>Le code <em>javascript</em>:
-									<ul style="margin-top:3px;">
-										<li>fonctionne en mode <code>point</code> :
-											<pre><code class="javascript encadre">mode = "point";</code></pre></li>
-										<li>envoie la commande <code>mesure</code> lorsque l'utilisateur clique sur le bouton <code>mesure</code>:
-										<pre><code class="javascript encadre">var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];</code></pre></li>
-										<li>attend une mesure de la pression délivrée par le capteur de pression :
-										<pre><code class="javascript encadre">series = [{grandeur: "P", unite: "hPa"}];</code></pre>.</li>
-										<li>place sur le graphique le point de coordonnées (V, P) où <em>V</em> est le volume d'air saisi par
-											l'utilisateur <pre><code class="javascript encadre">axes = [{grandeur: "V", unite: "mL"}, {grandeur: "P", unite: "hPa"}];</code></pre></li>
-									</ul>	
-
-									<p>Le code <em>Javascript</em> complet est le suivant :</p>
-
-<pre><code class="javascript encadre">mode = "point";
-var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
-series = [{grandeur: "P", unite: "hPa"}];
-titre_graphe = "Loi de Mariotte";
-axes = [{grandeur: "V", unite: "mL"}, {grandeur: "P", unite: "hPa"}];
+void loop() {
+    if (Serial.available()) {
+        String chaine = Serial.readString(); // Lecture de la commande
+        if (chaine == "allume") {
+            digitalWrite(ledPin, HIGH); // Allume la LED
+            Serial.println("LED allumée");
+        } else if (chaine == "eteint") {
+            digitalWrite(ledPin, LOW); // Éteint la LED
+            Serial.println("LED éteinte");
+        } else {
+            Serial.println("commande non reconnue"); // Réponse par défaut
+        }
+    }
+}
 </code></pre>
+<p>Dans cet exemple :</p>
+<ul>
+	<li>Une LED est connectée à la broche 13.</li>
+	<li>Les commandes <code>allume</code> et <code>eteint</code> contrôlent l'état de la LED.</li>
+	<li>Toute commande non reconnue génère un message d'erreur.</li>
+</ul>
 
-<p>Le code complet à insérer dans une cellule <em>Jupyter</em></p>
 
-<pre><code class="python encadre">from IPython.display import HTML, display
-from web_sciences import get_interface
-	
-my_init = '''
-mode = "point";
-var commandes = [{texte_bouton:"Mesure", arduino:"mesure"}];
-series = [{grandeur: "P", unite: "hPa"}];
-titre_graphe = "Loi de Mariotte";
-axes = [{grandeur: "V", unite: "mL"}, {grandeur: "P", unite: "hPa"}];
-'''
-	
-S = get_interface(my_init)
-display(HTML(S))
-</code></pre>
+
 							
-								<hr />
-								<h3>Exemple d'éxécution</h3>
-								<p><span class="image main"><img src="images/mariotte_1.png" style="max-width:902px;"><span class="image main"></p>								
-								<hr />
-								<h3>Démo en ligne</h3>
-								<ul>
-									<li>Télécharger le script <a href="programmes/capteur_pression_1/capteur_pression_2.ino">capteur_pression_2.ino</a> en cliquant sur le lien.</li>
-									<li>Téléverser ce script dans la carte à l'aide de l'IDE <em>Arduino</em>.</li>
-									<li>Relier le capteur de <em>pression Grove</em> à l'entrée <em>A0</em> de la carte.</li>
-									<li>Cliquer sur le bouton <em>Connexion</em> ci-dessous et sélectionner le port correspondant à la carte.</li>
-									<li>Régler le volume de la seringue à <em>60mL</em> en relier le tube au capteur de pression (voir image ci-dessus).</li>
-									<li>Cliquer sur le bouton <em>mesure</em>. La carte effectue une mesure de la pression dans la seringue et cette valeur  
-										est transmise par la liaison série.</li>
-									<li>Le script affiche le point de coordonnées (V, P) (ou <em>V</em> est la valeur du volume saisie par l'utilisateur)
-										sur le graphe <em>P = f(V)</em>.</li>
-									<li>Renouveler l'opération pour <em>V</em> variant de <em>60 mL</em> à <em>25 mL</em> par pas de <em>5 mL</em>.</li>
-									<li>Cliquer sur le bouton <em>Copie presse papier</em> pour récupérer les données dans le presse papier.
-									Dans cet exemple, les données sont formatées sous forme de tableaux python. Il est cependant possible 
-									d'obtenir un formatage compatible avec un tableur comme <em>Régressi</em> ou <em>Excel</em> en
-								cochant la case ci-dessous.</li>
-								</ul>
-														
-								<form class="my_form">
-									<input type="checkbox" id="tableur_case" name="tableur_case" value="">
-									<label for="tableur_case">Cocher cette case pour obtenir les données au format tableur (Régressi par exemple)</label>
-									<code class="code_special">tableur = <span id="id_tableur_boolean">false</span>;</code>
-								</form>
-							
-								<div class="menu" id="id_menu">
-									<div id="id_boutons_commandes">
-									  <button class="rouge" id="id_button_connexion">Connexion</button>
-									</div>
-								</div>
-								<div class="image" style="width:95%;"><canvas id="myChart"></canvas></div>
-								<p id="id_resultat"></p>
-								<script src="assets/js/webardu_demo_mariotte.js"></script>
-								<script>
-								const checkbox = document.getElementById("tableur_case");
-								checkbox.addEventListener("change", function () {
-									if (checkbox.checked) {
-										document.getElementById("id_tableur_boolean").textContent = "true";
-										tableur = true;
-									} else {
-										document.getElementById("id_tableur_boolean").textContent = "false";
-										tableur = false;
-									}
-								});	
-								</script>	
-								<p>Le traitement des données permet de tracer le graphe <em>P = f(1/V)</em> et de vérifier ainsi la loi de
-									Mariotte (voir le notebook ci-dessous).</p>
-									<p><span class="image main"><img src="images/mariotte_2.png" style="max-width:587px;"><span class="image main"></p>								
-								<h3>Liens</h3>
-								<ul>
-									<li><a target="_blank" href="https://mybinder.org/v2/gh/bultec/physique_chimie_lycee/HEAD?labpath=loi_mariotte%2Floi_mariotte_prof.ipynb">
-										Un TP complet sur Binder</a> (éventuellement long à démarrer -> soyez patient).</li>
-									<li>Un lien vers capytale (bientôt)</li>
-									<li>Le notebook correspondant : <a href="programmes/notebooks/loi_mariotte_prof.ipynb">loi_mariotte_prof.ipynb</a></li>
-									<li>Les fichiers <em>Arduino</em> : 
-										<ul>
-											<li><a href="programmes/capteur_pression_1/capteur_pression_1.ino">capteur_pression_1</a> (pour l'étalonnage)</li>
-											<li><a href="programmes/capteur_pression_2/capteur_pression_2.ino">capteur_pression_2</a> (pour les mesures)</li>
-										</ul>		
-									</li>				
-									<li>La bibliothèque Web Sciences : <a href="programmes/web_sciences.py">web_sciences.py</a></li>
-									<li>fichier html au format python <a target="_blank" href="programmes/html/mariotte_pyt.html">mariotte_pyt.html</a> (pour utilisation avec python)</li>	
-									<li>fichier html au format tableur <a target="_blank" href="programmes/html/mariotte_tab.html">mariotte_tab.html</a> (pour utilisation avec <em>Régressi</em> ou <em>Excel</em>).</li>	
-								</ul>
-								<p>&nbsp;</p>
-							</div>k
+							</div>
 						</div>
 					</div>
 

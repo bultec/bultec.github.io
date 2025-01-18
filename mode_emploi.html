@@ -76,20 +76,20 @@
 										<h4>b) Définir les commandes à envoyer</h4>
 										<p>Spécifiez les commandes à envoyer à la carte <em>Arduino</em> ainsi que le texte à afficher
 											sur le bouton que l'utilisateur va cliquer: </p>
-										<pre><code class="javascript encadre">var commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
+										<pre><code class="javascript encadre">commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
                  {texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];</code></pre>
 										<p>Chaque élément du tableau <code>commandes</code>du type <code>{texte_bouton:&quot;...&quot;, arduino:&quot;...&quot;}</code>va créer
 										un bouton qui permet d'envoyer une commande à <em>Arduino</em>.</p>
 										<h4>c) Spécifier les séries renvoyées</h4>
 										<p>Définissez les séries renvoyées par la carte avec leurs unités:</p>
-										<pre><code class="javascript encadre">var series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];</code></pre>
+										<pre><code class="javascript encadre">series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];</code></pre>
 										<div class="encadre">
 											<p><strong>Remarque : </strong>Dans le cas du mode temporel, la première série renvoyée par la carte est toujours le <em>temps</em>. Il n'est pas nécessaire de le
 												préciser dans la variable <code>series</code>.</p>
 										</div>
 										<h4>d) Configurer le graphique</h4>
 										<p>Définissez les axes :</p>
-										<pre><code class="javascript encadre">var axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];</code></pre>
+										<pre><code class="javascript encadre">axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];</code></pre>
 										<div class="encadre">
 											<p><strong>Remarques : </strong></p>
 											<ul>
@@ -101,35 +101,37 @@
 										</div>
 										<h4>e) Choisir un titre</h4>	
 										<p>Choisissez, si nécessaire, un titre pour le graphique</p>
-										<pre><code class="javascript encadre">var titre_graphe = &quot;Circuit RC&quot;;</code></pre>
-										<h4>f) Rassembler le code</h4>
+										<pre><code class="javascript encadre">titre_graphe = &quot;Circuit RC&quot;;</code></pre>
+										<h4>f) Eventuellement modifier la précision</h4>	
+										<p>Par défaut, le programme utilise 3 chiffres significatifs. Modifiez, si nécessaire, la variable <code>precision</code></p>
+										<pre><code class="javascript encadre">precision = 5;</code></pre>
+										<h4>g) Rassembler le code</h4>
 										<p>Placez tout le code <em>JavaScript</em> dans une variable <em>python</em> de type <code>str</code>:</p>
 										<pre><code class="python encadre">my_init = '''
 mode = &quot;temporel&quot;;
-var commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
+commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
                  {texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
-var series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
-var axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
-var titre_graphe = &quot;Circuit RC&quot;;
+series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
+axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
+titre_graphe = &quot;Circuit RC&quot;;
 '''</code></pre>
 
 									<h2>II. Utilisation avec <em>Jupyter</em></h2>
 									<p>Copiez le fichier <code>web_sciences.py</code> dans le même dossier que votre notebook.</p>
 									<p>Intégrez le code précédent dans une cellule <em>Jupyter</em> :</p>
-									<pre><code class="python encadre">from IPython.display import HTML, display
-from web_sciences import get_interface
+									<pre><code class="python encadre">from web_sciences import WebSciences
 
 my_init = &#39;&#39;&#39;
 mode = &quot;temporel&quot;;
-var commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
-				{texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
-var series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
-var titre_graphe = &quot;Circuit RC&quot;;
-var axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
+commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
+             {texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
+series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
+titre_graphe = &quot;Circuit RC&quot;;
+axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
 &#39;&#39;&#39;
 
-S = get_interface(my_init)
-display(HTML(S))</code></pre>
+interface = WebSciences(my_init)
+interface.affiche()</code></pre>
 <p>Après exécution de la cellule <em>Jupyter</em>, on obtient quelque chose qui ressemble à ceci : </p>
 <p><span class="image main"><img src="images/image_8.png" style="max-width:457px"></span></p>
 <p>Après avoir cliqué sur le bouton <code>Connexion</code> et connecté la carte <em>Arduino</em>, les boutons s'activent et 
@@ -148,7 +150,8 @@ display(HTML(S))</code></pre>
 										<li>
 											<strong>Récupération du code JavaScript :</strong>
 											<p>Utilisez le code préparé précédemment, qui configure les variables <code>mode</code>,
-											   <code>commandes</code>, <code>series</code>, et <code>axes</code> et <code>titre_graphe</code>.</p>
+											   <code>commandes</code>, <code>series</code>, <code>axes</code>, <code>titre_graphe</code>
+											   et éventuellement <code>précision</code>.</p>
 										</li>
 										<li>
 											<strong>Modification du fichier <code>insere_code.py</code> :</strong>
@@ -157,11 +160,11 @@ display(HTML(S))</code></pre>
 
 my_init = '''
 mode = &quot;temporel&quot;;
-var commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
-					{texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
-var series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
-var axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
-var titre_graphe = &quot;Circuit RC&quot;;
+commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
+             {texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
+series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
+axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
+titre_graphe = &quot;Circuit RC&quot;;
 '''</code></pre>
 										</li>
 										<li>
@@ -207,7 +210,7 @@ nom_sortie = "circuit_rc.html"</code></pre>
 										<li>
 											<strong>Activer le mode tableur :</strong>
 											<p>Ajoutez ou modifiez la variable suivante dans le code JavaScript avant de générer le fichier HTML :</p>
-											<pre><code class="javascript encadre">var tableur = true;</code></pre>
+											<pre><code class="javascript encadre">tableur = true;</code></pre>
 										</li>
 										<li>
 											<strong>Résultat :</strong>
@@ -215,12 +218,12 @@ nom_sortie = "circuit_rc.html"</code></pre>
 										</li>
 									</ol>
 									
-									<h3>Conclusion</h3>
+									<h2>Conclusion</h2>
 									<p>Ce mode d’emploi vous permet d'utiliser la bibliothèque <code>Web-Sciences</code> avec un tableur ou un environnement Python.
 									Partagez le fichier HTML généré avec vos élèves pour une utilisation simple et autonome.</p>
 																
 
-								<h3>Liens</h3>
+								<h2>Liens</h2>
 								<ul>
 									<li>La bibliothèque Web Sciences pour Jupyter: <a href="programmes/web_sciences.py">web_sciences.py</a>.</li>			
 									<li>Le fichier <code>web_sciences_complet.html</code> qui contient le modèle HTML de base <a target="_blank" href="programmes/web_sciences_complet.html" download="web_sciences_complet.html">web_sciences_complet.html</a>.</li>	
