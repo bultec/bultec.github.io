@@ -77,7 +77,7 @@
 										<p>Spécifiez les commandes à envoyer à la carte <em>Arduino</em> ainsi que le texte à afficher
 											sur le bouton que l'utilisateur va cliquer: </p>
 										<pre><code class="javascript encadre">commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
-                 {texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];</code></pre>
+             {texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];</code></pre>
 										<p>Chaque élément du tableau <code>commandes</code>du type <code>{texte_bouton:&quot;...&quot;, arduino:&quot;...&quot;}</code>va créer
 										un bouton qui permet d'envoyer une commande à <em>Arduino</em>.</p>
 										<h4>c) Spécifier les séries renvoyées</h4>
@@ -110,7 +110,7 @@
 										<pre><code class="python encadre">my_init = '''
 mode = &quot;temporel&quot;;
 commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
-                 {texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
+             {texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
 series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
 axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
 titre_graphe = &quot;Circuit RC&quot;;
@@ -154,14 +154,13 @@ interface.affiche()</code></pre>
 											   et éventuellement <code>précision</code>.</p>
 										</li>
 										<li>
-											<strong>Modification du fichier <code>insere_code.py</code> :</strong>
-											<p>Collez le code JavaScript dans la section prévue, par exemple :</p>
-											<pre><code class="python encadre"># code javascrit à insérer
+										<strong>Modification du fichier <code>insere_code.py</code> :</strong>
+										<p>Collez le code JavaScript dans la section prévue, par exemple :</p>
+										<pre><code class="python encadre"># code javascrit à insérer
 
 my_init = '''
 mode = &quot;temporel&quot;;
-commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;},
-             {texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
+commandes = [{texte_bouton:&quot;Charge&quot;, arduino:&quot;charge&quot;}, {texte_bouton:&quot;Décharge&quot;, arduino:&quot;decharge&quot;}];
 series = [{grandeur: &quot;Uc&quot;, unite: &quot;V&quot;}, {grandeur: &quot;E&quot;, unite: &quot;V&quot;}];
 axes = [{grandeur: &quot;t&quot;, unite: &quot;ms&quot;}, {grandeur: &quot;U&quot;, unite: &quot;V&quot;}];
 titre_graphe = &quot;Circuit RC&quot;;

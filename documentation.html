@@ -228,7 +228,7 @@ series = [{grandeur: "T", unite: "°C"}];
 explications détaillées.</p>
 
 <!-- Mode commande -->
-<h2>1. Mode commande</h2>
+<h3>1. Mode commande</h3>
 <p>Le mode commande permet à l'Arduino de réagir à des commandes reçues via la liaison série. Il exécute des actions spécifiques et renvoie une réponse à chaque commande. Voici un exemple :</p>
 <pre><code class="encadre">/* déclaration des constantes */
 const int ledPin = 13; // Exemple : une LED connectée à la broche 13
@@ -255,14 +255,288 @@ void loop() {
 }
 </code></pre>
 <p>Dans cet exemple :</p>
-<ul>
+<ul class="marge_b_20">
 	<li>Une LED est connectée à la broche 13.</li>
 	<li>Les commandes <code>allume</code> et <code>eteint</code> contrôlent l'état de la LED.</li>
 	<li>Toute commande non reconnue génère un message d'erreur.</li>
 </ul>
 
+<!-- Mode point -->
+<h3>2. Mode point</h3>
+<p>Le mode point réalise une mesure unique sur demande et renvoie la valeur mesurée. Par exemple&nbsp;:</p>
+<pre><code class="encadre">const int capteurPin = A0; // Capteur connecté à la broche analogique A0
 
+void setup() {
+    Serial.begin(9600);
+    delay(1);
+}
 
+void loop() {
+    if (Serial.available()) {
+        String chaine = Serial.readString();
+        if (chaine == "mesure") {
+            int valeurBrute = analogRead(capteurPin); // Lecture de la valeur
+            float tension = valeurBrute * (5.0 / 1023.0); // Conversion en volts
+            Serial.println(tension); // Envoie la mesure
+        }
+        else {
+            Serial.println("commande non reconnue");
+        }
+    }
+}</code></pre>
+
+<p>Ce code lit la valeur d'un capteur analogique sur la broche A0, la convertit en tension, et envoie la mesure via la liaison série.</p>
+
+<h3>3. Mode temporel</h3>
+<p>Le programme réalise des mesures périodiques à un intervalle fixe. Il transmet en continu les résultats au PC sous la forme d'une série temporelle.
+Voici un exemple pour deux capteurs connectés sur A0 et A1&nbsp;:</p>
+<pre><code class="encadre">#define TEMPS 10000 // Durée totale des mesures en ms (10 secondes)
+#define N_PTS 100   // Nombre total de points à mesurer
+	
+unsigned long t_total = TEMPS;
+unsigned long dt = t_total / N_PTS; // Intervalle de temps entre deux mesures en ms
+	
+// Définition des constantes pour le capteur
+const int capteurPin_0 = A0; // Capteur connecté à la broche analogique A0
+const int capteurPin_1 = A1; // Capteur connecté à la broche analogique A1
+	
+void setup() {
+    Serial.begin(9600);
+    pinMode(capteurPin, INPUT);
+    delay(1);
+}
+	
+void mesures() {
+    unsigned long temps_depart = millis();
+    unsigned long t_mesure;
+
+    while (millis() - temps_depart <= t_total) {
+        t_mesure = (millis() - temps_depart); // Temps écoulé depuis le début des mesures
+        int u0 = analogRead(capteurPin_0); // Lecture de la valeur brute du capteur 0
+        float C_0 = u0 * ... // Conversion capteur_0
+        int u1 = analogRead(capteurPin_1); // Lecture de la valeur brute du capteur 1
+        float C_1 = u1 * ... // Conversion capteur_1
+        // Envoi des séries
+        Serial.println(String(t_mesure) + "," + String(C_0) + "," + String(C_1));
+        // Délai personnalisé pour respecter le temps entre deux mesures
+        while ((millis() - temps_depart) - t_mesure < dt) {}
+    }
+    // ne pas oublier d'envoyer le mot "end"
+    Serial.println("end");
+}
+	
+void loop() {
+    if (Serial.available()) {
+        String chaine = Serial.readString();
+        if (chaine == "mesures") {
+            mesures(); 	
+        } else {
+            String message = "commande non reconnue";
+            Serial.println(message);
+        }
+    }
+}</code></pre>
+
+	<h4>Explications :</h4>
+	<p class="marge_b_5"><strong>Macros définies :</strong></p>
+	<ul class="marge_b_20">
+	  <li><code>#define TEMPS</code> : Durée totale des mesures (modifiable selon les besoins).</li>
+	  <li><code>#define N_PTS</code> : Nombre de points à mesurer.</li>
+	</ul>
+	<p class="marge_b_5"><strong>Initialisation :</strong></p>
+	<ul class="marge_b_20">
+		<li><code>dt = t_total / N_PTS</code> : Calcule l'intervalle de temps entre deux mesures.</li>
+	</ul>
+
+	<p class="marge_b_5"><strong>Fonction <code>mesures</code> :</strong></p>
+	<ul class="marge_b_20">	
+		<li>Envoie les données sous forme de séries temporelles (temps écoulé + valeur mesurée).</li>
+	  	<li>Garantit un espacement constant entre les mesures avec une boucle d'attente contrôlée.</li>
+	</ul>
+
+	<p class="marge_b_5"><strong>Boucle principale (<code>loop</code>) :</strong></p>
+	<ul class="marge_b_20">
+	  <li>Attente d'une commande sur la liaison série.</li>
+	  <li>La commande<code>"mesures"</code> lancent la série de mesures.</li>
+	  <li>Toute commande non reconnue retourne un message d'erreur.</li>
+	</ul>
+	<p>Cette structure rend le programme flexible pour différents types de mesures et optimise la précision des mesures temporelles.</p>
+	
+	<h3>4. Un cas particuliers : le mode <code>temporel rapide</code></h3>
+	<p>Le programme ci-dessous effectue des mesures rapides de tensions aux bornes d'un circuit RC et aux bornes du condensateur.
+	La constante de temps du circuit RC est faible et la durée d'acquisition est courte (600ms). De façon à être rapide, le programme doit
+	stocker les séries pendant les mesures pour les envoyer en bloc par la liaison série à la fin des mesures.</p>
+	<pre><code class="encadre">#define TEMPS 650
+#define N_PTS 75
+		
+const int pin_led_condo = 3;
+const int nb = N_PTS;
+unsigned long t_total = TEMPS;
+unsigned long temps[nb];
+int mesures[nb][2];
+ 
+void setup() {
+    for (int i=0; i&lt;nb; i++)
+        temps[i] = -1;
+    t_total = t_total * 1000;
+    pinMode(pin_led_condo, OUTPUT);
+    digitalWrite(pin_led_condo, LOW);
+    Serial.begin(9600);
+    delay(1);
+}
+		
+void get_mesures(int command) {
+    int n = 0;
+    unsigned long dt = t_total / (N_PTS-1); 
+    unsigned long temps_depart = micros();
+    unsigned long t = temps_depart;
+    if (command == 1) {
+        digitalWrite(pin_led_condo, HIGH); 
+    }
+    else {
+        digitalWrite(pin_led_condo, LOW); 
+    }
+    while (t - temps_depart &lt;= t_total) {
+        temps[n] = (micros() - temps_depart); // t en µs
+        mesures[n][0] = analogRead(A0);
+        mesures[n][1] = analogRead(A1);
+        //un delai personnalisé pour optimiser la rapidité
+        while ((micros() - temps_depart) - long(n*dt) &lt;= dt) {}
+        n = n + 1;
+        t = micros();
+    }
+}
+
+void envoie_mesures() {
+    int n = 0;
+    for(int i=0 ; i&lt;nb; i++) {
+        if (temps[i] != -1) {
+            // le temps est convertit en ms pour compatibilité avec le programe de charge lente condo.ino
+            Serial.println(String(float(temps[i])/1000) + "," + String(mesures[i][0]*5.0/1023) + "," + String(mesures[i][1]*5.0/1023));
+            n = n+1;
+    	}
+    	delay(1);
+    }
+}	
+
+void loop() {
+    if (Serial.available()) {
+        String chaine = Serial.readString();
+        if (chaine=="charge") {
+            get_mesures(1);
+            envoie_mesures();
+            Serial.println("end");    
+        }
+        else if (chaine=="decharge") {
+            get_mesures(0);
+            envoie_mesures();
+            Serial.println("end");
+        }
+        else {
+            Serial.println("commande non reconnue");
+        }
+    }   
+}</code></pre>
+	
+		<h4>Explication détaillée du programme</h4>
+	
+		<p>Ce programme permet de mesurer rapidement les tensions aux bornes d’un circuit RC (résistance et condensateur) ainsi qu'aux bornes du condensateur, avec une acquisition rapide et une transmission des données en bloc une fois l'acquisition terminée.</p>
+	
+		<h4>a. Déclaration des constantes et des variables globales</h4>
+		<ul class="marge_b_20">
+			<li><strong>Macros :</strong>
+				<ul>
+					<li><code>#define TEMPS 650</code> : La durée totale des mesures est fixée à <strong>650 ms</strong>.</li>
+					<li><code>#define N_PTS 75</code> : Le nombre de points à mesurer est fixé à <strong>75</strong>.</li>
+				</ul>
+			</li>
+			<li><strong>Broches utilisées :</strong>
+				<ul>
+					<li><code>pin_led_condo</code> : Applique la tension aux bornes du circuit. Permet de réaliser les différentes
+						phases de charge et de décharge.</li>
+					<li><code>A0</code> : Entrée analogique pour mesurer la tension aux bornes du générateur.</li>
+					<li><code>A1</code> : Entrée analogique pour mesurer la tension aux bornes du condensateur.</li>
+				</ul>
+			</li>
+			<li><strong>Tableaux :</strong>
+				<ul>
+					<li><code>temps[nb]</code> : Stocke les instants (en microsecondes) où les mesures sont effectuées.</li>
+					<li><code>mesures[nb][2]</code> : Stocke les valeurs analogiques des tensions mesurées (colonne 0 pour <code>A0</code> et colonne 1 pour <code>A1</code>).</li>
+				</ul>
+			</li>
+		</ul>
+	
+		<h4>b. Fonction <code>setup()</code></h4>
+		<ul class="marge_b_20">
+			<li>Initialise les tableaux <code>temps</code> à <code>-1</code>.</li>
+			<li>Convertit <code>t_total</code> en microsecondes pour une meilleure précision.</li>
+			<li>Initialise la communication série avec une vitesse de transmission de <strong>9600 bauds</strong>.</li>
+		</ul>
+	
+		<h4>3. Fonction <code>get_mesures()</code></h4>
+		<ul class="marge_b_20">
+			<li><strong>Objectif :</strong> Effectuer les mesures à intervalle régulier et les stocker.</li>
+			<li><strong>Paramètre :</strong>
+				<ul>
+					<li><code>command</code> : Détermine si la mesure correspond à une <strong>charge</strong> (<code>1</code>) ou une <strong>décharge</strong> (<code>0</code>).</li>
+				</ul>
+			</li>
+			<li><strong>Déroulement :</strong>
+				<ul>
+					<li>Calcule l'intervalle entre deux mesures : <code>dt = t_total / (N_PTS - 1)</code> (en microsecondes).</li>
+					<li>Effectue les mesures dans une boucle :
+						<ul>
+							<li>Stocke l'instant courant dans <code>temps[n]</code>.</li>
+							<li>Mesure les tensions analogiques et les enregistre dans <code>mesures[n][0]</code> et <code>mesures[n][1]</code>.</li>
+							<li>Utilise une boucle d'attente pour garantir un espacement constant entre les mesures.</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	
+		<h4>4. Fonction <code>envoie_mesures()</code></h4>
+		<ul class="marge_b_20">
+			<li><strong>Objectif :</strong> Envoyer les données mesurées en bloc via la liaison série.</li>
+			<li><strong>Déroulement :</strong>
+				<ul>
+					<li>Parcourt les tableaux <code>temps</code> et <code>mesures</code>.</li>
+					<li>Convertit les temps en millisecondes pour compatibilité avec d'autres programmes.</li>
+					<li>Convertit les mesures analogiques en tensions réelles (valeurs entre 0 et 5 V).</li>
+					<li>Envoie chaque ligne au format CSV : <code>&lt;temps(ms)&gt;,&lt;tension_A0(V)&gt;,&lt;tension_A1(V)&gt;</code>.</li>
+				</ul>
+			</li>
+		</ul>
+	
+		<h4>5. Fonction <code>loop()</code></h4>
+		<ul class="marge_b_20">
+			<li><strong>Objectif :</strong> Réagir aux commandes reçues via la liaison série.</li>
+			<li><strong>Déroulement :</strong>
+				<ul>
+					<li>Attente d'une commande (<code>charge</code> ou <code>decharge</code>).</li>
+					<li>Appelle <code>get_mesures()</code> en fonction de la commande reçue puis et <code>envoie_mesures()</code>.</li>
+					<li>Envoie un message <code>"end"</code> à la fin des mesures.</li>
+					<li>Gère les commandes inconnues avec un message d'erreur.</li>
+				</ul>
+			</li>
+		</ul>
+	
+		<h4>Optimisations pour la rapidité</h4>
+		<ul class="marge_b_20">
+			<li><strong>Stockage local des données pendant la mesure :</strong> Les mesures sont stockées dans les tableaux et envoyées après l'acquisition, ce qui minimise le temps d'attente.</li>
+			<li><strong>Conversion des temps en millisecondes :</strong> Facilite la compatibilité avec d'autres programmes tout en conservant la précision.</li>
+			<li><strong>Attente optimisée entre les mesures :</strong> La boucle d'attente assure une précision temporelle en microsecondes.</li>
+		</ul>
+	
+		<h4>Points forts de ce programme</h4>
+		<ul class="marge_b_20">
+			<li><strong>Rapidité :</strong> L'utilisation de <code>micros()</code> pour mesurer le temps permet une grande précision temporelle.</li>
+			<li><strong>Flexibilité :</strong> Gère deux phases (charge et décharge) et peut facilement être adapté pour d'autres configurations.</li>
+			<li><strong>Transmission efficace :</strong> Les données sont transmises en bloc, évitant les interruptions pendant l'acquisition.</li>
+		</ul>
+	
+		<p>Ce script est parfaitement adapté pour des situations nécessitant des mesures rapides et peut-être modifié facilement.</p>
+	
 							
 							</div>
 						</div>
