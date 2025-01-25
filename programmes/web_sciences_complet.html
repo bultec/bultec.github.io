@@ -78,6 +78,7 @@ var commandes =[];
 var abscisse_is_saisie  =  true;
 var tableau_masjuscule = false;
 var tableur = false;
+var stop_possible = false;
 /*
 var commandes = [{texte_bouton:"", arduino:""},
                  {texte_bouton:"", arduino:""}];
@@ -95,6 +96,7 @@ var car_par_ligne = 70;
 // --- variables globales -> ne pas modifier ---
 var port = null;
 var my_chart = null;
+var bouton_stop = null;
 var  a_desactiver = ["id_zone_saisie", "id_bouton_commande_1",
                      "id_bouton_commande_2", "id_bouton_supprime", "id_bouton_copie"];
 var affichage_resultat = true;
@@ -111,7 +113,7 @@ async function do_connect() {
       port = await navigator.serial.requestPort();
       await port.open({ baudRate: 9600 });
       bouton_connexion.className = "vert";
-      setTimeout (() => disable_status(a_desactiver, false), 1500);
+      setTimeout (() => disable_status(a_desactiver, false, true), 1500);
       if ((mode == "point") || (mode == "temporel")) {
         document.getElementById("myChart").style.width = "100%";
         document.getElementById("myChart").style.display = "block";
@@ -123,18 +125,19 @@ async function do_connect() {
       await port.close();
       port = null;
       bouton_connexion.className = "rouge";
-      disable_status(a_desactiver, true);
+      disable_status(a_desactiver, true, true);
       if ((mode == "point") || (mode == "temporel")) {
         document.getElementById("myChart").style.width = "inherit";
         document.getElementById("myChart").style.display = "none";
       }
+
     }
   }
   catch (error) {
     await port.close();
     port = null;
     bouton_connexion.className = "rouge";
-    disable_status(a_desactiver, true);
+    disable_status(a_desactiver, true, true);
   }
   if ((my_chart == null) && (mode != "commande")) {
     // correction pour capytale
@@ -365,7 +368,7 @@ async function do_mesure_ponctuelle(command) {
 async function do_mesures_tempo(commande) {
   // traite le resultat envoye par readUntilClosed()
   try {
-    disable_status(a_desactiver, true);
+    disable_status(a_desactiver, true, false);
     set_command(commande);
     let resultat = document.getElementById("id_resultat");
     resultat.innerHTML = '';
@@ -374,15 +377,17 @@ async function do_mesures_tempo(commande) {
     resultat.innerHTML = tableaux_pyhon(true);
   }
   finally {
-    disable_status(a_desactiver, false);
+    disable_status(a_desactiver, false, true);
   }
 }
 
 //--- fonctions utilitaire ---
-function disable_status(tab_id, b)  {
+function disable_status(tab_id, b, b_stop=false)  {
   for (e of a_desactiver) {
     e.disabled = b;
   }
+  if (bouton_stop != null)
+    bouton_stop.disabled = b_stop;
 }
 
 function formatte(chaine) {
@@ -508,6 +513,10 @@ function copie_presse_papier () {
   navigator.clipboard.writeText(texte);
 }
 
+function envoi_stop() {
+  set_command('stop');
+}
+
 function cree_boutons_commandes(){
   // creation des boutons si commandes[i]["arduino"]!=""
   l_div = document.getElementById("id_boutons_commandes");
@@ -526,6 +535,15 @@ function cree_boutons_commandes(){
 function cree_bouton_copie() { 
   let l_btn = document.createElement("BUTTON");
   let l_txt = document.createTextNode("Copie presse papier");
+  l_btn.appendChild(l_txt);
+  l_btn.className = "element";
+  document.getElementById("id_boutons_commandes").appendChild(l_btn);
+  return l_btn;
+}
+
+function cree_bouton_stop() { 
+  let l_btn = document.createElement("BUTTON");
+  let l_txt = document.createTextNode("Stop");
   l_btn.appendChild(l_txt);
   l_btn.className = "element";
   document.getElementById("id_boutons_commandes").appendChild(l_btn);
@@ -567,6 +585,10 @@ if ("serial" in navigator) {
       affichage_resultat = false;
       cree_boutons_commandes();
       var action_traitement = do_mesures_tempo;
+      if (stop_possible) {
+        bouton_stop = cree_bouton_stop();
+        bouton_stop.addEventListener('click', envoi_stop);
+      }
       bouton_copie = cree_bouton_copie();
       bouton_copie.addEventListener('click', copie_presse_papier);
       a_desactiver = tab_boutons_commande;
@@ -635,7 +657,7 @@ if ("serial" in navigator) {
     tab_boutons_commande[i].addEventListener('click', async => action_traitement(commandes[i]["arduino"]));
   }
 
-  disable_status(a_desactiver, true);
+  disable_status(a_desactiver, true, true);
   if (mode != "commande") {
     try {
       my_chart = cree_chart();
