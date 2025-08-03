@@ -1,5 +1,5 @@
 /* charge ou décharge d'un condensateur par réception de commandes envoyées sur la liason série
- * paramètres : temps et nombre de points de mesures (encodés dans la commande)
+ * paramètres : temps et nombre de points de mesure (encodés dans la commande)
  * montage: - un condensateur en série avec  une résistance sur le pin 3
  *            constante de temps d'environ 1,1 s avec les valeurs par défaut 
  *          - pour la visualisation : - une led rouge (en série avec une résistance de 220 ohms) sur le pin 4

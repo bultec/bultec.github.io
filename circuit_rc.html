@@ -64,20 +64,27 @@
 									<p>Les leds sont présentes uniquement dans un but de visualisation. Il est possible de les supprimer.</p>
 									<hr />
 									<h3>Script <em>Arduino</em></h3>
-									<p>Deux versions du programme sont fournies&nbsp;:</p>
+									<p>Trois versions du programme sont fournies&nbsp;:</p>
 									<ul class="marge_b_20">
 										<li>le programme  <a href="programmes/circuit_rc/circuit_rc.ino">circuit_rc.ino</a> pour lequel la
 											constante de temps du circuit peut être de quelques secondes qui envoie les valeurs de
 											<em>E</em> (tension aux bornes du circuit) et de <em>u<sub>c</sub></em> (tension aux bornes du condensateur) sur la liaison série après chaque mesure.</li>
-										<li>le programme  <a href="programmes/circuit_rc_rapide/circuit_rc_rapide.ino">condo_rapide.ino</a> pour
-											lequel la constante de temps du circuit peut être de quelques centaines de millisecondes qui, dans un but de rapidité, envoie les toutes valeurs une fois que les mesures sont terminées.</li>
+										<li>le programme  <a href="programmes/circuit_rc_param/circuit_rc_param.ino">circuit_rc_param.ino</a> est identique au précédent mais il permet 
+											à l'utilisateur de choisir à partir du notebook Jupyter 
+											la durée et le nombre de points de mesure. Il s'agit d'un exemple de passage de paramètres du 
+											programme python vers le programme Arduino (voir à cet effet le notebook <a href="programmes/notebooks/circuit_rc_param.ipynb">circuit_rc_param.ipynb</a>
+											et sa version sur binder&nbsp; 
+											<a href="https://mybinder.org/v2/gh/bultec/physique_chimie_lycee/HEAD?urlpath=%2Fdoc%2Ftree%2Fdemo_circuit_rc%2Fcircuit_rc_param.ipynb" target="_blank">circuit_rc_param</a>).	
+										    </li>
+										<li>le programme  <a href="programmes/circuit_rc_rapide/circuit_rc_rapide.ino">circuit_rc_rapide.ino</a> pour
+											lequel la constante de temps du circuit peut être de quelques centaines de millisecondes qui, dans un but de rapidité, envoie les toutes valeurs une fois que les mesures sont terminées.</li>	
 									</ul>
 								
 									<h4>Fonctionnement</h4>
 									<p>Le programme:</p>
 									<ul>
 										<li>attend l'arrivée d'une commande (<code>charge</code> ou <code>decharge</code>) sur 
-											la liaison série et réagit en conséquence:</li>
+											la liaison série et réagit en conséquence:</li>mm
 										<li>si la commande est <code>charge</code>, il place le pin 3 à l'état haut et effectue
 											la série de mesure. Chaque mesure est envoyée sur la liaison série juste après sa réalisation. la série se termine par l&#39;envoi du mot <code>end</code>.</li>
 										<li>si la commande est <code>decharge</code>, il place le pin 3 à l'état bas  et effectue la
@@ -170,11 +177,15 @@ interface.affiche()
 								<ul>
 									<li><a target="_blank" href="https://mybinder.org/v2/gh/bultec/physique_chimie_lycee/HEAD?labpath=demo_circuit_rc%2FCircuitRC.ipynb">
 										Un notebook de démonstration sur Binder</a> (éventuellement long à démarrer -> soyez patient).</li>
+								    <li><a href="https://mybinder.org/v2/gh/bultec/physique_chimie_lycee/HEAD?urlpath=%2Fdoc%2Ftree%2Fdemo_circuit_rc%2Fcircuit_rc_param.ipynb" target="_blank">
+										Un autre notebook de démonstration avec passage de paramètres (durée et nombre de points de mesure)</a></li>
 									<li>Le lien vers capytale : <a target="_blank" href ="https://capytale2.ac-paris.fr/web/b/3921011">Mesure de la constante de temps d'un circuit RC série</a></li>
-									<li>Le notebook correspondant : <a href="programmes/notebooks/CircuitRC.ipynb">CircuitRC.ipynb</a></li>
+									<li>Les notebooks correspondants : <a href="programmes/notebooks/CircuitRC.ipynb">CircuitRC.ipynb</a> et
+										<a href="programmes/notebooks/circuit_rc_param.ipynb">circuit_rc_param.ipynb</a></li>
 									<li>Les fichiers <em>Arduino</em> : 
 										<ul>
 											<li><a href="programmes/circuit_rc/circuit_rc.ino">circuit_rc.ino</a></li>
+											<li><a href="programmes/circuit_rc_param/circuit_rc_param.ino">circuit_rc_param.ino</a></li>
 											<li><a href="programmes/circuit_rc_rapide/circuit_rc_rapide.ino">condo_rapide.ino</a></li>
 										</ul>		
 									</li>
